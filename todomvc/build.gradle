@@ -1,10 +1,15 @@
 plugins {
     id 'distribution'
+    id 'org.openjfx.javafxplugin'
 }
 
 dependencies {
     implementation project(':todomvc-frontend')
     implementation project(':todomvc-backend')
+}
+
+javafx {
+    modules = ['javafx.graphics']
 }
 
 ext.mainClassName = 'de.muspellheim.todomvc.App'
