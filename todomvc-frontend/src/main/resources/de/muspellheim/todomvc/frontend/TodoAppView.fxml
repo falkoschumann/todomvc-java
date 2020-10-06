@@ -7,7 +7,7 @@
 <?import javafx.scene.text.TextFlow?>
 <?import javafx.scene.text.Text?>
 
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.muspellheim.todomvc.frontend.TodoAppViewController" stylesheets="@style.css" prefHeight="400.0" prefWidth="600.0">
+<VBox xmlns="http://javafx.com/javafx/12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.muspellheim.todomvc.frontend.TodoAppViewController" stylesheets="@style.css" prefHeight="400.0" prefWidth="600.0">
   <VBox alignment="CENTER">
     <Label style="-fx-text-fill: darksalmon;-fx-font-size: 42" text="todos"/>
     <HBox alignment="CENTER_LEFT" spacing="10.0">
