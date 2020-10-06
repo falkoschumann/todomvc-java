@@ -1,5 +1,5 @@
 plugins {
-    id 'distribution'
+    id 'application'
     id 'org.openjfx.javafxplugin'
 }
 
@@ -9,45 +9,10 @@ dependencies {
 }
 
 javafx {
-    modules = ['javafx.graphics']
+    modules = ['javafx.controls']
 }
 
-ext.mainClassName = 'de.muspellheim.todomvc.App'
-
-task run(type: JavaExec) {
-    group = 'application'
-    main = mainClassName
-    classpath = sourceSets.main.runtimeClasspath
-}
-
-task uberJar(type: Jar) {
-    group = 'distribution'
-    archiveClassifier = 'uber'
-    manifest {
-        attributes(
-                'Implementation-Title': 'TodoMVC',
-                'Implementation-Version': archiveVersion,
-                'Implementation-Vendor': 'Falko Schumann <falko.schumann@muspellheim.de>',
-                'Main-Class': mainClassName
-        )
-    }
-    from sourceSets.main.output
-    dependsOn configurations.runtimeClasspath
-    from {
-        configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) }
-    }
-}
-
-distributions {
-    main {
-        contents {
-            from(uberJar)
-            from(rootDir) {
-                include 'README.md'
-                include 'LICENSE.txt'
-                include 'CHANGELOG.md'
-                rename 'md', 'txt'
-            }
-        }
-    }
+application {
+    mainModule = 'de.muspellheim.todomvc'
+    mainClass = 'de.muspellheim.todomvc.App'
 }
