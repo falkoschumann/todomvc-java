@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.stream.Collectors;
 import lombok.NonNull;
-import lombok.val;
 
 public class MessageHandler {
   private final TodoRepository repository;
@@ -33,7 +32,7 @@ public class MessageHandler {
 
   public CommandStatus handle(@NonNull NewTodoCommand command) {
     try {
-      val todos = new ArrayList<>(repository.load());
+      var todos = new ArrayList<>(repository.load());
       todos.add(Todo.of(command.getTitle()));
       repository.store(todos);
       return new Success();
@@ -44,7 +43,7 @@ public class MessageHandler {
 
   public CommandStatus handle(@NonNull ToggleAllCommand command) {
     try {
-      val todos =
+      var todos =
           repository.load().stream()
               .map(it -> it.withCompleted(command.isCompleted()))
               .collect(Collectors.toList());
@@ -57,7 +56,7 @@ public class MessageHandler {
 
   public CommandStatus handle(@NonNull ToggleCommand command) {
     try {
-      val todos =
+      var todos =
           repository.load().stream()
               .map(
                   it ->
@@ -74,7 +73,7 @@ public class MessageHandler {
 
   public CommandStatus handle(@NonNull DestroyCommand command) {
     try {
-      val todos =
+      var todos =
           repository.load().stream()
               .filter(it -> it.getId() != command.getId())
               .collect(Collectors.toList());
@@ -87,7 +86,7 @@ public class MessageHandler {
 
   public CommandStatus handle(@NonNull EditCommand command) {
     try {
-      val todos =
+      var todos =
           repository.load().stream()
               .map(it -> it.getId().equals(command.getId()) ? it.withTitle(command.getTitle()) : it)
               .collect(Collectors.toList());
@@ -100,7 +99,7 @@ public class MessageHandler {
 
   public CommandStatus handle(@NonNull ClearCompletedCommand command) {
     try {
-      val todos =
+      var todos =
           repository.load().stream().filter(it -> !it.isCompleted()).collect(Collectors.toList());
       repository.store(todos);
       return new Success();
@@ -111,7 +110,7 @@ public class MessageHandler {
 
   public TodoListQueryResult handle(@NonNull TodoListQuery query) {
     try {
-      val todos = repository.load();
+      var todos = repository.load();
       return new TodoListQueryResult(todos);
     } catch (IOException e) {
       System.err.println(e);

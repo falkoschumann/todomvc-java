@@ -22,7 +22,6 @@ import de.muspellheim.todomvc.contract.messages.queries.TodoListQueryResult;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import lombok.val;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -38,9 +37,9 @@ public class MessageHandlerTests {
 
   @Test
   void newTodo() {
-    val command = new NewTodoCommand("Foobar");
+    var command = new NewTodoCommand("Foobar");
 
-    val result = messageHandler.handle(command);
+    var result = messageHandler.handle(command);
 
     assertEquals(new Success(), result, "Command handled successfully");
     assertEquals(3, repository.todos.size(), "Todo added to list");
@@ -51,9 +50,9 @@ public class MessageHandlerTests {
 
   @Test
   void toggleAll() {
-    val command = new ToggleAllCommand(true);
+    var command = new ToggleAllCommand(true);
 
-    val result = messageHandler.handle(command);
+    var result = messageHandler.handle(command);
 
     assertEquals(new Success(), result, "Command handled successfully");
     assertEquals(
@@ -66,9 +65,9 @@ public class MessageHandlerTests {
 
   @Test
   void toggle() {
-    val command = new ToggleCommand("d2f7760d-8f03-4cb3-9176-06311cb89993");
+    var command = new ToggleCommand("d2f7760d-8f03-4cb3-9176-06311cb89993");
 
-    val result = messageHandler.handle(command);
+    var result = messageHandler.handle(command);
 
     assertEquals(new Success(), result, "Command handled successfully");
     assertEquals(
@@ -81,9 +80,9 @@ public class MessageHandlerTests {
 
   @Test
   void destroy() {
-    val command = new DestroyCommand("119e6785-8ffc-42e0-8df6-dbc64881f2b7");
+    var command = new DestroyCommand("119e6785-8ffc-42e0-8df6-dbc64881f2b7");
 
-    val result = messageHandler.handle(command);
+    var result = messageHandler.handle(command);
 
     assertEquals(new Success(), result, "Command handled successfully");
     assertEquals(
@@ -95,9 +94,9 @@ public class MessageHandlerTests {
 
   @Test
   void edit() {
-    val command = new EditCommand("d2f7760d-8f03-4cb3-9176-06311cb89993", "Foobar");
+    var command = new EditCommand("d2f7760d-8f03-4cb3-9176-06311cb89993", "Foobar");
 
-    val result = messageHandler.handle(command);
+    var result = messageHandler.handle(command);
 
     assertEquals(new Success(), result, "Command handled successfully");
     assertEquals(
@@ -110,9 +109,9 @@ public class MessageHandlerTests {
 
   @Test
   void clearCompleted() {
-    val command = new ClearCompletedCommand();
+    var command = new ClearCompletedCommand();
 
-    val result = messageHandler.handle(command);
+    var result = messageHandler.handle(command);
 
     assertEquals(new Success(), result, "Command handled successfully");
     assertEquals(
@@ -124,9 +123,9 @@ public class MessageHandlerTests {
 
   @Test
   void queryTodoList() {
-    val query = new TodoListQuery();
+    var query = new TodoListQuery();
 
-    val result = messageHandler.handle(query);
+    var result = messageHandler.handle(query);
 
     assertEquals(
         new TodoListQueryResult(

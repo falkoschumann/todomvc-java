@@ -19,7 +19,6 @@ import java.nio.file.Path;
 import java.util.Collections;
 import java.util.List;
 import lombok.NonNull;
-import lombok.val;
 
 public class TodoJsonRepository implements TodoRepository {
   private static final Type LIST_TYPE = new TypeToken<List<Todo>>() {}.getType();
@@ -35,7 +34,7 @@ public class TodoJsonRepository implements TodoRepository {
       return Collections.emptyList();
     }
 
-    val gson = new Gson();
+    var gson = new Gson();
     try (BufferedReader reader = Files.newBufferedReader(file)) {
       return gson.fromJson(reader, LIST_TYPE);
     }
@@ -43,7 +42,7 @@ public class TodoJsonRepository implements TodoRepository {
 
   @Override
   public void store(@NonNull List<Todo> todos) throws IOException {
-    val gson = new GsonBuilder().setPrettyPrinting().create();
+    var gson = new GsonBuilder().setPrettyPrinting().create();
     try (BufferedWriter writer = Files.newBufferedWriter(file)) {
       gson.toJson(todos, writer);
     }
