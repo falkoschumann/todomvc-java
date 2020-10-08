@@ -8,7 +8,7 @@ package de.muspellheim.todomvc;
 import de.muspellheim.todomvc.contract.data.Todo;
 import de.muspellheim.todomvc.contract.messages.queries.TodoListQueryResult;
 import de.muspellheim.todomvc.frontend.TodoAppViewController;
-import java.util.Arrays;
+import java.util.List;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -50,7 +50,7 @@ public class TodoAppViewControllerTest extends Application {
   private void run() {
     controller.display(
         new TodoListQueryResult(
-            Arrays.asList(
+            List.of(
                 new Todo("119e6785-8ffc-42e0-8df6-dbc64881f2b7", "Taste JavaScript", true),
                 new Todo("d2f7760d-8f03-4cb3-9176-06311cb89993", "Buy a unicorn", false))));
     stage.show();

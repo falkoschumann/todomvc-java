@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Collections;
 import java.util.List;
 import lombok.NonNull;
 
@@ -31,7 +30,7 @@ public class TodoJsonRepository implements TodoRepository {
   @Override
   public List<Todo> load() throws IOException {
     if (!Files.exists(file)) {
-      return Collections.emptyList();
+      return List.of();
     }
 
     var gson = new Gson();

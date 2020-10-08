@@ -19,8 +19,6 @@ import de.muspellheim.todomvc.contract.messages.commands.ToggleAllCommand;
 import de.muspellheim.todomvc.contract.messages.commands.ToggleCommand;
 import de.muspellheim.todomvc.contract.messages.queries.TodoListQuery;
 import de.muspellheim.todomvc.contract.messages.queries.TodoListQueryResult;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -56,7 +54,7 @@ public class MessageHandlerTests {
 
     assertEquals(new Success(), result, "Command handled successfully");
     assertEquals(
-        Arrays.asList(
+        List.of(
             new Todo("119e6785-8ffc-42e0-8df6-dbc64881f2b7", "Taste JavaScript", true),
             new Todo("d2f7760d-8f03-4cb3-9176-06311cb89993", "Buy a unicorn", true)),
         repository.todos,
@@ -71,7 +69,7 @@ public class MessageHandlerTests {
 
     assertEquals(new Success(), result, "Command handled successfully");
     assertEquals(
-        Arrays.asList(
+        List.of(
             new Todo("119e6785-8ffc-42e0-8df6-dbc64881f2b7", "Taste JavaScript", true),
             new Todo("d2f7760d-8f03-4cb3-9176-06311cb89993", "Buy a unicorn", true)),
         repository.todos,
@@ -86,8 +84,7 @@ public class MessageHandlerTests {
 
     assertEquals(new Success(), result, "Command handled successfully");
     assertEquals(
-        Collections.singletonList(
-            new Todo("d2f7760d-8f03-4cb3-9176-06311cb89993", "Buy a unicorn", false)),
+        List.of(new Todo("d2f7760d-8f03-4cb3-9176-06311cb89993", "Buy a unicorn", false)),
         repository.todos,
         "Todos updated");
   }
@@ -100,7 +97,7 @@ public class MessageHandlerTests {
 
     assertEquals(new Success(), result, "Command handled successfully");
     assertEquals(
-        Arrays.asList(
+        List.of(
             new Todo("119e6785-8ffc-42e0-8df6-dbc64881f2b7", "Taste JavaScript", true),
             new Todo("d2f7760d-8f03-4cb3-9176-06311cb89993", "Foobar", false)),
         repository.todos,
@@ -115,8 +112,7 @@ public class MessageHandlerTests {
 
     assertEquals(new Success(), result, "Command handled successfully");
     assertEquals(
-        Collections.singletonList(
-            new Todo("d2f7760d-8f03-4cb3-9176-06311cb89993", "Buy a unicorn", false)),
+        List.of(new Todo("d2f7760d-8f03-4cb3-9176-06311cb89993", "Buy a unicorn", false)),
         repository.todos,
         "Todos updated");
   }
@@ -129,7 +125,7 @@ public class MessageHandlerTests {
 
     assertEquals(
         new TodoListQueryResult(
-            Arrays.asList(
+            List.of(
                 new Todo("119e6785-8ffc-42e0-8df6-dbc64881f2b7", "Taste JavaScript", true),
                 new Todo("d2f7760d-8f03-4cb3-9176-06311cb89993", "Buy a unicorn", false))),
         result);
@@ -137,7 +133,7 @@ public class MessageHandlerTests {
 
   private static class TestingTodoRepository implements TodoRepository {
     List<Todo> todos =
-        Arrays.asList(
+        List.of(
             new Todo("119e6785-8ffc-42e0-8df6-dbc64881f2b7", "Taste JavaScript", true),
             new Todo("d2f7760d-8f03-4cb3-9176-06311cb89993", "Buy a unicorn", false));
 

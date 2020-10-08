@@ -15,7 +15,6 @@ import de.muspellheim.todomvc.contract.messages.commands.ToggleCommand;
 import de.muspellheim.todomvc.contract.messages.queries.TodoListQuery;
 import de.muspellheim.todomvc.contract.messages.queries.TodoListQueryResult;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -58,7 +57,7 @@ public class TodoAppViewController {
   @FXML private ToggleButton completed;
   @FXML private Button clearCompleted;
 
-  private List<Todo> todos = Collections.emptyList();
+  private List<Todo> todos = List.of();
 
   public static Pair<Parent, TodoAppViewController> load() {
     FXMLLoader fxmlLoader =

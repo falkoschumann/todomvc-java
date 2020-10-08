@@ -19,7 +19,7 @@ import de.muspellheim.todomvc.contract.messages.queries.TodoListQuery;
 import de.muspellheim.todomvc.contract.messages.queries.TodoListQueryResult;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 import lombok.NonNull;
 
@@ -114,7 +114,7 @@ public class MessageHandler {
       return new TodoListQueryResult(todos);
     } catch (IOException e) {
       System.err.println(e);
-      return new TodoListQueryResult(Collections.emptyList());
+      return new TodoListQueryResult(List.of());
     }
   }
 }
