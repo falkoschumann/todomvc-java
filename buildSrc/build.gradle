@@ -1,0 +1,16 @@
+plugins {
+    id 'groovy-gradle-plugin'
+}
+
+repositories {
+    gradlePluginPortal()
+}
+
+gradlePlugin {
+    plugins {
+        simplePlugin {
+            id = 'todomvc.java-application-uberjar-conventions'
+            implementationClass = 'ApplicationUberJarPlugin'
+        }
+    }
+}
