@@ -5,10 +5,14 @@
 
 package de.muspellheim.todomvc.contract.messages.commands;
 
-import lombok.NonNull;
-import lombok.Value;
+import de.muspellheim.todomvc.contract.messages.Command;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Value
-public class ToggleCommand {
-  @NonNull String id;
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class ToggleCommand implements Command {
+  String id;
 }

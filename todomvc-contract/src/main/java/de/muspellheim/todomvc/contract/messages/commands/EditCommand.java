@@ -5,11 +5,15 @@
 
 package de.muspellheim.todomvc.contract.messages.commands;
 
-import lombok.NonNull;
-import lombok.Value;
+import de.muspellheim.todomvc.contract.messages.Command;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Value
-public class EditCommand {
-  @NonNull String id;
-  @NonNull String title;
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class EditCommand implements Command {
+  String id;
+  String title;
 }

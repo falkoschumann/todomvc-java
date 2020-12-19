@@ -6,13 +6,13 @@
 package de.muspellheim.todomvc.backend;
 
 import de.muspellheim.todomvc.contract.data.Todo;
+import de.muspellheim.todomvc.contract.messages.CommandStatus;
+import de.muspellheim.todomvc.contract.messages.Failure;
+import de.muspellheim.todomvc.contract.messages.Success;
 import de.muspellheim.todomvc.contract.messages.commands.ClearCompletedCommand;
-import de.muspellheim.todomvc.contract.messages.commands.CommandStatus;
 import de.muspellheim.todomvc.contract.messages.commands.DestroyCommand;
 import de.muspellheim.todomvc.contract.messages.commands.EditCommand;
-import de.muspellheim.todomvc.contract.messages.commands.Failure;
 import de.muspellheim.todomvc.contract.messages.commands.NewTodoCommand;
-import de.muspellheim.todomvc.contract.messages.commands.Success;
 import de.muspellheim.todomvc.contract.messages.commands.ToggleAllCommand;
 import de.muspellheim.todomvc.contract.messages.commands.ToggleCommand;
 import de.muspellheim.todomvc.contract.messages.queries.TodoListQuery;
@@ -33,7 +33,7 @@ public class MessageHandler {
   public CommandStatus handle(@NonNull NewTodoCommand command) {
     try {
       var todos = new ArrayList<>(repository.load());
-      todos.add(Todo.of(command.getTitle()));
+      todos.add(new Todo(command.getTitle()));
       repository.store(todos);
       return new Success();
     } catch (IOException e) {
@@ -45,7 +45,7 @@ public class MessageHandler {
     try {
       var todos =
           repository.load().stream()
-              .map(it -> it.withCompleted(command.isCompleted()))
+              .peek(it -> it.setCompleted(command.getCompleted()))
               .collect(Collectors.toList());
       repository.store(todos);
       return new Success();
@@ -58,11 +58,12 @@ public class MessageHandler {
     try {
       var todos =
           repository.load().stream()
-              .map(
-                  it ->
-                      (it.getId().equals(command.getId()))
-                          ? it.withCompleted(!it.isCompleted())
-                          : it)
+              .peek(
+                  it -> {
+                    if (it.getId().equals(command.getId())) {
+                      it.setCompleted(!it.isCompleted());
+                    }
+                  })
               .collect(Collectors.toList());
       repository.store(todos);
       return new Success();
@@ -88,7 +89,12 @@ public class MessageHandler {
     try {
       var todos =
           repository.load().stream()
-              .map(it -> it.getId().equals(command.getId()) ? it.withTitle(command.getTitle()) : it)
+              .peek(
+                  it -> {
+                    if (it.getId().equals(command.getId())) {
+                      it.setTitle(command.getTitle());
+                    }
+                  })
               .collect(Collectors.toList());
       repository.store(todos);
       return new Success();

@@ -5,4 +5,8 @@
 
 package de.muspellheim.todomvc.contract.messages.queries;
 
-public class TodoListQuery {}
+import de.muspellheim.todomvc.contract.messages.Query;
+import lombok.Data;
+
+@Data
+public class TodoListQuery implements Query {}

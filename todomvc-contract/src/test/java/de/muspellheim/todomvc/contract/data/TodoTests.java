@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 public class TodoTests {
   @Test
   void create() {
-    Todo todo = new Todo("foobar", "Taste JavaScript", true);
+    var todo = new Todo("foobar", "Taste JavaScript", true);
 
     assertEquals("foobar", todo.getId(), "Id is set");
     assertEquals("Taste JavaScript", todo.getTitle(), "Title is set");
@@ -24,7 +24,7 @@ public class TodoTests {
 
   @Test
   void createConvenience() {
-    Todo todo = Todo.of("Taste JavaScript");
+    var todo = new Todo("Taste JavaScript");
 
     assertNotNull(todo.getId(), "Id is set");
     assertEquals("Taste JavaScript", todo.getTitle(), "Title is set");
