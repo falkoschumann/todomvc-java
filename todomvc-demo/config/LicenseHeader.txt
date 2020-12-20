@@ -1,5 +1,0 @@
-/*
- * TodoMVC - Demo Application
- * Copyright (c) $YEAR Falko Schumann <falko.schumann@muspellheim.de>
- */
-
