@@ -1,10 +1,10 @@
 plugins {
     id 'todomvc.java-application-conventions'
     id 'org.openjfx.javafxplugin'
-    id 'org.beryx.jlink' version '2.22.3'
 }
 
 dependencies {
+    implementation project(':todomvc')
     implementation project(':todomvc-frontend')
     implementation project(':todomvc-backend')
 }
@@ -14,12 +14,6 @@ javafx {
 }
 
 application {
-    mainModule = 'de.muspellheim.todomvc'
-    mainClass = 'de.muspellheim.todomvc.App'
-}
-
-jlink {
-    launcher {
-        name = 'todomvc'
-    }
+    mainModule = 'de.muspellheim.todomvc.demo'
+    mainClass = 'de.muspellheim.todomvc.demo.DemoApp'
 }

@@ -1,10 +1,11 @@
 /*
- * TodoMVC - Application
+ * TodoMVC - Demo Application
  * Copyright (c) 2020 Falko Schumann <falko.schumann@muspellheim.de>
  */
 
-package de.muspellheim.todomvc;
+package de.muspellheim.todomvc.demo;
 
+import de.muspellheim.todomvc.App;
 import de.muspellheim.todomvc.backend.TodoRepository;
 import de.muspellheim.todomvc.backend.adapters.TodoRepositoryMemory;
 import de.muspellheim.todomvc.contract.data.Todo;

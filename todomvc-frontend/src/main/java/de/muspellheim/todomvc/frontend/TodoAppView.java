@@ -66,7 +66,7 @@ public class TodoAppView extends VBox {
     toggleAll.setOnAction(
         event -> {
           var checked = toggleAll.isSelected();
-          onToggleAllCommand.accept(new ToggleAllCommand());
+          onToggleAllCommand.accept(new ToggleAllCommand(checked));
         });
 
     var newTodo = new TextField();
