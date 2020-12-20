@@ -1,0 +1,25 @@
+plugins {
+    id 'todomvc.java-application-conventions'
+    id 'org.openjfx.javafxplugin'
+    id 'org.beryx.jlink' version '2.22.3'
+}
+
+dependencies {
+    implementation project(':todomvc-frontend')
+    implementation 'com.google.code.gson:gson:2.8.6'
+}
+
+javafx {
+    modules = ['javafx.controls']
+}
+
+application {
+    mainModule = 'de.muspellheim.todomvc.distributed'
+    mainClass = 'de.muspellheim.todomvc.distributed.App'
+}
+
+jlink {
+    launcher {
+        name = 'todomvc-distributed'
+    }
+}
