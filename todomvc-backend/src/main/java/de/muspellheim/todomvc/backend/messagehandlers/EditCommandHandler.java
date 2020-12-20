@@ -6,6 +6,7 @@
 package de.muspellheim.todomvc.backend.messagehandlers;
 
 import de.muspellheim.todomvc.backend.TodoRepository;
+import de.muspellheim.todomvc.contract.messages.CommandHandling;
 import de.muspellheim.todomvc.contract.messages.CommandStatus;
 import de.muspellheim.todomvc.contract.messages.Failure;
 import de.muspellheim.todomvc.contract.messages.Success;
@@ -13,13 +14,14 @@ import de.muspellheim.todomvc.contract.messages.commands.EditCommand;
 import java.util.stream.Collectors;
 import lombok.NonNull;
 
-public class EditCommandHandler {
+public class EditCommandHandler implements CommandHandling<EditCommand> {
   private final TodoRepository repository;
 
   public EditCommandHandler(TodoRepository repository) {
     this.repository = repository;
   }
 
+  @Override
   public CommandStatus handle(@NonNull EditCommand command) {
     try {
       var todos =
