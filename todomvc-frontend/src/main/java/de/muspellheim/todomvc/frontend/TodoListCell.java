@@ -8,51 +8,48 @@ package de.muspellheim.todomvc.frontend;
 import de.muspellheim.todomvc.contract.messages.commands.DestroyCommand;
 import de.muspellheim.todomvc.contract.messages.commands.EditCommand;
 import de.muspellheim.todomvc.contract.messages.commands.ToggleCommand;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 
 public class TodoListCell<T extends TodoModel> extends ListCell<T> {
-  private HBox container;
-  private CheckBox completed;
-  private Label title;
-  private Button destroy;
-  private TextField edit;
+  private final HBox container;
+  private final CheckBox completed;
+  private final Label titleLabel;
+  private final Button destroy;
+  private final TextField titleTextField;
 
   public TodoListCell() {
-    build();
-    bind();
-  }
+    completed = new CheckBox();
 
-  private void build() {
-    title = new Label();
-    title.setMaxWidth(Double.MAX_VALUE);
-    title.setMaxHeight(Double.MAX_VALUE);
-    HBox.setHgrow(title, Priority.ALWAYS);
+    titleLabel = new Label();
+    titleLabel.setMaxWidth(Double.MAX_VALUE);
+    titleLabel.setMaxHeight(Double.MAX_VALUE);
+    HBox.setHgrow(titleLabel, Priority.ALWAYS);
 
-    edit = new TextField();
-    HBox.setHgrow(edit, Priority.ALWAYS);
+    titleTextField = new TextField();
+    titleTextField.setMaxWidth(Double.MAX_VALUE);
+    titleTextField.setMaxHeight(Double.MAX_VALUE);
+    HBox.setHgrow(titleTextField, Priority.ALWAYS);
 
     destroy = new Button("X");
     destroy.setVisible(false);
 
-    completed = new CheckBox();
-
-    container = new HBox();
-    container.getChildren().setAll(completed, title, destroy);
-  }
-
-  private void bind() {
+    container = new HBox(8);
+    container.setAlignment(Pos.CENTER_LEFT);
+    container.getChildren().setAll(completed, titleLabel, destroy);
     container
         .hoverProperty()
         .addListener(
             (observableValue, oldValue, newValue) ->
-                destroy.setVisible(newValue && container.getChildren().contains(title)));
+                destroy.setVisible(newValue && container.getChildren().contains(titleLabel)));
   }
 
   @Override
@@ -69,24 +66,17 @@ public class TodoListCell<T extends TodoModel> extends ListCell<T> {
       completed.setOnAction(
           it -> item.getOnToggleCommand().accept((new ToggleCommand(item.getTodo().getId()))));
 
-      title.setText(item.getTodo().getTitle());
-      title.setOnMouseClicked(
-          it -> {
-            if (it.getButton() == MouseButton.PRIMARY && it.getClickCount() == 2) {
-              completed.setVisible(false);
-              container.getChildren().set(1, edit);
-              edit.requestFocus();
-              destroy.setVisible(false);
-            }
-          });
+      titleLabel.setText(item.getTodo().getTitle());
+      titleLabel.setOnMouseClicked(it -> startEdit(it));
 
-      edit.setText(item.getTodo().getTitle());
-      edit.setOnAction(it -> edit());
-      edit.focusedProperty()
+      titleTextField.setText(item.getTodo().getTitle());
+      titleTextField.setOnAction(it -> endEdit());
+      titleTextField
+          .focusedProperty()
           .addListener(
               (observableValue, oldValue, newValue) -> {
                 if (oldValue && !newValue) {
-                  edit();
+                  endEdit();
                 }
               });
 
@@ -95,12 +85,21 @@ public class TodoListCell<T extends TodoModel> extends ListCell<T> {
     }
   }
 
-  private void edit() {
+  private void startEdit(MouseEvent it) {
+    if (it.getButton() == MouseButton.PRIMARY && it.getClickCount() == 2) {
+      completed.setVisible(false);
+      container.getChildren().set(1, titleTextField);
+      titleTextField.requestFocus();
+      destroy.setVisible(false);
+    }
+  }
+
+  private void endEdit() {
     getItem()
         .getOnEditCommand()
-        .accept(new EditCommand(getItem().getTodo().getId(), edit.getText().trim()));
+        .accept(new EditCommand(getItem().getTodo().getId(), titleTextField.getText().trim()));
     completed.setVisible(true);
-    container.getChildren().set(1, title);
+    container.getChildren().set(1, titleLabel);
     destroy.setVisible(container.isHover());
   }
 }

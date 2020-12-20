@@ -18,6 +18,14 @@ application {
     mainClass = 'de.muspellheim.todomvc.App'
 }
 
+task runDemo(type: JavaExec) {
+    // FIXME run startet; runDemo nicht, weil: JavaFX runtime components are missing
+    group = 'application'
+    mainModule = 'de.muspellheim.todomvc'
+    mainClass = 'de.muspellheim.todomvc.DemoApp'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
 jlink {
     launcher {
         name = 'todomvc'
