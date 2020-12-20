@@ -12,8 +12,8 @@ import de.muspellheim.todomvc.contract.messages.commands.EditCommand;
 import de.muspellheim.todomvc.contract.messages.commands.NewTodoCommand;
 import de.muspellheim.todomvc.contract.messages.commands.ToggleAllCommand;
 import de.muspellheim.todomvc.contract.messages.commands.ToggleCommand;
-import de.muspellheim.todomvc.contract.messages.queries.TodoListQuery;
-import de.muspellheim.todomvc.contract.messages.queries.TodoListQueryResult;
+import de.muspellheim.todomvc.contract.messages.queries.TodosQuery;
+import de.muspellheim.todomvc.contract.messages.queries.TodosQueryResult;
 import java.io.IOException;
 import java.util.List;
 import java.util.function.Consumer;
@@ -42,7 +42,7 @@ public class TodoAppViewController {
   @Getter @Setter private Consumer<EditCommand> onEditCommand;
   @Getter @Setter private Consumer<DestroyCommand> onDestroyCommand;
   @Getter @Setter private Consumer<ClearCompletedCommand> onClearCompletedCommand;
-  @Getter @Setter private Consumer<TodoListQuery> onTodoListQuery;
+  @Getter @Setter private Consumer<TodosQuery> onTodoListQuery;
 
   @FXML private CheckBox toggleAll;
   @FXML private TextField newTodo;
@@ -100,7 +100,7 @@ public class TodoAppViewController {
     onClearCompletedCommand.accept(new ClearCompletedCommand());
   }
 
-  public void display(@NonNull TodoListQueryResult result) {
+  public void display(@NonNull TodosQueryResult result) {
     todos = result.getTodos();
     updateTodoList();
 

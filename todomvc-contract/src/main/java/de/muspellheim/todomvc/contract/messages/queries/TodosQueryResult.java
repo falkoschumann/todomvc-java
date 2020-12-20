@@ -15,6 +15,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TodoListQueryResult implements QueryResult {
+public class TodosQueryResult implements QueryResult {
   List<Todo> todos;
 }

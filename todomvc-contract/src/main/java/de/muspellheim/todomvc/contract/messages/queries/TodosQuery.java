@@ -9,4 +9,4 @@ import de.muspellheim.todomvc.contract.messages.Query;
 import lombok.Data;
 
 @Data
-public class TodoListQuery implements Query {}
+public class TodosQuery implements Query {}
