@@ -1,4 +1,15 @@
+pluginManagement {
+    repositories {
+        maven {
+            url "https://nexus.gluonhq.com/nexus/content/repositories/releases"
+        }
+
+        gradlePluginPortal()
+    }
+}
+
 rootProject.name = 'todomvc-root'
+
 include 'todomvc'
 include 'todomvc-contract'
 include 'todomvc-backend'
