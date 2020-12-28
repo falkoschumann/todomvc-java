@@ -1,8 +1,5 @@
 plugins {
-    id 'todomvc.java-application-conventions'
-    id 'com.gluonhq.client-gradle-plugin' version '0.1.35'
-    id 'org.openjfx.javafxplugin'
-    id 'org.beryx.jlink' version '2.22.3'
+    id 'todomvc.java-applicationfx-conventions'
 }
 
 dependencies {
@@ -16,16 +13,6 @@ application {
 }
 
 gluonClient {
-    graalvmHome = System.getenv('JAVA_HOME')
     reflectionList += ['de.muspellheim.todomvc.contract.data.Todo']
 }
 
-javafx {
-    modules = ['javafx.controls']
-}
-
-jlink {
-    launcher {
-        name = 'todomvc'
-    }
-}

@@ -1,12 +1,7 @@
 plugins {
-    id 'todomvc.java-library-conventions'
-    id 'org.openjfx.javafxplugin'
+    id 'todomvc.java-libraryfx-conventions'
 }
 
 dependencies {
     api project(':todomvc-contract')
-}
-
-javafx {
-    modules = ['javafx.controls']
 }
