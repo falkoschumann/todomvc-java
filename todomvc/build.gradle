@@ -15,4 +15,3 @@ application {
 gluonClient {
     reflectionList += ['de.muspellheim.todomvc.contract.data.Todo']
 }
-

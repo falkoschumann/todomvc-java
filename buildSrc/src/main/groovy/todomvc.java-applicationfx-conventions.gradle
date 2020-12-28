@@ -2,9 +2,4 @@ plugins {
     id 'todomvc.java-application-conventions'
     id 'todomvc.java-openjfx-conventions'
     id 'com.gluonhq.client-gradle-plugin'
-    id 'org.beryx.jlink'
-}
-
-gluonClient {
-    graalvmHome = System.getenv('JAVA_HOME')
 }
