@@ -107,9 +107,4 @@ public class App extends Application {
     stage.setTitle("TodoMVC");
     stage.show();
   }
-
-  protected TodoRepository createRepository() {
-    var file = Paths.get("todos.json");
-    return new TodoRepositoryJson(file);
-  }
 }
