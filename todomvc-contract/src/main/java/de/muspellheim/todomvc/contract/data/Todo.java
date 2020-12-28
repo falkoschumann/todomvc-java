@@ -23,7 +23,6 @@ public class Todo {
     this(UUID.randomUUID().toString(), title, false);
   }
 
-  // @JsonIgnore
   public final boolean isActive() {
     return !completed;
   }
