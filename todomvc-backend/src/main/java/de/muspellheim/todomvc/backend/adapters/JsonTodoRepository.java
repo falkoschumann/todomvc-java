@@ -19,11 +19,11 @@ import java.nio.file.Path;
 import java.util.List;
 import lombok.NonNull;
 
-public class TodoRepositoryJson implements TodoRepository {
+public class JsonTodoRepository implements TodoRepository {
   private static final Type LIST_TYPE = new TypeToken<List<Todo>>() {}.getType();
   private final Path file;
 
-  public TodoRepositoryJson(Path file) {
+  public JsonTodoRepository(Path file) {
     this.file = file;
   }
 

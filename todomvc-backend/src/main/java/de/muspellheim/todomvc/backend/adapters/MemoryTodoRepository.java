@@ -9,7 +9,7 @@ import de.muspellheim.todomvc.backend.TodoRepository;
 import de.muspellheim.todomvc.contract.data.Todo;
 import java.util.List;
 
-public class TodoRepositoryMemory implements TodoRepository {
+public class MemoryTodoRepository implements TodoRepository {
   private List<Todo> todos = List.of();
 
   @Override

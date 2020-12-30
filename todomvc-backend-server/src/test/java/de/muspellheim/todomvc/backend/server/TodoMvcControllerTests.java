@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.google.gson.Gson;
 import de.muspellheim.todomvc.backend.TodoRepository;
-import de.muspellheim.todomvc.backend.adapters.TodoRepositoryMemory;
+import de.muspellheim.todomvc.backend.adapters.MemoryTodoRepository;
 import de.muspellheim.todomvc.contract.data.Todo;
 import de.muspellheim.todomvc.contract.messages.Command;
 import de.muspellheim.todomvc.contract.messages.Failure;
@@ -42,7 +42,7 @@ class TodoMvcControllerTests {
 
   @BeforeEach
   void setUp() throws Exception {
-    repository = new TodoRepositoryMemory();
+    repository = new MemoryTodoRepository();
     repository.store(createTodos());
     TodoMvcController.repository = repository;
   }
