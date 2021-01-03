@@ -1,28 +1,28 @@
 plugins {
-    id 'todomvc.java-applicationfx-conventions'
+  id 'todomvc.java-applicationfx-conventions'
 }
 
 dependencies {
-    implementation project(':todomvc-frontend')
-    implementation 'com.google.code.gson:gson:2.8.6'
+  implementation project(':todomvc-frontend')
+  implementation 'com.google.code.gson:gson:2.8.6'
 }
 
 application {
-    mainModule = 'de.muspellheim.todomvc.distributed'
-    mainClassName = 'de.muspellheim.todomvc.distributed.App'
+  mainModule = 'de.muspellheim.todomvc.distributed'
+  mainClassName = 'de.muspellheim.todomvc.distributed.App'
 }
 
 gluonClient {
-    reflectionList += [
-            'de.muspellheim.todomvc.contract.data.Todo',
-            'de.muspellheim.todomvc.contract.messages.HttpCommandStatus',
-            'de.muspellheim.todomvc.contract.messages.commands.ClearCompletedCommand',
-            'de.muspellheim.todomvc.contract.messages.commands.DestroyCommand',
-            'de.muspellheim.todomvc.contract.messages.commands.EditCommand',
-            'de.muspellheim.todomvc.contract.messages.commands.NewTodoCommand',
-            'de.muspellheim.todomvc.contract.messages.commands.ToggleAllCommand',
-            'de.muspellheim.todomvc.contract.messages.commands.ToggleCommand',
-            'de.muspellheim.todomvc.contract.messages.queries.TodosQuery',
-            'de.muspellheim.todomvc.contract.messages.queries.TodosQueryResult',
-    ]
+  reflectionList += [
+    'de.muspellheim.todomvc.contract.data.Todo',
+    'de.muspellheim.todomvc.contract.messages.HttpCommandStatus',
+    'de.muspellheim.todomvc.contract.messages.commands.ClearCompletedCommand',
+    'de.muspellheim.todomvc.contract.messages.commands.DestroyCommand',
+    'de.muspellheim.todomvc.contract.messages.commands.EditCommand',
+    'de.muspellheim.todomvc.contract.messages.commands.NewTodoCommand',
+    'de.muspellheim.todomvc.contract.messages.commands.ToggleAllCommand',
+    'de.muspellheim.todomvc.contract.messages.commands.ToggleCommand',
+    'de.muspellheim.todomvc.contract.messages.queries.TodosQuery',
+    'de.muspellheim.todomvc.contract.messages.queries.TodosQueryResult',
+  ]
 }

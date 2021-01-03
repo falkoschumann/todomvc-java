@@ -1,17 +1,17 @@
 plugins {
-    id 'todomvc.java-applicationfx-conventions'
+  id 'todomvc.java-applicationfx-conventions'
 }
 
 dependencies {
-    implementation project(':todomvc-frontend')
-    implementation project(':todomvc-backend')
+  implementation project(':todomvc-frontend')
+  implementation project(':todomvc-backend')
 }
 
 application {
-    mainModule = 'de.muspellheim.todomvc'
-    mainClassName = 'de.muspellheim.todomvc.App'
+  mainModule = 'de.muspellheim.todomvc'
+  mainClassName = 'de.muspellheim.todomvc.App'
 }
 
 gluonClient {
-    reflectionList += ['de.muspellheim.todomvc.contract.data.Todo']
+  reflectionList += ['de.muspellheim.todomvc.contract.data.Todo']
 }

@@ -1,7 +1,7 @@
 plugins {
-    id 'todomvc.java-libraryfx-conventions'
+  id 'todomvc.java-libraryfx-conventions'
 }
 
 dependencies {
-    api project(':todomvc-contract')
+  api project(':todomvc-contract')
 }

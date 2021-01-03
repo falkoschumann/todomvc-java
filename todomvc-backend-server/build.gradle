@@ -1,8 +1,8 @@
 plugins {
-    id 'todomvc.java-webapp-conventions'
+  id 'todomvc.java-webapp-conventions'
 }
 
 dependencies {
-    implementation project(':todomvc-backend')
-    testImplementation 'com.google.code.gson:gson:2.8.6'
+  implementation project(':todomvc-backend')
+  testImplementation 'com.google.code.gson:gson:2.8.6'
 }

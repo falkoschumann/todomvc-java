@@ -1,17 +1,17 @@
 plugins {
-    id 'todomvc.java-common-conventions'
-    id 'io.quarkus'
+  id 'todomvc.java-common-conventions'
+  id 'io.quarkus'
 }
 
 dependencies {
-    implementation enforcedPlatform('io.quarkus:quarkus-universe-bom:1.10.5.Final')
-    implementation 'io.quarkus:quarkus-resteasy-jackson'
-    implementation 'io.quarkus:quarkus-arc'
-    implementation 'io.quarkus:quarkus-resteasy'
-    implementation 'io.quarkus:quarkus-smallrye-openapi'
-    testImplementation 'io.quarkus:quarkus-junit5'
+  implementation enforcedPlatform('io.quarkus:quarkus-universe-bom:1.10.5.Final')
+  implementation 'io.quarkus:quarkus-resteasy-jackson'
+  implementation 'io.quarkus:quarkus-arc'
+  implementation 'io.quarkus:quarkus-resteasy'
+  implementation 'io.quarkus:quarkus-smallrye-openapi'
+  testImplementation 'io.quarkus:quarkus-junit5'
 }
 
 quarkusDev {
-    workingDir = projectDir
+  workingDir = projectDir
 }

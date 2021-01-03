@@ -1,7 +1,7 @@
 plugins {
-    id 'org.openjfx.javafxplugin'
+  id 'org.openjfx.javafxplugin'
 }
 
 javafx {
-    modules = ['javafx.controls']
+  modules = ['javafx.controls']
 }
