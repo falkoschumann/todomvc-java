@@ -5,12 +5,9 @@
 
 package de.muspellheim.todomvc.backend.messagehandlers;
 
+import de.muspellheim.messages.*;
 import de.muspellheim.todomvc.backend.TodoRepository;
 import de.muspellheim.todomvc.contract.data.Todo;
-import de.muspellheim.todomvc.contract.messages.CommandHandling;
-import de.muspellheim.todomvc.contract.messages.CommandStatus;
-import de.muspellheim.todomvc.contract.messages.Failure;
-import de.muspellheim.todomvc.contract.messages.Success;
 import de.muspellheim.todomvc.contract.messages.commands.NewTodoCommand;
 import java.util.ArrayList;
 import lombok.NonNull;

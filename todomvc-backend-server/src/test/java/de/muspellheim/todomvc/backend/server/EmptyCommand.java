@@ -5,7 +5,7 @@
 
 package de.muspellheim.todomvc.backend.server;
 
-import de.muspellheim.todomvc.contract.messages.Command;
+import de.muspellheim.messages.Command;
 import lombok.Data;
 
 @Data

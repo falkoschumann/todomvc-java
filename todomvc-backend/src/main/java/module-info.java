@@ -1,4 +1,5 @@
 module de.muspellheim.todomvc.backend {
+  requires de.muspellheim.messages;
   requires transitive de.muspellheim.todomvc.contract;
   requires com.google.gson;
   requires static lombok;

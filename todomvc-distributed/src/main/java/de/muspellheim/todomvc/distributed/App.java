@@ -6,11 +6,7 @@
 package de.muspellheim.todomvc.distributed;
 
 import com.google.gson.Gson;
-import de.muspellheim.todomvc.contract.messages.Command;
-import de.muspellheim.todomvc.contract.messages.CommandStatus;
-import de.muspellheim.todomvc.contract.messages.Failure;
-import de.muspellheim.todomvc.contract.messages.HttpCommandStatus;
-import de.muspellheim.todomvc.contract.messages.Success;
+import de.muspellheim.messages.*;
 import de.muspellheim.todomvc.contract.messages.queries.TodosQueryResult;
 import de.muspellheim.todomvc.frontend.TodoAppView;
 import java.net.URI;
