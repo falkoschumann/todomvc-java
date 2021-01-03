@@ -1,6 +1,6 @@
 plugins {
   id 'java'
-  id 'jacoco'
+  //id 'jacoco' TODO Jacoco deaktiviert, weil nicht mit Java 15 kompatibel
   id 'com.diffplug.spotless'
   id 'io.freefair.lombok'
 }
@@ -42,13 +42,13 @@ test {
   testLogging {
     events("passed", "skipped", "failed")
   }
-  finalizedBy jacocoTestReport
+  //finalizedBy jacocoTestReport
 }
-
+/*
 jacocoTestReport {
   dependsOn test
 }
-
+*/
 spotless {
   java {
     googleJavaFormat()
