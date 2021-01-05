@@ -1,8 +1,8 @@
 module de.muspellheim.todomvc.backend {
-  requires de.muspellheim.messages;
-  requires transitive de.muspellheim.todomvc.contract;
-  requires com.google.gson;
   requires static lombok;
+  requires de.muspellheim.messages;
+  requires de.muspellheim.todomvc.contract;
+  requires com.google.gson;
 
   exports de.muspellheim.todomvc.backend;
   exports de.muspellheim.todomvc.backend.adapters;

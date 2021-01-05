@@ -1,7 +1,9 @@
 module de.muspellheim.todomvc {
-  requires transitive de.muspellheim.todomvc.backend;
-  requires transitive de.muspellheim.todomvc.frontend;
   requires static lombok;
+  requires de.muspellheim.todomvc.backend;
+  requires de.muspellheim.todomvc.contract;
+  requires de.muspellheim.todomvc.frontend;
+  requires javafx.graphics;
 
   exports de.muspellheim.todomvc;
 }

@@ -33,7 +33,7 @@ public class App extends Application {
 
   @Override
   public void init() throws Exception {
-    var demo = getParameters().getUnnamed().contains("-demo");
+    var demo = getParameters().getUnnamed().contains("--demo");
     if (demo) {
       System.out.println("Run in demo mode...");
       repository = new MemoryTodoRepository();
