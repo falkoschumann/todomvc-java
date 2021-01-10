@@ -6,9 +6,14 @@
 package de.muspellheim.todomvc.distributed;
 
 import com.google.gson.Gson;
-import de.muspellheim.messages.*;
+import de.muspellheim.messages.Command;
+import de.muspellheim.messages.CommandStatus;
+import de.muspellheim.messages.Failure;
+import de.muspellheim.messages.HttpCommandStatus;
+import de.muspellheim.messages.Success;
 import de.muspellheim.todomvc.contract.messages.queries.TodosQueryResult;
-import de.muspellheim.todomvc.frontend.TodoAppView;
+import de.muspellheim.todomvc.frontend.AboutViewController;
+import de.muspellheim.todomvc.frontend.TodosViewController;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -16,78 +21,100 @@ import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpResponse;
 import java.util.List;
 import javafx.application.Application;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class App extends Application {
+  private boolean useSystemMenuBar = true;
+
   public static void main(String[] args) {
     Application.launch(args);
   }
 
   @Override
-  public void start(Stage stage) {
-    var frontend = new TodoAppView();
+  public void init() {
+    if (getParameters().getUnnamed().contains("--noSystemMenuBar")) {
+      useSystemMenuBar = false;
+    }
+  }
 
-    frontend.setOnNewTodoCommand(
+  @Override
+  public void start(Stage primaryStage) {
+    //
+    // Build
+    //
+
+    var todosViewController = TodosViewController.create(primaryStage, useSystemMenuBar);
+
+    var aboutStage = new Stage();
+    aboutStage.initOwner(primaryStage);
+    var aboutViewController = AboutViewController.create(aboutStage);
+    aboutViewController.initVersion(System.getProperty("app.version"));
+    aboutViewController.initCopyright(System.getProperty("app.copyright"));
+
+    //
+    // Bind
+    //
+
+    todosViewController.setOnOpenAbout(() -> aboutStage.show());
+    todosViewController.setOnNewTodoCommand(
         it -> {
           var status = sendCommand("newtodocommand", it);
           if (status.equals(new Success())) {
             TodosQueryResult result = sendQuery();
-            frontend.display(result);
+            todosViewController.display(result);
           }
         });
-    frontend.setOnToggleCommand(
+    todosViewController.setOnToggleCommand(
         it -> {
           var status = sendCommand("togglecommand", it);
           if (status.equals(new Success())) {
             TodosQueryResult result = sendQuery();
-            frontend.display(result);
+            todosViewController.display(result);
           }
         });
-    frontend.setOnToggleAllCommand(
+    todosViewController.setOnToggleAllCommand(
         it -> {
           var status = sendCommand("toggleallcommand", it);
           if (status.equals(new Success())) {
             TodosQueryResult result = sendQuery();
-            frontend.display(result);
+            todosViewController.display(result);
           }
         });
-    frontend.setOnEditCommand(
+    todosViewController.setOnEditCommand(
         it -> {
           var status = sendCommand("editcommand", it);
           if (status.equals(new Success())) {
             TodosQueryResult result = sendQuery();
-            frontend.display(result);
+            todosViewController.display(result);
           }
         });
-    frontend.setOnDestroyCommand(
+    todosViewController.setOnDestroyCommand(
         it -> {
           var status = sendCommand("destroycommand", it);
           if (status.equals(new Success())) {
             TodosQueryResult result = sendQuery();
-            frontend.display(result);
+            todosViewController.display(result);
           }
         });
-    frontend.setOnClearCompletedCommand(
+    todosViewController.setOnClearCompletedCommand(
         it -> {
           var status = sendCommand("clearcompletedcommand", it);
           if (status.equals(new Success())) {
             TodosQueryResult result = sendQuery();
-            frontend.display(result);
+            todosViewController.display(result);
           }
         });
-    frontend.setOnTodosQuery(
+    todosViewController.setOnTodosQuery(
         it -> {
           TodosQueryResult result = sendQuery();
-          frontend.display(result);
+          todosViewController.display(result);
         });
 
-    frontend.run();
+    //
+    // Run
+    //
 
-    Scene scene = new Scene(frontend);
-    stage.setScene(scene);
-    stage.setTitle("TodoMVC");
-    stage.show();
+    todosViewController.run();
   }
 
   private static CommandStatus sendCommand(String path, Command command) {
