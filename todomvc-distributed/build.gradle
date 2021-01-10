@@ -1,6 +1,11 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
+import java.time.LocalDate
+
 plugins {
   id 'todomvc.java-application-conventions'
   id 'com.gluonhq.client-gradle-plugin'
+  id 'org.beryx.jlink'
 }
 
 dependencies {
@@ -8,9 +13,54 @@ dependencies {
   implementation 'com.google.code.gson:gson:2.8.6'
 }
 
+version = '1.0.0'
+
+def year = LocalDate.now().year
+
 application {
   mainModule = 'de.muspellheim.todomvc.distributed'
   mainClassName = 'de.muspellheim.todomvc.distributed.App'
+}
+
+jlink {
+  options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
+}
+
+if (Os.isFamily(Os.FAMILY_MAC)) {
+  jlink {
+    jpackage {
+      icon = 'src/main/macos/AppIcon.icns'
+      imageName = 'TodoMVC'
+      installerType = 'dmg'
+      imageOptions = [
+        '--copyright', "Copyright (c) ${year} Falko Schumann",
+        '--mac-sign',
+        '--mac-signing-key-user-name', project.findProperty('macSigning.keyUserName')
+      ]
+    }
+  }
+}
+
+if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+  jlink {
+    jpackage {
+      icon = 'src/main/win/app.ico'
+      imageName = 'TodoMVC'
+      imageOptions = [
+        '--copyright', "Copyright (c) ${year} Falko Schumann",
+      ]
+      installerName = 'TodoMVC'
+      installerType = 'msi'
+      installerOptions = [
+        '--copyright', "Copyright (c) ${year} Falko Schumann",
+        '--license-file', '../LICENSE.txt',
+        '--win-dir-chooser',
+        '--win-menu',
+        '--win-menu-group', 'Muspellheim',
+        '--win-upgrade-uuid', '1f42ed58-4e2b-49e8-bc39-f333396ff8b6'
+      ]
+    }
+  }
 }
 
 gluonClient {
