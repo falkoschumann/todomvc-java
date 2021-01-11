@@ -19,14 +19,16 @@ import de.muspellheim.todomvc.contract.data.Todo;
 import de.muspellheim.todomvc.contract.messages.queries.TodosQuery;
 import de.muspellheim.todomvc.frontend.AboutViewController;
 import de.muspellheim.todomvc.frontend.TodosViewController;
+import java.io.InputStream;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Properties;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
 public class App extends Application {
   private TodoRepository repository;
-  private boolean useSystemMenuBar = true;
+  private boolean useSystemMenuBar;
 
   public static void main(String[] args) {
     Application.launch(args);
@@ -47,13 +49,11 @@ public class App extends Application {
       repository = new JsonTodoRepository(file);
     }
 
-    if (getParameters().getUnnamed().contains("--noSystemMenuBar")) {
-      useSystemMenuBar = false;
-    }
+    useSystemMenuBar = getParameters().getUnnamed().contains("--useSystemMenuBar");
   }
 
   @Override
-  public void start(Stage primaryStage) {
+  public void start(Stage primaryStage) throws Exception {
     //
     // Build
     //
@@ -71,8 +71,15 @@ public class App extends Application {
     var aboutStage = new Stage();
     aboutStage.initOwner(primaryStage);
     var aboutViewController = AboutViewController.create(aboutStage);
-    aboutViewController.initVersion(System.getProperty("app.version"));
-    aboutViewController.initCopyright(System.getProperty("app.copyright"));
+    var appIcon = getClass().getResource("/app.png");
+    aboutViewController.setIcon(appIcon.toString());
+    try (InputStream in = getClass().getResourceAsStream("/app.properties")) {
+      var appProperties = new Properties();
+      appProperties.load(in);
+      aboutViewController.setTitle(appProperties.getProperty("title"));
+      aboutViewController.setVersion(appProperties.getProperty("version"));
+      aboutViewController.setCopyright(appProperties.getProperty("copyright"));
+    }
 
     //
     // Bind

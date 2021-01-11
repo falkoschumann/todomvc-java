@@ -13,34 +13,35 @@ dependencies {
   implementation 'com.google.code.gson:gson:2.8.6'
 }
 
-version = '1.0.0'
-
 def year = LocalDate.now().year
+def copyright = "Copyright (c) ${year} Falko Schumann"
+
+processResources {
+  filesMatching('**/*.properties') {
+    expand(title: 'Todos', version: rootProject.version, copyright: copyright)
+  }
+}
 
 application {
   mainModule = 'de.muspellheim.todomvc.distributed'
   mainClassName = 'de.muspellheim.todomvc.distributed.App'
-  applicationDefaultJvmArgs = [
-    "-Dapp.version=${project.version}",
-    "-Dapp.copyright=${year} Falko Schumann"
-  ]
 }
 
 jlink {
   options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
-  launcher {
-    jvmArgs = application.applicationDefaultJvmArgs
-  }
 }
 
 if (Os.isFamily(Os.FAMILY_MAC)) {
   jlink {
+    launcher {
+      args = ['--useSystemMenuBar']
+    }
     jpackage {
       icon = 'src/main/macos/AppIcon.icns'
       imageName = 'TodoMVC'
       installerType = 'dmg'
       imageOptions = [
-        '--copyright', "Copyright (c) ${year} Falko Schumann",
+        '--copyright', copyright,
         '--mac-sign',
         '--mac-signing-key-user-name', project.findProperty('macSigning.keyUserName')
       ]
@@ -54,12 +55,12 @@ if (Os.isFamily(Os.FAMILY_WINDOWS)) {
       icon = 'src/main/win/app.ico'
       imageName = 'TodoMVC'
       imageOptions = [
-        '--copyright', "Copyright (c) ${year} Falko Schumann",
+        '--copyright', copyright,
       ]
       installerName = 'TodoMVC'
       installerType = 'msi'
       installerOptions = [
-        '--copyright', "Copyright (c) ${year} Falko Schumann",
+        '--copyright', copyright,
         '--license-file', '../LICENSE.txt',
         '--win-dir-chooser',
         '--win-menu',
@@ -71,7 +72,8 @@ if (Os.isFamily(Os.FAMILY_WINDOWS)) {
 }
 
 gluonClient {
-  reflectionList += [
+  resourcesList = ['app.properties']
+  reflectionList = [
     'de.muspellheim.todomvc.contract.data.Todo',
     'de.muspellheim.messages.HttpCommandStatus',
     'de.muspellheim.todomvc.contract.messages.commands.ClearCompletedCommand',
@@ -82,5 +84,25 @@ gluonClient {
     'de.muspellheim.todomvc.contract.messages.commands.ToggleCommand',
     'de.muspellheim.todomvc.contract.messages.queries.TodosQuery',
     'de.muspellheim.todomvc.contract.messages.queries.TodosQueryResult',
+    'de.muspellheim.todomvc.frontend.TodosViewController',
+    'de.muspellheim.todomvc.frontend.AboutViewController',
+    'javafx.geometry.Insets',
+    'javafx.scene.control.Button',
+    'javafx.scene.control.CheckBox',
+    'javafx.scene.control.Label',
+    'javafx.scene.control.ListView',
+    'javafx.scene.control.Menu',
+    'javafx.scene.control.MenuBar',
+    'javafx.scene.control.MenuItem',
+    'javafx.scene.control.TextField',
+    'javafx.scene.control.ToggleButton',
+    'javafx.scene.control.ToggleGroup',
+    'javafx.scene.image.Image',
+    'javafx.scene.image.ImageView',
+    'javafx.scene.layout.HBox',
+    'javafx.scene.layout.Region',
+    'javafx.scene.layout.VBox',
+    'javafx.scene.text.Text',
+    'javafx.scene.text.TextFlow',
   ]
 }

@@ -11,20 +11,23 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<?import de.muspellheim.todomvc.frontend.TodoListCellFactory?>
 <VBox prefWidth="640.0" spacing="8.0" stylesheets="@uwp.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.muspellheim.todomvc.frontend.TodosViewController">
    <children>
       <MenuBar fx:id="menuBar">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
+              <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="Q" control="UP" meta="DOWN" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
@@ -39,16 +42,12 @@
             <Label alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="header" text="todos" />
             <HBox alignment="CENTER_LEFT" spacing="8.0">
                <children>
-                  <CheckBox fx:id="toggleAll" mnemonicParsing="false" onAction="#handleToggleAll" visible="${controller.todosAvailable}" />
+                  <CheckBox fx:id="toggleAll" mnemonicParsing="false" onAction="#handleToggleAll" />
                   <TextField fx:id="newTodo" onAction="#handleNewTodo" promptText="What needs to be done?" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
-            <ListView fx:id="todoList" managed="${controller.todosAvailable}" visible="${controller.todosAvailable}" VBox.vgrow="ALWAYS">
-              <cellFactory>
-                <TodoListCellFactory />
-              </cellFactory>
-            </ListView>
-            <HBox alignment="CENTER" managed="${controller.todosAvailable}" spacing="8.0" visible="${controller.todosAvailable}">
+            <ListView fx:id="todoList" VBox.vgrow="ALWAYS" />
+            <HBox fx:id="footer" alignment="CENTER" spacing="8.0">
                <children>
                   <TextFlow fx:id="todoCount">
                      <children>

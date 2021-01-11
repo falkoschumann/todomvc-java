@@ -29,6 +29,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
@@ -49,6 +50,7 @@ public class TodosViewController {
   @FXML private CheckBox toggleAll;
   @FXML private TextField newTodo;
   @FXML private ListView<TodoModel> todoList;
+  @FXML private HBox footer;
   @FXML private TextFlow todoCount;
   @FXML private ToggleGroup filterGroup;
   @FXML private ToggleButton allFilter;
@@ -65,7 +67,7 @@ public class TodosViewController {
     var scene = new Scene(factory.getView());
     stage.setScene(scene);
     stage.setTitle("Todos");
-    stage.setMinWidth(400);
+    stage.setMinWidth(480);
     stage.setMinHeight(400);
 
     TodosViewController controller = factory.getController();
@@ -109,6 +111,16 @@ public class TodosViewController {
         .setAll(text, new Text(" item" + (completedCount == 1 ? "" : "s") + " left"));
 
     clearCompleted.setVisible(completedCount > 0);
+  }
+
+  @FXML
+  private void initialize() {
+    toggleAll.visibleProperty().bind(todosAvailable);
+    todoList.setCellFactory(view -> new TodoListCell<>());
+    todoList.visibleProperty().bind(todosAvailable);
+    todoList.managedProperty().bind(todosAvailable);
+    footer.visibleProperty().bind(todosAvailable);
+    footer.managedProperty().bind(todosAvailable);
   }
 
   @FXML

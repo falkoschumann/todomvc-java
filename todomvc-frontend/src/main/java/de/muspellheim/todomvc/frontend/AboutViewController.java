@@ -16,7 +16,7 @@ import javafx.stage.StageStyle;
 
 public class AboutViewController {
   @FXML private ImageView icon;
-  @FXML private Label appName;
+  @FXML private Label title;
   @FXML private Label version;
   @FXML private Label copyright;
 
@@ -30,21 +30,21 @@ public class AboutViewController {
     return factory.getController();
   }
 
-  public void initAppIcon(String url) {
-    icon.setImage(new Image(url, true));
+  public void setIcon(String url) {
+    this.icon.setImage(new Image(url, true));
   }
 
-  public void initAppName(String name) {
+  public void setTitle(String name) {
     getWindow().setTitle("About " + name);
-    appName.setText(name);
+    title.setText(name);
   }
 
-  public void initVersion(String version) {
+  public void setVersion(String version) {
     this.version.setText("Version " + version);
   }
 
-  public void initCopyright(String copyright) {
-    this.copyright.setText("Copyright © " + copyright);
+  public void setCopyright(String copyright) {
+    this.copyright.setText(copyright);
   }
 
   private Stage getWindow() {

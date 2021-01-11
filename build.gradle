@@ -5,3 +5,5 @@ plugins {
   id 'io.quarkus' version '1.10.5.Final' apply false
   id 'org.beryx.jlink' version '2.23.1' apply false
 }
+
+version = '1.0.0'
