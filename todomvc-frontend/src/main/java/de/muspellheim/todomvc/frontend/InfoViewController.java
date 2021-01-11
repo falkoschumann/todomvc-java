@@ -14,14 +14,14 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class AboutViewController {
+public class InfoViewController {
   @FXML private ImageView icon;
   @FXML private Label title;
   @FXML private Label version;
   @FXML private Label copyright;
 
-  public static AboutViewController create(Stage stage) {
-    var factory = new ViewControllerFactory(AboutViewController.class);
+  public static InfoViewController create(Stage stage) {
+    var factory = new ViewControllerFactory(InfoViewController.class);
     var scene = new Scene(factory.getView());
     stage.setScene(scene);
     stage.initModality(Modality.APPLICATION_MODAL);
@@ -35,7 +35,7 @@ public class AboutViewController {
   }
 
   public void setTitle(String name) {
-    getWindow().setTitle("About " + name);
+    getWindow().setTitle("Info");
     title.setText(name);
   }
 

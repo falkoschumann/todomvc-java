@@ -2,76 +2,86 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
-<?import javafx.scene.control.ToggleGroup?>
-<?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<VBox prefWidth="640.0" spacing="8.0" stylesheets="@uwp.css" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.muspellheim.todomvc.frontend.TodosViewController">
+<VBox prefWidth="640.0" spacing="8.0" styleClass="small-window" stylesheets="@uwp.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.muspellheim.todomvc.frontend.TodosViewController">
    <children>
-      <MenuBar fx:id="menuBar">
-        <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-              <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="Q" control="UP" meta="DOWN" shift="UP" shortcut="UP" />
-                     </accelerator></MenuItem>
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" onAction="#handleAbout" text="About" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-      <VBox spacing="8.0" styleClass="small-window">
+      <Label styleClass="header" text="todos" />
+      <HBox fx:id="commandBar" styleClass="command-bar">
          <children>
-            <Label alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="header" text="todos" />
-            <HBox alignment="CENTER_LEFT" spacing="8.0">
+            <TextFlow fx:id="todoCount">
                <children>
-                  <CheckBox fx:id="toggleAll" mnemonicParsing="false" onAction="#handleToggleAll" />
-                  <TextField fx:id="newTodo" onAction="#handleNewTodo" promptText="What needs to be done?" HBox.hgrow="ALWAYS" />
+                  <Text styleClass="base" text="0" />
+                  <Text styleClass="body" text=" items left" />
                </children>
-            </HBox>
-            <ListView fx:id="todoList" VBox.vgrow="ALWAYS" />
-            <HBox fx:id="footer" alignment="CENTER" spacing="8.0">
-               <children>
-                  <TextFlow fx:id="todoCount">
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="base" text="0" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="body" text=" items left" />
-                     </children>
-                  </TextFlow>
-                  <Region HBox.hgrow="ALWAYS" />
-                  <ToggleButton fx:id="allFilter" mnemonicParsing="false" onAction="#handleChangeFilter" selected="true" text="All">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="filterGroup" />
-                     </toggleGroup>
-                  </ToggleButton>
-                  <ToggleButton fx:id="activeFilter" mnemonicParsing="false" onAction="#handleChangeFilter" text="Active" toggleGroup="$filterGroup" />
-                  <ToggleButton fx:id="completedFilter" mnemonicParsing="false" onAction="#handleChangeFilter" text="Completed" toggleGroup="$filterGroup" />
-                  <Region HBox.hgrow="ALWAYS" />
-                  <Button fx:id="clearCompleted" mnemonicParsing="false" onAction="#handleClearCompleted" text="Clear Completed" />
-               </children>
-            </HBox>
-            <Label alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="caption" text="Double-click to edit a todo" />
+            </TextFlow>
+            <Separator />
+            <ChoiceBox fx:id="filter">
+               <tooltip>
+                  <Tooltip text="Filter list" />
+               </tooltip>
+            </ChoiceBox>
+            <Separator />
+            <ToggleButton fx:id="toggleAll" mnemonicParsing="false" onAction="#handleToggleAll">
+               <graphic>
+                  <ImageView pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@done-all.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <tooltip>
+                  <Tooltip text="Toggle all" />
+               </tooltip>
+            </ToggleButton>
+            <Button fx:id="clearCompleted" mnemonicParsing="false" onAction="#handleClearCompleted">
+               <graphic>
+                  <ImageView pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@delete.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <tooltip>
+                  <Tooltip text="Clear completed" />
+               </tooltip>
+            </Button>
+            <MenuButton mnemonicParsing="false">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#handleOpenInfo" styleClass="more" text="Info" />
+              </items>
+               <graphic>
+                  <ImageView pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@more-horiz.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <HBox.margin>
+                  <Insets left="8.0" />
+               </HBox.margin>
+            </MenuButton>
          </children>
-         <VBox.margin>
-            <Insets bottom="12.0" top="12.0" />
-         </VBox.margin>
-      </VBox>
+      </HBox>
+      <TextField fx:id="newTodo" onAction="#handleNewTodo" promptText="What needs to be done?" />
+      <ListView fx:id="todoList" VBox.vgrow="ALWAYS">
+         <tooltip>
+            <Tooltip text="Double-click to edit a todoDouble-click to edit a todo" />
+         </tooltip>
+      </ListView>
    </children>
 </VBox>

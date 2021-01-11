@@ -17,26 +17,30 @@ import de.muspellheim.todomvc.contract.messages.queries.TodosQueryResult;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
-import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyBooleanWrapper;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
-import javafx.scene.control.MenuBar;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 import lombok.Getter;
 import lombok.Setter;
 
 public class TodosViewController {
-  @Getter @Setter private Runnable onOpenAbout;
+  private enum TodoFilter {
+    ALL,
+    ACTIVE,
+    COMPLETED
+  }
+
+  @Getter @Setter private Runnable onOpenInfo;
   @Getter @Setter private Consumer<NewTodoCommand> onNewTodoCommand;
   @Getter @Setter private Consumer<ToggleAllCommand> onToggleAllCommand;
   @Getter @Setter private Consumer<ToggleCommand> onToggleCommand;
@@ -45,37 +49,31 @@ public class TodosViewController {
   @Getter @Setter private Consumer<ClearCompletedCommand> onClearCompletedCommand;
   @Getter @Setter private Consumer<TodosQuery> onTodosQuery;
 
-  @FXML private MenuBar menuBar;
-  @FXML private CheckBox toggleAll;
+  @FXML private HBox commandBar;
+  @FXML private TextFlow todoCount;
+  @FXML private ChoiceBox<TodoFilter> filter;
+  @FXML private ToggleButton toggleAll;
+  @FXML private Button clearCompleted;
   @FXML private TextField newTodo;
   @FXML private ListView<Todo> todoList;
-  @FXML private HBox footer;
-  @FXML private TextFlow todoCount;
-  @FXML private ToggleGroup filterGroup;
-  @FXML private ToggleButton allFilter;
-  @FXML private ToggleButton activeFilter;
-  @FXML private ToggleButton completedFilter;
-  @FXML private Button clearCompleted;
 
   private final ReadOnlyBooleanWrapper todosAvailable = new ReadOnlyBooleanWrapper(false);
   private List<Todo> todos = List.of();
 
-  public static TodosViewController create(Stage stage, boolean useSystemMenuBar) {
+  public static TodosViewController create(Stage stage) {
     var factory = new ViewControllerFactory(TodosViewController.class);
 
     var scene = new Scene(factory.getView());
     stage.setScene(scene);
     stage.setTitle("Todos");
-    stage.setMinWidth(480);
-    stage.setMinHeight(400);
+    stage.setMinWidth(320);
+    stage.setMinHeight(569);
 
-    TodosViewController controller = factory.getController();
-    controller.menuBar.setUseSystemMenuBar(useSystemMenuBar);
-    return controller;
+    return factory.getController();
   }
 
   private Stage getWindow() {
-    return (Stage) menuBar.getScene().getWindow();
+    return (Stage) commandBar.getScene().getWindow();
   }
 
   public void run() {
@@ -101,12 +99,19 @@ public class TodosViewController {
         .getChildren()
         .setAll(text, new Text(" item" + (completedCount == 1 ? "" : "s") + " left"));
 
-    clearCompleted.setVisible(completedCount > 0);
+    clearCompleted.setDisable(completedCount == 0);
   }
 
   @FXML
   private void initialize() {
-    toggleAll.visibleProperty().bind(todosAvailable);
+    //
+    // Build
+    //
+
+    filter.getItems().setAll(TodoFilter.values());
+    filter.setValue(TodoFilter.ALL);
+    filter.setConverter(new TodoFilterStringConverter());
+
     todoList.setCellFactory(
         view -> {
           var cell = new TodoListCell();
@@ -115,20 +120,22 @@ public class TodosViewController {
           cell.setOnDestroyCommand(onDestroyCommand);
           return cell;
         });
+
+    //
+    // Bind
+    //
+
+    commandBar.visibleProperty().bind(todosAvailable);
+    commandBar.managedProperty().bind(commandBar.visibleProperty());
     todoList.visibleProperty().bind(todosAvailable);
-    todoList.managedProperty().bind(todosAvailable);
-    footer.visibleProperty().bind(todosAvailable);
-    footer.managedProperty().bind(todosAvailable);
+    todoList.managedProperty().bind(todoList.visibleProperty());
+
+    filter.valueProperty().addListener(o -> updateTodoList());
   }
 
   @FXML
-  private void handleExit() {
-    Platform.exit();
-  }
-
-  @FXML
-  private void handleAbout() {
-    onOpenAbout.run();
+  private void handleOpenInfo() {
+    onOpenInfo.run();
   }
 
   @FXML
@@ -149,11 +156,6 @@ public class TodosViewController {
   }
 
   @FXML
-  private void handleChangeFilter() {
-    updateTodoList();
-  }
-
-  @FXML
   private void handleClearCompleted() {
     onClearCompletedCommand.accept(new ClearCompletedCommand());
   }
@@ -163,10 +165,31 @@ public class TodosViewController {
         todos.stream()
             .filter(
                 it ->
-                    filterGroup.getSelectedToggle() == activeFilter && it.isActive()
-                        || filterGroup.getSelectedToggle() == completedFilter && it.isCompleted()
-                        || filterGroup.getSelectedToggle() == allFilter)
+                    filter.getValue() == TodoFilter.ACTIVE && it.isActive()
+                        || filter.getValue() == TodoFilter.COMPLETED && it.isCompleted()
+                        || filter.getValue() == TodoFilter.ALL)
             .collect(Collectors.toList());
     todoList.getItems().setAll(filteredTodos);
+  }
+
+  private static class TodoFilterStringConverter extends StringConverter<TodoFilter> {
+    @Override
+    public String toString(TodoFilter object) {
+      switch (object) {
+        case ALL:
+          return "All";
+        case ACTIVE:
+          return "Active";
+        case COMPLETED:
+          return "Completed";
+        default:
+          throw new IllegalArgumentException("Unreachable code");
+      }
+    }
+
+    @Override
+    public TodoFilter fromString(String string) {
+      return TodoFilter.valueOf(string);
+    }
   }
 }

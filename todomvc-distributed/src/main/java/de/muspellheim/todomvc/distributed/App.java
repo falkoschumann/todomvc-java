@@ -12,7 +12,7 @@ import de.muspellheim.messages.Failure;
 import de.muspellheim.messages.HttpCommandStatus;
 import de.muspellheim.messages.Success;
 import de.muspellheim.todomvc.contract.messages.queries.TodosQueryResult;
-import de.muspellheim.todomvc.frontend.AboutViewController;
+import de.muspellheim.todomvc.frontend.InfoViewController;
 import de.muspellheim.todomvc.frontend.TodosViewController;
 import java.io.InputStream;
 import java.net.URI;
@@ -26,15 +26,8 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 public class App extends Application {
-  private boolean useSystemMenuBar;
-
   public static void main(String[] args) {
     Application.launch(args);
-  }
-
-  @Override
-  public void init() {
-    useSystemMenuBar = getParameters().getUnnamed().contains("--useSystemMenuBar");
   }
 
   @Override
@@ -43,26 +36,26 @@ public class App extends Application {
     // Build
     //
 
-    var todosViewController = TodosViewController.create(primaryStage, useSystemMenuBar);
+    var todosViewController = TodosViewController.create(primaryStage);
 
-    var aboutStage = new Stage();
-    aboutStage.initOwner(primaryStage);
-    var aboutViewController = AboutViewController.create(aboutStage);
+    var infoStage = new Stage();
+    infoStage.initOwner(primaryStage);
+    var infoViewController = InfoViewController.create(infoStage);
     var appIcon = getClass().getResource("/app.png");
-    aboutViewController.setIcon(appIcon.toString());
+    infoViewController.setIcon(appIcon.toString());
     try (InputStream in = getClass().getResourceAsStream("/app.properties")) {
       var appProperties = new Properties();
       appProperties.load(in);
-      aboutViewController.setTitle(appProperties.getProperty("title"));
-      aboutViewController.setVersion(appProperties.getProperty("version"));
-      aboutViewController.setCopyright(appProperties.getProperty("copyright"));
+      infoViewController.setTitle(appProperties.getProperty("title"));
+      infoViewController.setVersion(appProperties.getProperty("version"));
+      infoViewController.setCopyright(appProperties.getProperty("copyright"));
     }
 
     //
     // Bind
     //
 
-    todosViewController.setOnOpenAbout(() -> aboutStage.show());
+    todosViewController.setOnOpenInfo(() -> infoStage.show());
     todosViewController.setOnNewTodoCommand(
         it -> {
           var status = sendCommand("newtodocommand", it);
