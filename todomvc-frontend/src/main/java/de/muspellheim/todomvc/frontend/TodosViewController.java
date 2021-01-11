@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import javafx.application.Platform;
-import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.ReadOnlyBooleanWrapper;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -49,7 +48,7 @@ public class TodosViewController {
   @FXML private MenuBar menuBar;
   @FXML private CheckBox toggleAll;
   @FXML private TextField newTodo;
-  @FXML private ListView<TodoModel> todoList;
+  @FXML private ListView<Todo> todoList;
   @FXML private HBox footer;
   @FXML private TextFlow todoCount;
   @FXML private ToggleGroup filterGroup;
@@ -58,7 +57,7 @@ public class TodosViewController {
   @FXML private ToggleButton completedFilter;
   @FXML private Button clearCompleted;
 
-  private ReadOnlyBooleanWrapper todosAvailable = new ReadOnlyBooleanWrapper(false);
+  private final ReadOnlyBooleanWrapper todosAvailable = new ReadOnlyBooleanWrapper(false);
   private List<Todo> todos = List.of();
 
   public static TodosViewController create(Stage stage, boolean useSystemMenuBar) {
@@ -73,14 +72,6 @@ public class TodosViewController {
     TodosViewController controller = factory.getController();
     controller.menuBar.setUseSystemMenuBar(useSystemMenuBar);
     return controller;
-  }
-
-  public ReadOnlyBooleanProperty todosAvailableProperty() {
-    return todosAvailable.getReadOnlyProperty();
-  }
-
-  public boolean isTodosAvailable() {
-    return todosAvailable.get();
   }
 
   private Stage getWindow() {
@@ -102,7 +93,7 @@ public class TodosViewController {
     todosAvailable.set(!result.getTodos().isEmpty());
 
     boolean allCompleted = result.getTodos().size() == completedCount;
-    toggleAll.setSelected(isTodosAvailable() && allCompleted);
+    toggleAll.setSelected(todosAvailable.get() && allCompleted);
 
     var text = new Text(String.valueOf(activeTodoCount));
     text.setStyle("-fx-font-weight: bold");
@@ -116,7 +107,14 @@ public class TodosViewController {
   @FXML
   private void initialize() {
     toggleAll.visibleProperty().bind(todosAvailable);
-    todoList.setCellFactory(view -> new TodoListCell<>());
+    todoList.setCellFactory(
+        view -> {
+          var cell = new TodoListCell();
+          cell.setOnToggleCommand(onToggleCommand);
+          cell.setOnEditCommand(onEditCommand);
+          cell.setOnDestroyCommand(onDestroyCommand);
+          return cell;
+        });
     todoList.visibleProperty().bind(todosAvailable);
     todoList.managedProperty().bind(todosAvailable);
     footer.visibleProperty().bind(todosAvailable);
@@ -161,15 +159,14 @@ public class TodosViewController {
   }
 
   private void updateTodoList() {
-    var todoModels =
+    var filteredTodos =
         todos.stream()
             .filter(
                 it ->
                     filterGroup.getSelectedToggle() == activeFilter && it.isActive()
                         || filterGroup.getSelectedToggle() == completedFilter && it.isCompleted()
                         || filterGroup.getSelectedToggle() == allFilter)
-            .map(it -> new TodoModel(it, onToggleCommand, onEditCommand, onDestroyCommand))
             .collect(Collectors.toList());
-    todoList.getItems().setAll(todoModels);
+    todoList.getItems().setAll(filteredTodos);
   }
 }
