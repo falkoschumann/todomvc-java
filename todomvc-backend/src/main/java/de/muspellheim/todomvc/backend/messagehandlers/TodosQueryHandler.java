@@ -25,7 +25,7 @@ public class TodosQueryHandler implements QueryHandling<TodosQuery, TodosQueryRe
       var todos = repository.load();
       return new TodosQueryResult(todos);
     } catch (Exception e) {
-      System.err.println(e);
+      e.printStackTrace();
       return new TodosQueryResult(List.of());
     }
   }

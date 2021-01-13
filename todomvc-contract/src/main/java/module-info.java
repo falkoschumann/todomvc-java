@@ -7,4 +7,6 @@ module de.muspellheim.todomvc.contract {
   exports de.muspellheim.todomvc.contract.messages.queries;
 
   opens de.muspellheim.todomvc.contract.data;
+  opens de.muspellheim.todomvc.contract.messages.commands;
+  opens de.muspellheim.todomvc.contract.messages.queries;
 }

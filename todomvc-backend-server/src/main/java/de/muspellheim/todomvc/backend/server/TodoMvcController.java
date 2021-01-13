@@ -46,7 +46,7 @@ public class TodoMvcController {
     repository = new JsonTodoRepository(file);
   }
 
-  @Path("newtodocommand")
+  @Path("new-todo-command")
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
@@ -82,7 +82,7 @@ public class TodoMvcController {
     return checkCommandStatus(status);
   }
 
-  @Path("togglecommand")
+  @Path("toggle-command")
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
@@ -118,7 +118,7 @@ public class TodoMvcController {
     return checkCommandStatus(status);
   }
 
-  @Path("toggleallcommand")
+  @Path("toggle-all-command")
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
@@ -154,7 +154,7 @@ public class TodoMvcController {
     return checkCommandStatus(status);
   }
 
-  @Path("editcommand")
+  @Path("edit-command")
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
@@ -193,7 +193,7 @@ public class TodoMvcController {
     return checkCommandStatus(status);
   }
 
-  @Path("destroycommand")
+  @Path("destroy-command")
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
@@ -229,7 +229,7 @@ public class TodoMvcController {
     return checkCommandStatus(status);
   }
 
-  @Path("clearcompletedcommand")
+  @Path("clear-completed-command")
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
@@ -261,7 +261,7 @@ public class TodoMvcController {
     return checkCommandStatus(status);
   }
 
-  @Path("todosquery")
+  @Path("todos-query")
   @GET
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
