@@ -11,7 +11,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.google.gson.Gson;
-import de.muspellheim.messages.*;
+import de.muspellheim.messages.Failure;
+import de.muspellheim.messages.HttpCommandStatus;
+import de.muspellheim.messages.Message;
+import de.muspellheim.messages.Success;
 import de.muspellheim.todomvc.backend.TodoRepository;
 import de.muspellheim.todomvc.backend.adapters.MemoryTodoRepository;
 import de.muspellheim.todomvc.contract.data.Todo;
@@ -21,6 +24,7 @@ import de.muspellheim.todomvc.contract.messages.commands.EditCommand;
 import de.muspellheim.todomvc.contract.messages.commands.NewTodoCommand;
 import de.muspellheim.todomvc.contract.messages.commands.ToggleAllCommand;
 import de.muspellheim.todomvc.contract.messages.commands.ToggleCommand;
+import de.muspellheim.todomvc.contract.messages.queries.TodosQuery;
 import de.muspellheim.todomvc.contract.messages.queries.TodosQueryResult;
 import io.quarkus.test.junit.QuarkusTest;
 import java.net.URI;
@@ -47,7 +51,7 @@ class TodoMvcControllerTests {
   @Test
   void handleNewTodoCommandWithSuccess() throws Exception {
     var command = new NewTodoCommand("Foobar");
-    HttpResponse<String> response = sendCommand("new-todo-command", command);
+    HttpResponse<String> response = sendMessage("new-todo-command", command);
     var status = new Gson().fromJson(response.body(), HttpCommandStatus.class);
 
     assertAll(
@@ -64,7 +68,7 @@ class TodoMvcControllerTests {
   @Test
   void handleNewTodoCommandMissingTitleWithFailure() throws Exception {
     var command = new EmptyCommand();
-    HttpResponse<String> response = sendCommand("new-todo-command", command);
+    HttpResponse<String> response = sendMessage("new-todo-command", command);
     var status = new Gson().fromJson(response.body(), HttpCommandStatus.class);
 
     assertAll(
@@ -81,7 +85,7 @@ class TodoMvcControllerTests {
   @Test
   void handleToggleCommandWithSuccess() throws Exception {
     var command = new ToggleCommand("d2f7760d-8f03-4cb3-9176-06311cb89993");
-    HttpResponse<String> response = sendCommand("toggle-command", command);
+    HttpResponse<String> response = sendMessage("toggle-command", command);
     var status = new Gson().fromJson(response.body(), HttpCommandStatus.class);
 
     assertAll(
@@ -101,7 +105,7 @@ class TodoMvcControllerTests {
   @Test
   void handleToggleCommand_MissingId_Error() throws Exception {
     var command = new EmptyCommand();
-    HttpResponse<String> response = sendCommand("toggle-command", command);
+    HttpResponse<String> response = sendMessage("toggle-command", command);
     var status = new Gson().fromJson(response.body(), HttpCommandStatus.class);
 
     assertAll(
@@ -118,7 +122,7 @@ class TodoMvcControllerTests {
   @Test
   void handleToggleAllCommandWithSuccess() throws Exception {
     var command = new ToggleAllCommand(true);
-    HttpResponse<String> response = sendCommand("toggle-all-command", command);
+    HttpResponse<String> response = sendMessage("toggle-all-command", command);
     var status = new Gson().fromJson(response.body(), HttpCommandStatus.class);
 
     assertAll(
@@ -138,7 +142,7 @@ class TodoMvcControllerTests {
   @Test
   void handleToggleAllCommandMissingCompletedWithFailure() throws Exception {
     var command = new EmptyCommand();
-    HttpResponse<String> response = sendCommand("toggle-all-command", command);
+    HttpResponse<String> response = sendMessage("toggle-all-command", command);
     var status = new Gson().fromJson(response.body(), HttpCommandStatus.class);
 
     assertAll(
@@ -156,7 +160,7 @@ class TodoMvcControllerTests {
   @Test
   void handleEditCommandWithSuccess() throws Exception {
     var command = new EditCommand("d2f7760d-8f03-4cb3-9176-06311cb89993", "Foobar");
-    HttpResponse<String> response = sendCommand("edit-command", command);
+    HttpResponse<String> response = sendMessage("edit-command", command);
     var status = new Gson().fromJson(response.body(), HttpCommandStatus.class);
 
     assertAll(
@@ -176,7 +180,7 @@ class TodoMvcControllerTests {
   @Test
   void handleEditCommandMissingIdWithFailure() throws Exception {
     var command = new EditCommand(null, "Foobar");
-    HttpResponse<String> response = sendCommand("edit-command", command);
+    HttpResponse<String> response = sendMessage("edit-command", command);
     var status = new Gson().fromJson(response.body(), HttpCommandStatus.class);
 
     assertAll(
@@ -193,7 +197,7 @@ class TodoMvcControllerTests {
   @Test
   void handleEditCommandMissingTitleWithFailure() throws Exception {
     var command = new EditCommand("d2f7760d-8f03-4cb3-9176-06311cb89993", null);
-    HttpResponse<String> response = sendCommand("edit-command", command);
+    HttpResponse<String> response = sendMessage("edit-command", command);
     var status = new Gson().fromJson(response.body(), HttpCommandStatus.class);
 
     assertAll(
@@ -210,7 +214,7 @@ class TodoMvcControllerTests {
   @Test
   void handleDestroyCommandWithSuccess() throws Exception {
     var command = new DestroyCommand("119e6785-8ffc-42e0-8df6-dbc64881f2b7");
-    HttpResponse<String> response = sendCommand("destroy-command", command);
+    HttpResponse<String> response = sendMessage("destroy-command", command);
     var status = new Gson().fromJson(response.body(), HttpCommandStatus.class);
 
     assertAll(
@@ -228,7 +232,7 @@ class TodoMvcControllerTests {
   @Test
   void handleDestroyCommandMissingIdWithFailure() throws Exception {
     var command = new EmptyCommand();
-    HttpResponse<String> response = sendCommand("destroy-command", command);
+    HttpResponse<String> response = sendMessage("destroy-command", command);
     var status = new Gson().fromJson(response.body(), HttpCommandStatus.class);
 
     assertAll(
@@ -245,7 +249,7 @@ class TodoMvcControllerTests {
   @Test
   void handleClearCompletedCommandWithSuccess() throws Exception {
     var command = new ClearCompletedCommand();
-    HttpResponse<String> response = sendCommand("clear-completed-command", command);
+    HttpResponse<String> response = sendMessage("clear-completed-command", command);
     var status = new Gson().fromJson(response.body(), HttpCommandStatus.class);
 
     assertAll(
@@ -260,32 +264,24 @@ class TodoMvcControllerTests {
                 "Todo list updated"));
   }
 
-  private static HttpResponse<String> sendCommand(String path, Command command) throws Exception {
-    var client = HttpClient.newHttpClient();
+  @Test
+  void handleTodosQuery() throws Exception {
+    var query = new TodosQuery();
+    HttpResponse<String> response = sendMessage("todos-query", query);
+    var result = new Gson().fromJson(response.body(), TodosQueryResult.class);
 
-    var body = new Gson().toJson(command);
+    assertEquals(new TodosQueryResult(createTodos()), result);
+  }
+
+  private static HttpResponse<String> sendMessage(String path, Message message) throws Exception {
+    var body = new Gson().toJson(message);
     var request =
         HttpRequest.newBuilder(URI.create("http://localhost:8081/api/" + path))
             .header("Accept", "application/json")
             .header("Content-Type", "application/json")
             .POST(BodyPublishers.ofString(body))
             .build();
-    return client.send(request, HttpResponse.BodyHandlers.ofString());
-  }
-
-  @Test
-  void handleTodosQuery() throws Exception {
-    var client = HttpClient.newHttpClient();
-
-    var request =
-        HttpRequest.newBuilder(URI.create("http://localhost:8081/api/todos-query"))
-            .header("Accept", "application/json")
-            .GET()
-            .build();
-    var response = client.send(request, HttpResponse.BodyHandlers.ofString());
-    var result = new Gson().fromJson(response.body(), TodosQueryResult.class);
-
-    assertEquals(new TodosQueryResult(createTodos()), result);
+    return HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
   }
 
   private static List<Todo> createTodos() {

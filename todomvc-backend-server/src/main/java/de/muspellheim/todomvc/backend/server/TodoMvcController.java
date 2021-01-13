@@ -5,7 +5,10 @@
 
 package de.muspellheim.todomvc.backend.server;
 
-import de.muspellheim.messages.*;
+import de.muspellheim.messages.CommandStatus;
+import de.muspellheim.messages.Failure;
+import de.muspellheim.messages.HttpCommandStatus;
+import de.muspellheim.messages.Success;
 import de.muspellheim.todomvc.backend.TodoRepository;
 import de.muspellheim.todomvc.backend.adapters.JsonTodoRepository;
 import de.muspellheim.todomvc.backend.messagehandlers.ClearCompletedCommandHandler;
@@ -25,7 +28,6 @@ import de.muspellheim.todomvc.contract.messages.queries.TodosQuery;
 import de.muspellheim.todomvc.contract.messages.queries.TodosQueryResult;
 import java.nio.file.Paths;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -261,23 +263,6 @@ public class TodoMvcController {
     return checkCommandStatus(status);
   }
 
-  @Path("todos-query")
-  @GET
-  @Consumes(MediaType.APPLICATION_JSON)
-  @Produces(MediaType.APPLICATION_JSON)
-  @Operation(summary = "Gibt die To-Do-Liste zurück.")
-  @APIResponse(
-      responseCode = "200",
-      description = "Das Ergebnis der Query.",
-      content =
-          @Content(
-              mediaType = MediaType.APPLICATION_JSON,
-              schema = @Schema(implementation = TodosQueryResult.class)))
-  public TodosQueryResult handleTodosQuery() {
-    TodosQueryHandler handler = new TodosQueryHandler(repository);
-    return handler.handle(new TodosQuery());
-  }
-
   private Response badRequest(String errorMessage) {
     return Response.status(Status.BAD_REQUEST)
         .entity(new HttpCommandStatus(new Failure(errorMessage)))
@@ -293,5 +278,22 @@ public class TodoMvcController {
           .entity(new HttpCommandStatus(new Failure(failure.getErrorMessage())))
           .build();
     }
+  }
+
+  @Path("todos-query")
+  @POST
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  @Operation(summary = "Gibt die To-Do-Liste zurück.")
+  @APIResponse(
+      responseCode = "200",
+      description = "Das Ergebnis der Query.",
+      content =
+          @Content(
+              mediaType = MediaType.APPLICATION_JSON,
+              schema = @Schema(implementation = TodosQueryResult.class)))
+  public TodosQueryResult handleTodosQuery(TodosQuery query) {
+    TodosQueryHandler handler = new TodosQueryHandler(repository);
+    return handler.handle(new TodosQuery());
   }
 }
