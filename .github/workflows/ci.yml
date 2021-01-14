@@ -44,5 +44,5 @@ jobs:
       - name: Build with Gradle
         env:
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: ./gradlew build
+        run: ./gradlew build
       - run: ls todomvc-webapp
