@@ -9,6 +9,7 @@ dependencies {
   implementation 'io.quarkus:quarkus-arc'
   implementation 'io.quarkus:quarkus-resteasy'
   implementation 'io.quarkus:quarkus-smallrye-openapi'
+  implementation 'io.quarkus:quarkus-undertow'
   testImplementation 'io.quarkus:quarkus-junit5'
 }
 
