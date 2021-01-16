@@ -8,9 +8,10 @@
     "@testing-library/user-event": "^12.6.0",
     "@types/classnames": "^2.2.11",
     "@types/jest": "^26.0.20",
-    "@types/node": "^12.19.12",
-    "@types/react": "^16.14.2",
-    "@types/react-dom": "^16.9.10",
+    "@types/node": "^12.19.14",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@types/react-router-dom": "^5.1.7",
     "classnames": "^2.2.6",
     "prettier": "^2.2.1",
     "react": "^17.0.1",
@@ -57,8 +58,7 @@
     "@storybook/addon-storyshots": "^6.1.14",
     "@storybook/node-logger": "^6.1.14",
     "@storybook/preset-create-react-app": "^3.1.5",
-    "@storybook/react": "^6.1.14",
-    "@types/react-router-dom": "^5.1.7"
+    "@storybook/react": "^6.1.14"
   },
   "proxy": "http://localhost:8080"
 }
