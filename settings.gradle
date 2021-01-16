@@ -10,10 +10,10 @@ pluginManagement {
 
 rootProject.name = 'todomvc-root'
 
-include 'todomvc'
+include 'todomvc-application'
+include 'todomvc-distributed-application'
+include 'todomvc-single-page-application'
 include 'todomvc-contract'
 include 'todomvc-backend'
-include 'todomvc-frontend'
-include 'todomvc-webapp'
 include 'todomvc-backend-server'
-include 'todomvc-distributed'
+include 'todomvc-frontend'

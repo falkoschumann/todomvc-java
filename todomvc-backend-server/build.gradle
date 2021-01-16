@@ -10,8 +10,8 @@ dependencies {
 }
 
 processResources {
-  dependsOn ':todomvc-webapp:assemble'
-  from(project(':todomvc-webapp').file('build')) {
+  dependsOn ':todomvc-single-page-application:assemble'
+  from(project(':todomvc-single-page-application').file('build')) {
     into 'META-INF/resources'
   }
 }
