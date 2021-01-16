@@ -1,5 +1,5 @@
 /*
- * TodoMVC - Distributed
+ * TodoMVC - Distributed Application
  * Copyright (c) 2021 Falko Schumann <falko.schumann@muspellheim.de>
  */
 
