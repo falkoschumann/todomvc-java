@@ -9,10 +9,7 @@ import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 import org.eclipse.microprofile.openapi.annotations.OpenAPIDefinition;
 import org.eclipse.microprofile.openapi.annotations.info.Info;
-import org.eclipse.microprofile.openapi.annotations.servers.Server;
 
 @ApplicationPath("/api")
-@OpenAPIDefinition(
-    info = @Info(version = "1.0.0", title = "TodoMVC API"),
-    servers = @Server(url = "/api"))
+@OpenAPIDefinition(info = @Info(version = "1.0.0", title = "TodoMVC API"))
 public class TodoMvcApplication extends Application {}
