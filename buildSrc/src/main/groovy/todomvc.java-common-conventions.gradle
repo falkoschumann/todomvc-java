@@ -1,6 +1,6 @@
 plugins {
   id 'java'
-  //id 'jacoco' TODO Jacoco deaktiviert, weil nicht mit Java 15 kompatibel
+  //id 'jacoco' // TODO Jacoco deaktiviert, weil nicht mit Java 15 kompatibel
   id 'com.diffplug.spotless'
   id 'io.freefair.lombok'
 }
@@ -16,25 +16,20 @@ repositories {
   }
 }
 
-sourceCompatibility = 11
-targetCompatibility = 11
-
-compileJava {
-  options.encoding = 'UTF-8'
-  options.compilerArgs << '-parameters'
-}
-
-compileTestJava {
-  options.encoding = 'UTF-8'
-}
-
 dependencies {
   testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
   testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 }
 
 java {
+  sourceCompatibility = JavaVersion.VERSION_11
+  targetCompatibility = JavaVersion.VERSION_11
   modularity.inferModulePath = true
+}
+
+compileJava {
+  options.encoding = 'UTF-8'
+  options.compilerArgs << '-parameters'
 }
 
 test {
@@ -44,11 +39,15 @@ test {
   }
   //finalizedBy jacocoTestReport
 }
-/*
-jacocoTestReport {
-  dependsOn test
+
+compileTestJava {
+  options.encoding = 'UTF-8'
 }
-*/
+
+//jacocoTestReport {
+//  dependsOn test
+//}
+
 spotless {
   java {
     googleJavaFormat()
