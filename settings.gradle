@@ -12,6 +12,7 @@ rootProject.name = 'todomvc-root'
 
 include 'todomvc-application'
 include 'todomvc-distributed-application'
+include 'todomvc-web-application'
 include 'todomvc-single-page-application'
 include 'todomvc-contract'
 include 'todomvc-backend'

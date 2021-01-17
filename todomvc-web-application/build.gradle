@@ -1,0 +1,16 @@
+plugins {
+  id 'todomvc.java-webapp-conventions'
+}
+
+version = rootProject.version
+
+dependencies {
+  implementation 'io.quarkus:quarkus-undertow'
+}
+
+processResources {
+  dependsOn ':todomvc-single-page-application:assemble'
+  from(project(':todomvc-single-page-application').file('build')) {
+    into 'META-INF/resources'
+  }
+}

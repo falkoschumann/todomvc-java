@@ -11,7 +11,7 @@ import {
 import { TodosQuery, TodosQueryResult } from '../domain/messages/queries';
 import { HttpJsonClient } from './HttpJsonClient';
 
-const BACKEND_URL = '/api/';
+const BACKEND_URL = 'http://localhost:8080/api/';
 
 export class BackendProxy implements MessageHandling {
   private client = new HttpJsonClient(BACKEND_URL);

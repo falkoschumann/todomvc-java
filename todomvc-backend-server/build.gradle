@@ -6,12 +6,8 @@ version = rootProject.version
 
 dependencies {
   implementation project(':todomvc-backend')
+  implementation 'io.quarkus:quarkus-resteasy-jackson'
+  implementation 'io.quarkus:quarkus-resteasy'
+  implementation 'io.quarkus:quarkus-smallrye-openapi'
   testImplementation 'com.google.code.gson:gson:2.8.6'
-}
-
-processResources {
-  dependsOn ':todomvc-single-page-application:assemble'
-  from(project(':todomvc-single-page-application').file('build')) {
-    into 'META-INF/resources'
-  }
 }
