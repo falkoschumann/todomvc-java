@@ -15,7 +15,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-public class TodoRepositoryJsonTests {
+public class JsonTodoRepositoryTests {
   private static final Path READ_TEST_FILE = Paths.get("src/test/resources/todos.json");
   private static final Path WRITTEN_TEST_FILE = Paths.get("build/test/todos.json");
 
