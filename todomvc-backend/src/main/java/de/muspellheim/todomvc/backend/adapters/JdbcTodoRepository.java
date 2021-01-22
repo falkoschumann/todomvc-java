@@ -20,6 +20,18 @@ public class JdbcTodoRepository implements TodoRepository {
     this.dataSource = dataSource;
   }
 
+  public void createSchema() throws SQLException {
+    try (var connection = dataSource.getConnection()) {
+      try (var statement = connection.createStatement()) {
+        statement.executeUpdate(
+            "CREATE TABLE IF NOT EXISTS todos ("
+                + "id VARCHAR(255) NOT NULL,"
+                + "title VARCHAR(255) NOT NULL,"
+                + "completed BOOLEAN NOT NULL);");
+      }
+    }
+  }
+
   @Override
   public List<Todo> load() throws SQLException {
     try (var connection = dataSource.getConnection()) {
@@ -41,6 +53,7 @@ public class JdbcTodoRepository implements TodoRepository {
   @Override
   public void store(List<Todo> todos) throws SQLException {
     try (var connection = dataSource.getConnection()) {
+      var autoCommit = connection.getAutoCommit();
       connection.setAutoCommit(false);
       var deleteAllSql = "DELETE FROM todos;";
       try (var statement = connection.prepareStatement(deleteAllSql)) {
@@ -57,6 +70,7 @@ public class JdbcTodoRepository implements TodoRepository {
         statement.executeBatch();
       }
       connection.commit();
+      connection.setAutoCommit(autoCommit);
     }
   }
 }

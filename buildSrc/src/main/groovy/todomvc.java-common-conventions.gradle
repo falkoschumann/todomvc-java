@@ -5,6 +5,8 @@ plugins {
   id 'io.freefair.lombok'
 }
 
+version = rootProject.version
+
 repositories {
   jcenter()
   maven {

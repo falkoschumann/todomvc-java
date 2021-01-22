@@ -12,33 +12,22 @@ import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.List;
 import javax.sql.DataSource;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class JdbcTodoRepositoryTests {
-  private DataSource dataSource;
+  private JdbcTodoRepository repository;
 
   @BeforeEach
   void setUp() throws SQLException {
-    dataSource = H2DataSourceFactory.createFile(Paths.get("./build/test"), "sa", "sa");
-    initDatabase(dataSource);
-  }
-
-  @AfterEach
-  void tearDown() throws SQLException {
-    try (var connection = dataSource.getConnection()) {
-      try (var statement = connection.createStatement()) {
-        System.out.println("Drop table...");
-        statement.executeUpdate("DROP TABLE todos;");
-      }
-    }
+    var dataSource = H2DataSourceFactory.createFile(Paths.get("./build/test"), "sa", "sa");
+    repository = new JdbcTodoRepository(dataSource);
+    repository.createSchema();
+    insertTestData(dataSource);
   }
 
   @Test
   void load() throws SQLException {
-    var repository = new JdbcTodoRepository(dataSource);
-
     var todos = repository.load();
 
     assertEquals(createTestData(), todos);
@@ -46,7 +35,6 @@ public class JdbcTodoRepositoryTests {
 
   @Test
   void store() throws SQLException {
-    var repository = new JdbcTodoRepository(dataSource);
     var todos = createTestData();
 
     repository.store(todos);
@@ -55,17 +43,10 @@ public class JdbcTodoRepositoryTests {
     assertEquals(createTestData(), actualTodos);
   }
 
-  private static void initDatabase(DataSource dataSource) throws SQLException {
+  private static void insertTestData(DataSource dataSource) throws SQLException {
     try (var connection = dataSource.getConnection()) {
-      connection.setAutoCommit(true);
       try (var statement = connection.createStatement()) {
-        System.out.println("Create table...");
-        statement.executeUpdate(
-            "CREATE TABLE todos ("
-                + "id VARCHAR(255) NOT NULL,"
-                + "title VARCHAR(255) NOT NULL,"
-                + "completed BOOLEAN NOT NULL);");
-        System.out.println("Create records...");
+        statement.executeUpdate("DELETE FROM todos;");
         statement.executeUpdate(
             "INSERT INTO todos (id, title, completed)"
                 + " VALUES ('119e6785-8ffc-42e0-8df6-dbc64881f2b7', 'Taste JavaScript', TRUE);");
