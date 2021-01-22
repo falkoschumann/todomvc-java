@@ -8,23 +8,20 @@ package de.muspellheim.todomvc.backend.adapters;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import de.muspellheim.todomvc.contract.data.Todo;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.List;
 import javax.sql.DataSource;
-import org.h2.jdbcx.JdbcDataSource;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class JdbcTodoRepositoryTests {
-  private JdbcDataSource dataSource;
+  private DataSource dataSource;
 
   @BeforeEach
   void setUp() throws SQLException {
-    dataSource = new JdbcDataSource();
-    dataSource.setURL("jdbc:h2:./build/test");
-    dataSource.setUser("sa");
-    dataSource.setPassword("sa");
+    dataSource = H2DataSourceFactory.createFile(Paths.get("./build/test"), "sa", "sa");
     initDatabase(dataSource);
   }
 
