@@ -1,38 +1,3 @@
 plugins {
-  id 'base'
-  id 'com.github.node-gradle.node' version '2.2.4'
+  id 'todomvc.javascript-application-conventions'
 }
-
-node {
-  download = true
-  version = "12.20.1"
-}
-
-task npmTest(type: NpmTask, dependsOn: npmInstall) {
-  npmCommand = ['run', 'test']
-  args = ['--', '--watchAll=false']
-  inputs.dir('src')
-  inputs.dir('node_modules')
-  inputs.file('tsconfig.json')
-  outputs.upToDateWhen { true }
-}
-check.dependsOn(npmTest)
-
-task npmPrettier(type: NpmTask, dependsOn: npmInstall) {
-  npmCommand = ['run', 'prettier:check']
-  inputs.dir('src')
-  inputs.dir('node_modules')
-  inputs.file('tsconfig.json')
-  outputs.upToDateWhen { true }
-}
-check.dependsOn(npmPrettier)
-
-task npmBuild(type: NpmTask, dependsOn: npmInstall) {
-  npmCommand = ['run', 'build']
-  inputs.dir(project.fileTree('src').exclude('**/*.test.ts*'))
-  inputs.dir('public')
-  inputs.dir('node_modules')
-  inputs.file('tsconfig.json')
-  outputs.dir('build')
-}
-assemble.dependsOn(npmBuild)
