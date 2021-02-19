@@ -8,12 +8,12 @@ plugins {
 version = rootProject.version
 
 repositories {
-  jcenter()
+  mavenCentral()
   maven {
-    url = uri("https://maven.pkg.github.com/falkoschumann/muspellheim-libs-java")
+    url = uri('https://maven.pkg.github.com/falkoschumann/muspellheim-libs-java')
     credentials {
-      username = project.findProperty("gpr.user") ?: System.getenv("USER")
-      password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
+      username = project.findProperty('gpr.user') ?: System.getenv('USER')
+      password = project.findProperty('gpr.key') ?: System.getenv('TOKEN')
     }
   }
 }
@@ -37,7 +37,7 @@ compileJava {
 test {
   useJUnitPlatform()
   testLogging {
-    events("passed", "skipped", "failed")
+    events('passed', 'skipped', 'failed')
   }
   finalizedBy jacocoTestReport
 }
