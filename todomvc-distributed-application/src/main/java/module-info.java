@@ -1,6 +1,5 @@
 module de.muspellheim.todomvc.distributed {
   requires static lombok;
-  requires de.muspellheim.messages;
   requires de.muspellheim.todomvc.contract;
   requires de.muspellheim.todomvc.frontend;
   requires java.net.http;

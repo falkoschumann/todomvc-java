@@ -11,17 +11,16 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.google.gson.Gson;
-import de.muspellheim.messages.Failure;
-import de.muspellheim.messages.HttpCommandStatus;
-import de.muspellheim.messages.Message;
-import de.muspellheim.messages.Success;
 import de.muspellheim.todomvc.backend.TodoRepository;
 import de.muspellheim.todomvc.backend.adapters.MemoryTodoRepository;
 import de.muspellheim.todomvc.contract.data.Todo;
 import de.muspellheim.todomvc.contract.messages.commands.ClearCompletedCommand;
 import de.muspellheim.todomvc.contract.messages.commands.DestroyCommand;
 import de.muspellheim.todomvc.contract.messages.commands.EditCommand;
+import de.muspellheim.todomvc.contract.messages.commands.Failure;
+import de.muspellheim.todomvc.contract.messages.commands.HttpCommandStatus;
 import de.muspellheim.todomvc.contract.messages.commands.NewTodoCommand;
+import de.muspellheim.todomvc.contract.messages.commands.Success;
 import de.muspellheim.todomvc.contract.messages.commands.ToggleAllCommand;
 import de.muspellheim.todomvc.contract.messages.commands.ToggleCommand;
 import de.muspellheim.todomvc.contract.messages.queries.TodosQuery;
@@ -273,7 +272,7 @@ class TodoMvcControllerTests {
     assertEquals(new TodosQueryResult(createTodos()), result);
   }
 
-  private static HttpResponse<String> sendMessage(String path, Message message) throws Exception {
+  private static HttpResponse<String> sendMessage(String path, Object message) throws Exception {
     var body = new Gson().toJson(message);
     var request =
         HttpRequest.newBuilder(URI.create("http://localhost:8081/api/" + path))

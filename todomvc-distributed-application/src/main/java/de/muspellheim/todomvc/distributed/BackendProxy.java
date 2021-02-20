@@ -5,13 +5,13 @@
 
 package de.muspellheim.todomvc.distributed;
 
-import de.muspellheim.messages.CommandStatus;
-import de.muspellheim.messages.Failure;
-import de.muspellheim.messages.HttpCommandStatus;
 import de.muspellheim.todomvc.contract.MessageHandling;
 import de.muspellheim.todomvc.contract.messages.commands.ClearCompletedCommand;
+import de.muspellheim.todomvc.contract.messages.commands.CommandStatus;
 import de.muspellheim.todomvc.contract.messages.commands.DestroyCommand;
 import de.muspellheim.todomvc.contract.messages.commands.EditCommand;
+import de.muspellheim.todomvc.contract.messages.commands.Failure;
+import de.muspellheim.todomvc.contract.messages.commands.HttpCommandStatus;
 import de.muspellheim.todomvc.contract.messages.commands.NewTodoCommand;
 import de.muspellheim.todomvc.contract.messages.commands.ToggleAllCommand;
 import de.muspellheim.todomvc.contract.messages.commands.ToggleCommand;

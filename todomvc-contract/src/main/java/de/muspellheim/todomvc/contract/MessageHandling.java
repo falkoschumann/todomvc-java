@@ -5,8 +5,8 @@
 
 package de.muspellheim.todomvc.contract;
 
-import de.muspellheim.messages.CommandStatus;
 import de.muspellheim.todomvc.contract.messages.commands.ClearCompletedCommand;
+import de.muspellheim.todomvc.contract.messages.commands.CommandStatus;
 import de.muspellheim.todomvc.contract.messages.commands.DestroyCommand;
 import de.muspellheim.todomvc.contract.messages.commands.EditCommand;
 import de.muspellheim.todomvc.contract.messages.commands.NewTodoCommand;

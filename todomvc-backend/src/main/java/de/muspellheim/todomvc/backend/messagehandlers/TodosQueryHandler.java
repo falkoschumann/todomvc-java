@@ -5,21 +5,19 @@
 
 package de.muspellheim.todomvc.backend.messagehandlers;
 
-import de.muspellheim.messages.*;
 import de.muspellheim.todomvc.backend.TodoRepository;
 import de.muspellheim.todomvc.contract.messages.queries.TodosQuery;
 import de.muspellheim.todomvc.contract.messages.queries.TodosQueryResult;
 import java.util.List;
 import lombok.NonNull;
 
-public class TodosQueryHandler implements QueryHandling<TodosQuery, TodosQueryResult> {
+public class TodosQueryHandler {
   private final TodoRepository repository;
 
   public TodosQueryHandler(TodoRepository repository) {
     this.repository = repository;
   }
 
-  @Override
   public TodosQueryResult handle(@NonNull TodosQuery query) {
     try {
       var todos = repository.load();

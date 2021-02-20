@@ -3,7 +3,6 @@ module de.muspellheim.todomvc.backend {
   requires static java.naming;
   requires static lombok;
   requires static org.postgresql.jdbc;
-  requires de.muspellheim.messages;
   requires de.muspellheim.todomvc.contract;
   requires com.google.gson;
 

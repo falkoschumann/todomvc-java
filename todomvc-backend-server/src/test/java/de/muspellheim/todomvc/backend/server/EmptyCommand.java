@@ -5,8 +5,7 @@
 
 package de.muspellheim.todomvc.backend.server;
 
-import de.muspellheim.messages.Command;
 import lombok.Data;
 
 @Data
-public class EmptyCommand implements Command {}
+public class EmptyCommand {}

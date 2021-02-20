@@ -5,10 +5,6 @@
 
 package de.muspellheim.todomvc.backend.server;
 
-import de.muspellheim.messages.CommandStatus;
-import de.muspellheim.messages.Failure;
-import de.muspellheim.messages.HttpCommandStatus;
-import de.muspellheim.messages.Success;
 import de.muspellheim.todomvc.backend.TodoRepository;
 import de.muspellheim.todomvc.backend.adapters.JsonTodoRepository;
 import de.muspellheim.todomvc.backend.messagehandlers.ClearCompletedCommandHandler;
@@ -19,9 +15,13 @@ import de.muspellheim.todomvc.backend.messagehandlers.TodosQueryHandler;
 import de.muspellheim.todomvc.backend.messagehandlers.ToggleAllCommandHandler;
 import de.muspellheim.todomvc.backend.messagehandlers.ToggleCommandHandler;
 import de.muspellheim.todomvc.contract.messages.commands.ClearCompletedCommand;
+import de.muspellheim.todomvc.contract.messages.commands.CommandStatus;
 import de.muspellheim.todomvc.contract.messages.commands.DestroyCommand;
 import de.muspellheim.todomvc.contract.messages.commands.EditCommand;
+import de.muspellheim.todomvc.contract.messages.commands.Failure;
+import de.muspellheim.todomvc.contract.messages.commands.HttpCommandStatus;
 import de.muspellheim.todomvc.contract.messages.commands.NewTodoCommand;
+import de.muspellheim.todomvc.contract.messages.commands.Success;
 import de.muspellheim.todomvc.contract.messages.commands.ToggleAllCommand;
 import de.muspellheim.todomvc.contract.messages.commands.ToggleCommand;
 import de.muspellheim.todomvc.contract.messages.queries.TodosQuery;

@@ -5,7 +5,6 @@
 
 package de.muspellheim.todomvc.backend;
 
-import de.muspellheim.messages.CommandStatus;
 import de.muspellheim.todomvc.backend.messagehandlers.ClearCompletedCommandHandler;
 import de.muspellheim.todomvc.backend.messagehandlers.DestroyCommandHandler;
 import de.muspellheim.todomvc.backend.messagehandlers.EditCommandHandler;
@@ -15,6 +14,7 @@ import de.muspellheim.todomvc.backend.messagehandlers.ToggleAllCommandHandler;
 import de.muspellheim.todomvc.backend.messagehandlers.ToggleCommandHandler;
 import de.muspellheim.todomvc.contract.MessageHandling;
 import de.muspellheim.todomvc.contract.messages.commands.ClearCompletedCommand;
+import de.muspellheim.todomvc.contract.messages.commands.CommandStatus;
 import de.muspellheim.todomvc.contract.messages.commands.DestroyCommand;
 import de.muspellheim.todomvc.contract.messages.commands.EditCommand;
 import de.muspellheim.todomvc.contract.messages.commands.NewTodoCommand;

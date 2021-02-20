@@ -5,7 +5,6 @@
 
 package de.muspellheim.todomvc.contract.messages.commands;
 
-import de.muspellheim.messages.Command;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +12,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ToggleCommand implements Command {
+public class ToggleCommand {
   String id;
 }

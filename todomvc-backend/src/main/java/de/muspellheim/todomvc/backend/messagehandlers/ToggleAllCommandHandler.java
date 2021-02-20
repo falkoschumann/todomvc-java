@@ -5,20 +5,21 @@
 
 package de.muspellheim.todomvc.backend.messagehandlers;
 
-import de.muspellheim.messages.*;
 import de.muspellheim.todomvc.backend.TodoRepository;
+import de.muspellheim.todomvc.contract.messages.commands.CommandStatus;
+import de.muspellheim.todomvc.contract.messages.commands.Failure;
+import de.muspellheim.todomvc.contract.messages.commands.Success;
 import de.muspellheim.todomvc.contract.messages.commands.ToggleAllCommand;
 import java.util.stream.Collectors;
 import lombok.NonNull;
 
-public class ToggleAllCommandHandler implements CommandHandling<ToggleAllCommand> {
+public class ToggleAllCommandHandler {
   private final TodoRepository repository;
 
   public ToggleAllCommandHandler(TodoRepository repository) {
     this.repository = repository;
   }
 
-  @Override
   public CommandStatus handle(@NonNull ToggleAllCommand command) {
     try {
       var todos =
