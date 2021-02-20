@@ -75,7 +75,7 @@ gluonClient {
   resourcesList = ['app.properties']
   reflectionList = [
     'de.muspellheim.todomvc.contract.data.Todo',
-    'de.muspellheim.messages.HttpCommandStatus',
+    'de.muspellheim.todomvc.contract.messages.commands.HttpCommandStatus',
     'de.muspellheim.todomvc.contract.messages.commands.ClearCompletedCommand',
     'de.muspellheim.todomvc.contract.messages.commands.DestroyCommand',
     'de.muspellheim.todomvc.contract.messages.commands.EditCommand',
