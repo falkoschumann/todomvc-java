@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import classnames from 'classnames';
 
-import { Todo } from '../domain/data';
+import { Todo } from '../contract/data';
 import { usePrevious } from './hooks';
 
 export type TodoItemProps = Readonly<{

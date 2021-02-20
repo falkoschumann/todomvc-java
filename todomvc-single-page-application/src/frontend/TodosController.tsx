@@ -7,9 +7,9 @@ import {
   NewTodoCommand,
   ToggleAllCommand,
   ToggleCommand,
-} from '../domain/messages/commands';
-import { TodosQueryResult } from '../domain/messages/queries';
-import { Todo, TodoId } from '../domain/data';
+} from '../contract/messages/commands';
+import { TodosQueryResult } from '../contract/messages/queries';
+import { Todo, TodoId } from '../contract/data';
 import { TodoFilter } from './types';
 import TodoListHeader from './TodoListHeader';
 import TodoList from './TodoList';

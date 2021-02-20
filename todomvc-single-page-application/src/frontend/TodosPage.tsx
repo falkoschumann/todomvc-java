@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { MessageHandling } from '../domain/MessageHandling';
+import { MessageHandling } from '../contract/MessageHandling';
 import { TodoFilter } from './types';
 import TodosController from './TodosController';
-import { TodosQueryResult } from '../domain/messages/queries';
+import { TodosQueryResult } from '../contract/messages/queries';
 
 export type TodosPageProps = Readonly<{
   messageHandling: MessageHandling;

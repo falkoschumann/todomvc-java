@@ -1,4 +1,4 @@
-import { MessageHandling } from '../domain/MessageHandling';
+import { MessageHandling } from '../contract/MessageHandling';
 import {
   ClearCompletedCommand,
   CommandStatus,
@@ -7,8 +7,8 @@ import {
   NewTodoCommand,
   ToggleAllCommand,
   ToggleCommand,
-} from '../domain/messages/commands';
-import { TodosQuery, TodosQueryResult } from '../domain/messages/queries';
+} from '../contract/messages/commands';
+import { TodosQuery, TodosQueryResult } from '../contract/messages/queries';
 import { HttpJsonClient } from './HttpJsonClient';
 
 const BACKEND_URL = 'http://localhost:8080/api/';

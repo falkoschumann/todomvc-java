@@ -1,16 +1,18 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import TodosPage from './portals/TodosPage';
-import InfoFooter from './portals/InfoFooter';
-import { BackendProxy } from './providers/BackendProxy';
+import TodosPage from './TodosPage';
+import InfoFooter from './InfoFooter';
 import './App.css';
+import { MessageHandling } from '../contract/MessageHandling';
 
-const messageHandling = new BackendProxy();
+export type AppProps = Readonly<{
+  messageHandling: MessageHandling;
+}>;
 
-function App() {
+function App({ messageHandling }: AppProps) {
   return (
-    <React.StrictMode>
+    <>
       <section className="todoapp">
         <Switch>
           <Route path="/">
@@ -19,7 +21,7 @@ function App() {
         </Switch>
       </section>
       <InfoFooter />
-    </React.StrictMode>
+    </>
   );
 }
 

@@ -3,13 +3,16 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import './index.css';
-import App from './App';
+import App from './frontend/App';
 import reportWebVitals from './reportWebVitals';
+import { BackendProxy } from './backend/BackendProxy';
+
+const messageHandling = new BackendProxy();
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
-      <App />
+      <App messageHandling={messageHandling} />
     </Router>
   </React.StrictMode>,
   document.getElementById('root')
