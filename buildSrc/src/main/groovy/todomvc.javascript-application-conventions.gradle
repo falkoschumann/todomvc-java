@@ -18,6 +18,16 @@ task npmBuild(type: NpmTask, dependsOn: npmInstall) {
 }
 assemble.dependsOn(npmBuild)
 
+task npmStart(type: NpmTask, dependsOn: npmInstall) {
+  npmCommand = ['start']
+  outputs.upToDateWhen { true }
+}
+
+task npmStorybook(type: NpmTask, dependsOn: npmInstall) {
+  npmCommand = ['run', 'storybook']
+  outputs.upToDateWhen { true }
+}
+
 task npmTest(type: NpmTask, dependsOn: npmInstall) {
   npmCommand = ['run', 'test']
   args = ['--', '--watchAll=false']
