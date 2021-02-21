@@ -23,7 +23,7 @@ import de.muspellheim.todomvc.contract.messages.commands.ToggleCommand;
 import de.muspellheim.todomvc.contract.messages.queries.TodosQuery;
 import de.muspellheim.todomvc.contract.messages.queries.TodosQueryResult;
 
-public class MessageHandlingImpl implements MessageHandling {
+public class MessageHandler implements MessageHandling {
   private final ClearCompletedCommandHandler clearCompletedCommandHandler;
   private final DestroyCommandHandler destroyCommandHandler;
   private final EditCommandHandler editCommandHandler;
@@ -32,7 +32,7 @@ public class MessageHandlingImpl implements MessageHandling {
   private final ToggleCommandHandler toggleCommandHandler;
   private final TodosQueryHandler todosQueryHandler;
 
-  public MessageHandlingImpl(TodoRepository todoRepository) {
+  public MessageHandler(TodoRepository todoRepository) {
     clearCompletedCommandHandler = new ClearCompletedCommandHandler(todoRepository);
     destroyCommandHandler = new DestroyCommandHandler(todoRepository);
     editCommandHandler = new EditCommandHandler(todoRepository);

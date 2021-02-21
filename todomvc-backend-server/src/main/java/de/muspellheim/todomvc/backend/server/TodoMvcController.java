@@ -5,14 +5,7 @@
 
 package de.muspellheim.todomvc.backend.server;
 
-import de.muspellheim.todomvc.backend.TodoRepository;
-import de.muspellheim.todomvc.backend.messagehandlers.ClearCompletedCommandHandler;
-import de.muspellheim.todomvc.backend.messagehandlers.DestroyCommandHandler;
-import de.muspellheim.todomvc.backend.messagehandlers.EditCommandHandler;
-import de.muspellheim.todomvc.backend.messagehandlers.NewTodoCommandHandler;
-import de.muspellheim.todomvc.backend.messagehandlers.TodosQueryHandler;
-import de.muspellheim.todomvc.backend.messagehandlers.ToggleAllCommandHandler;
-import de.muspellheim.todomvc.backend.messagehandlers.ToggleCommandHandler;
+import de.muspellheim.todomvc.contract.MessageHandling;
 import de.muspellheim.todomvc.contract.messages.commands.ClearCompletedCommand;
 import de.muspellheim.todomvc.contract.messages.commands.CommandStatus;
 import de.muspellheim.todomvc.contract.messages.commands.DestroyCommand;
@@ -40,7 +33,7 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 
 @Path("/")
 public class TodoMvcController {
-  @Inject TodoRepository repository;
+  @Inject MessageHandling messageHandling;
 
   @Path("new-todo-command")
   @POST
@@ -76,8 +69,7 @@ public class TodoMvcController {
       return badRequest("Property `title` is empty in new todo command.");
     }
 
-    NewTodoCommandHandler handler = new NewTodoCommandHandler(repository);
-    var status = handler.handle(command);
+    var status = messageHandling.handle(command);
     return checkCommandStatus(status);
   }
 
@@ -115,8 +107,7 @@ public class TodoMvcController {
       return badRequest("Property `id` is empty in toggle command.");
     }
 
-    ToggleCommandHandler handler = new ToggleCommandHandler(repository);
-    var status = handler.handle(command);
+    var status = messageHandling.handle(command);
     return checkCommandStatus(status);
   }
 
@@ -151,8 +142,7 @@ public class TodoMvcController {
       return badRequest("Missing property `completed` in toggle all command.");
     }
 
-    ToggleAllCommandHandler handler = new ToggleAllCommandHandler(repository);
-    var status = handler.handle(command);
+    var status = messageHandling.handle(command);
     return checkCommandStatus(status);
   }
 
@@ -190,8 +180,7 @@ public class TodoMvcController {
       return badRequest("Missing property `title` in edit command.");
     }
 
-    EditCommandHandler handler = new EditCommandHandler(repository);
-    var status = handler.handle(command);
+    var status = messageHandling.handle(command);
     return checkCommandStatus(status);
   }
 
@@ -226,8 +215,7 @@ public class TodoMvcController {
       return badRequest("Missing property `id` in edit command.");
     }
 
-    DestroyCommandHandler handler = new DestroyCommandHandler(repository);
-    var status = handler.handle(command);
+    var status = messageHandling.handle(command);
     return checkCommandStatus(status);
   }
 
@@ -258,8 +246,7 @@ public class TodoMvcController {
               mediaType = MediaType.APPLICATION_JSON,
               schema = @Schema(implementation = HttpCommandStatus.class)))
   public Response handleClearCompletedCommand(ClearCompletedCommand command) {
-    ClearCompletedCommandHandler handler = new ClearCompletedCommandHandler(repository);
-    var status = handler.handle(command);
+    var status = messageHandling.handle(command);
     return checkCommandStatus(status);
   }
 
@@ -293,7 +280,6 @@ public class TodoMvcController {
               mediaType = MediaType.APPLICATION_JSON,
               schema = @Schema(implementation = TodosQueryResult.class)))
   public TodosQueryResult handleTodosQuery(TodosQuery query) {
-    TodosQueryHandler handler = new TodosQueryHandler(repository);
-    return handler.handle(new TodosQuery());
+    return messageHandling.handle(new TodosQuery());
   }
 }

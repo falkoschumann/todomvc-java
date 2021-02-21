@@ -5,9 +5,11 @@
 
 package de.muspellheim.todomvc.backend.server;
 
+import de.muspellheim.todomvc.backend.MessageHandler;
 import de.muspellheim.todomvc.backend.TodoRepository;
 import de.muspellheim.todomvc.backend.adapters.JsonTodoRepository;
 import de.muspellheim.todomvc.backend.adapters.MemoryTodoRepository;
+import de.muspellheim.todomvc.contract.MessageHandling;
 import de.muspellheim.todomvc.contract.data.Todo;
 import io.quarkus.runtime.configuration.ProfileManager;
 import java.nio.file.Paths;
@@ -32,5 +34,10 @@ public class TodoMvcProducer {
       var file = Paths.get("todos.json");
       return new JsonTodoRepository(file);
     }
+  }
+
+  @Produces
+  MessageHandling getMessageHandling() {
+    return new MessageHandler(getTodoRepository());
   }
 }

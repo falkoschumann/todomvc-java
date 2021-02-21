@@ -5,7 +5,7 @@
 
 package de.muspellheim.todomvc;
 
-import de.muspellheim.todomvc.backend.MessageHandlingImpl;
+import de.muspellheim.todomvc.backend.MessageHandler;
 import de.muspellheim.todomvc.backend.TodoRepository;
 import de.muspellheim.todomvc.backend.adapters.JsonTodoRepository;
 import de.muspellheim.todomvc.backend.adapters.MemoryTodoRepository;
@@ -43,7 +43,7 @@ public class App extends Application {
 
   @Override
   public void start(Stage primaryStage) throws Exception {
-    var backend = new MessageHandlingImpl(repository);
+    var backend = new MessageHandler(repository);
     var appIcon = getClass().getResource("/app.png");
     var appProperties = new Properties();
     try (InputStream in = getClass().getResourceAsStream("/app.properties")) {
