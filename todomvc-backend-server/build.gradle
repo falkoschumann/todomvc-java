@@ -8,8 +8,9 @@ dependencies {
   implementation project(':todomvc-backend')
   implementation 'io.quarkus:quarkus-agroal'
   implementation 'io.quarkus:quarkus-jdbc-h2'
-  implementation 'io.quarkus:quarkus-resteasy-jackson'
   implementation 'io.quarkus:quarkus-resteasy'
+  implementation 'io.quarkus:quarkus-resteasy-jackson'
   implementation 'io.quarkus:quarkus-smallrye-openapi'
+  testImplementation 'io.rest-assured:rest-assured'
   testImplementation 'com.google.code.gson:gson:2.8.6'
 }

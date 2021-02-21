@@ -5,7 +5,9 @@
 
 package de.muspellheim.todomvc.backend.server;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 @Data
+@JsonInclude
 public class EmptyCommand {}

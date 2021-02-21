@@ -1,5 +1,6 @@
 module de.muspellheim.todomvc.contract {
   requires static lombok;
+  requires com.fasterxml.jackson.annotation;
 
   exports de.muspellheim.todomvc.contract;
   exports de.muspellheim.todomvc.contract.data;

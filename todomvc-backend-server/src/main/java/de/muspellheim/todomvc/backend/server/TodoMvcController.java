@@ -6,7 +6,6 @@
 package de.muspellheim.todomvc.backend.server;
 
 import de.muspellheim.todomvc.backend.TodoRepository;
-import de.muspellheim.todomvc.backend.adapters.JsonTodoRepository;
 import de.muspellheim.todomvc.backend.messagehandlers.ClearCompletedCommandHandler;
 import de.muspellheim.todomvc.backend.messagehandlers.DestroyCommandHandler;
 import de.muspellheim.todomvc.backend.messagehandlers.EditCommandHandler;
@@ -26,7 +25,7 @@ import de.muspellheim.todomvc.contract.messages.commands.ToggleAllCommand;
 import de.muspellheim.todomvc.contract.messages.commands.ToggleCommand;
 import de.muspellheim.todomvc.contract.messages.queries.TodosQuery;
 import de.muspellheim.todomvc.contract.messages.queries.TodosQueryResult;
-import java.nio.file.Paths;
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -41,12 +40,7 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 
 @Path("/")
 public class TodoMvcController {
-  static TodoRepository repository;
-
-  static {
-    var file = Paths.get("todos.json");
-    repository = new JsonTodoRepository(file);
-  }
+  @Inject TodoRepository repository;
 
   @Path("new-todo-command")
   @POST
@@ -77,6 +71,9 @@ public class TodoMvcController {
   public Response handleNewTodoCommand(NewTodoCommand command) {
     if (command.getTitle() == null) {
       return badRequest("Missing property `title` in new todo command.");
+    }
+    if (command.getTitle().isBlank()) {
+      return badRequest("Property `title` is empty in new todo command.");
     }
 
     NewTodoCommandHandler handler = new NewTodoCommandHandler(repository);
@@ -113,6 +110,9 @@ public class TodoMvcController {
   public Response handleToggleCommand(ToggleCommand command) {
     if (command.getId() == null) {
       return badRequest("Missing property `id` in toggle command.");
+    }
+    if (command.getId().isBlank()) {
+      return badRequest("Property `id` is empty in toggle command.");
     }
 
     ToggleCommandHandler handler = new ToggleCommandHandler(repository);

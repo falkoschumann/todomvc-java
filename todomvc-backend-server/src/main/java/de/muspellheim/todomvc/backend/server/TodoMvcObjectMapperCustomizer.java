@@ -7,15 +7,15 @@ package de.muspellheim.todomvc.backend.server;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import io.quarkus.jackson.ObjectMapperCustomizer;
 import javax.inject.Singleton;
 
 @Singleton
 public class TodoMvcObjectMapperCustomizer implements ObjectMapperCustomizer {
-
   @Override
   public void customize(ObjectMapper objectMapper) {
-    // To suppress serializing properties with null values
     objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+    objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
   }
 }
