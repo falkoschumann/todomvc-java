@@ -176,12 +176,20 @@ public class TodoMvcController {
     if (command.getId() == null) {
       return badRequest("Missing property `id` in edit command.");
     }
+    if (command.getId().isBlank()) {
+      return badRequest("Property `id` is empty in edit command.");
+    }
     if (command.getTitle() == null) {
       return badRequest("Missing property `title` in edit command.");
     }
 
-    var status = messageHandling.handle(command);
-    return checkCommandStatus(status);
+    if (command.getTitle().isBlank()) {
+      var status = messageHandling.handle(new DestroyCommand(command.getId()));
+      return checkCommandStatus(status);
+    } else {
+      var status = messageHandling.handle(command);
+      return checkCommandStatus(status);
+    }
   }
 
   @Path("destroy-command")
@@ -212,7 +220,10 @@ public class TodoMvcController {
               schema = @Schema(implementation = HttpCommandStatus.class)))
   public Response handleDestroyCommand(DestroyCommand command) {
     if (command.getId() == null) {
-      return badRequest("Missing property `id` in edit command.");
+      return badRequest("Missing property `id` in destroy command.");
+    }
+    if (command.getId().isBlank()) {
+      return badRequest("Property `id` is empty in destroy command.");
     }
 
     var status = messageHandling.handle(command);

@@ -270,6 +270,20 @@ class TodoMvcControllerTests {
   }
 
   @Test
+  void handleEditCommandEmptyIdWithFailure() {
+    given()
+        .when()
+        .accept(ContentType.JSON)
+        .contentType(ContentType.JSON)
+        .body(new EditCommand("", "Foobar"))
+        .post("/api/edit-command")
+        .then()
+        .statusCode(Status.BAD_REQUEST.getStatusCode())
+        .body("success", is(false))
+        .body("errorMessage", is("Property `id` is empty in edit command."));
+  }
+
+  @Test
   void handleEditCommandMissingTitleWithFailure() {
     given()
         .when()
@@ -285,6 +299,37 @@ class TodoMvcControllerTests {
 
   @Test
   @Order(6)
+  void handleEditCommandEmptyTitleDestroyTodoWithSuccess() {
+    given()
+        .when()
+        .accept(ContentType.JSON)
+        .contentType(ContentType.JSON)
+        .body(new EditCommand("d2f7760d-8f03-4cb3-9176-06311cb89993", ""))
+        .post("/api/edit-command")
+        .then()
+        .statusCode(Status.OK.getStatusCode())
+        .body("success", is(true));
+
+    given()
+        .when()
+        .accept(ContentType.JSON)
+        .contentType(ContentType.JSON)
+        .body(new TodosQuery())
+        .post("/api/todos-query")
+        .then()
+        .statusCode(Status.OK.getStatusCode())
+        .contentType(is(ContentType.JSON.toString()))
+        .body("todos", hasSize(2))
+        .body("todos[0].id", is("119e6785-8ffc-42e0-8df6-dbc64881f2b7"))
+        .body("todos[0].title", is("Taste JavaScript"))
+        .body("todos[0].completed", is(true))
+        .body("todos[1].id", is(any(String.class)))
+        .body("todos[1].title", is("Foobar"))
+        .body("todos[1].completed", is(true));
+  }
+
+  @Test
+  @Order(7)
   void handleDestroyCommandWithSuccess() {
     given()
         .when()
@@ -305,13 +350,10 @@ class TodoMvcControllerTests {
         .then()
         .statusCode(Status.OK.getStatusCode())
         .contentType(is(ContentType.JSON.toString()))
-        .body("todos", hasSize(2))
-        .body("todos[0].id", is("d2f7760d-8f03-4cb3-9176-06311cb89993"))
+        .body("todos", hasSize(1))
+        .body("todos[0].id", is(any(String.class)))
         .body("todos[0].title", is("Foobar"))
-        .body("todos[0].completed", is(true))
-        .body("todos[1].id", is(any(String.class)))
-        .body("todos[1].title", is("Foobar"))
-        .body("todos[1].completed", is(true));
+        .body("todos[0].completed", is(true));
   }
 
   @Test
@@ -325,11 +367,25 @@ class TodoMvcControllerTests {
         .then()
         .statusCode(Status.BAD_REQUEST.getStatusCode())
         .body("success", is(false))
-        .body("errorMessage", is("Missing property `id` in edit command."));
+        .body("errorMessage", is("Missing property `id` in destroy command."));
   }
 
   @Test
-  @Order(7)
+  void handleDestroyCommandEmptyIdWithFailure() {
+    given()
+        .when()
+        .accept(ContentType.JSON)
+        .contentType(ContentType.JSON)
+        .body(new DestroyCommand(""))
+        .post("/api/destroy-command")
+        .then()
+        .statusCode(Status.BAD_REQUEST.getStatusCode())
+        .body("success", is(false))
+        .body("errorMessage", is("Property `id` is empty in destroy command."));
+  }
+
+  @Test
+  @Order(8)
   void handleClearCompletedCommandWithSuccess() throws Exception {
     given()
         .when()
