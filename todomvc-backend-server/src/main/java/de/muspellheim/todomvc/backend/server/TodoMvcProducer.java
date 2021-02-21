@@ -16,9 +16,13 @@ import java.nio.file.Paths;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 @ApplicationScoped
 public class TodoMvcProducer {
+  @ConfigProperty(name = "todomvc.todos-file")
+  String todosFile;
+
   @Produces
   TodoRepository getTodoRepository() {
     var profile = ProfileManager.getActiveProfile();
@@ -30,8 +34,7 @@ public class TodoMvcProducer {
               new Todo("d2f7760d-8f03-4cb3-9176-06311cb89993", "Buy a unicorn", false)));
       return repository;
     } else {
-      // TODO File konfigurierbar machen
-      var file = Paths.get("todos.json");
+      var file = Paths.get(todosFile);
       return new JsonTodoRepository(file);
     }
   }
