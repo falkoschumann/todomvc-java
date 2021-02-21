@@ -1,10 +1,10 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
+import { MessageHandling } from '../contract/MessageHandling';
 import TodosPage from './TodosPage';
 import InfoFooter from './InfoFooter';
 import './App.css';
-import { MessageHandling } from '../contract/MessageHandling';
 
 export type AppProps = Readonly<{
   messageHandling: MessageHandling;
@@ -12,16 +12,18 @@ export type AppProps = Readonly<{
 
 function App({ messageHandling }: AppProps) {
   return (
-    <>
-      <section className="todoapp">
-        <Switch>
-          <Route path="/">
-            <TodosPage messageHandling={messageHandling} />
-          </Route>
-        </Switch>
-      </section>
-      <InfoFooter />
-    </>
+    <React.StrictMode>
+      <Router>
+        <section className="todoapp">
+          <Switch>
+            <Route path="/">
+              <TodosPage messageHandling={messageHandling} />
+            </Route>
+          </Switch>
+        </section>
+        <InfoFooter />
+      </Router>
+    </React.StrictMode>
   );
 }
 

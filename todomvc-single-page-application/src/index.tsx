@@ -1,22 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
 
-import './index.css';
+import { BackendProxy } from './backend/BackendProxy';
 import App from './frontend/App';
 import reportWebVitals from './reportWebVitals';
-import { BackendProxy } from './backend/BackendProxy';
+import './index.css';
 
-const messageHandling = new BackendProxy();
-
-ReactDOM.render(
-  <React.StrictMode>
-    <Router>
-      <App messageHandling={messageHandling} />
-    </Router>
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const backend = new BackendProxy();
+const frontend = <App messageHandling={backend} />;
+ReactDOM.render(frontend, document.getElementById('root'));
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
