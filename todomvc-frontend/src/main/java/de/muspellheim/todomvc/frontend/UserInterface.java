@@ -12,11 +12,11 @@ import java.util.Properties;
 import javafx.stage.Stage;
 
 public class UserInterface {
-  private final TodosViewController todosViewController;
+  private final MainViewController mainViewController;
 
   public UserInterface(
       MessageHandling messageHandling, Stage primaryStage, URL appIcon, Properties appProperties) {
-    todosViewController = TodosViewController.create(primaryStage);
+    mainViewController = MainViewController.create(primaryStage);
 
     var infoStage = new Stage();
     infoStage.initOwner(primaryStage);
@@ -26,51 +26,51 @@ public class UserInterface {
     infoViewController.setVersion(appProperties.getProperty("version"));
     infoViewController.setCopyright(appProperties.getProperty("copyright"));
 
-    todosViewController.setOnOpenInfo(() -> infoStage.show());
-    todosViewController.setOnNewTodoCommand(
+    mainViewController.setOnOpenInfo(() -> infoStage.show());
+    mainViewController.setOnNewTodoCommand(
         it -> {
           messageHandling.handle(it);
           var result = messageHandling.handle(new TodosQuery());
-          todosViewController.display(result);
+          mainViewController.display(result);
         });
-    todosViewController.setOnToggleAllCommand(
+    mainViewController.setOnToggleAllCommand(
         it -> {
           messageHandling.handle(it);
           var result = messageHandling.handle(new TodosQuery());
-          todosViewController.display(result);
+          mainViewController.display(result);
         });
-    todosViewController.setOnToggleCommand(
+    mainViewController.setOnToggleCommand(
         it -> {
           messageHandling.handle(it);
           var result = messageHandling.handle(new TodosQuery());
-          todosViewController.display(result);
+          mainViewController.display(result);
         });
-    todosViewController.setOnDestroyCommand(
+    mainViewController.setOnDestroyCommand(
         it -> {
           messageHandling.handle(it);
           var result = messageHandling.handle(new TodosQuery());
-          todosViewController.display(result);
+          mainViewController.display(result);
         });
-    todosViewController.setOnEditCommand(
+    mainViewController.setOnEditCommand(
         it -> {
           messageHandling.handle(it);
           var result = messageHandling.handle(new TodosQuery());
-          todosViewController.display(result);
+          mainViewController.display(result);
         });
-    todosViewController.setOnClearCompletedCommand(
+    mainViewController.setOnClearCompletedCommand(
         it -> {
           messageHandling.handle(it);
           var result = messageHandling.handle(new TodosQuery());
-          todosViewController.display(result);
+          mainViewController.display(result);
         });
-    todosViewController.setOnTodosQuery(
+    mainViewController.setOnTodosQuery(
         it -> {
           var result = messageHandling.handle(new TodosQuery());
-          todosViewController.display(result);
+          mainViewController.display(result);
         });
   }
 
   public void run() {
-    todosViewController.run();
+    mainViewController.run();
   }
 }

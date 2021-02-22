@@ -33,7 +33,7 @@ import javafx.util.StringConverter;
 import lombok.Getter;
 import lombok.Setter;
 
-public class TodosViewController {
+public class MainViewController {
   private enum TodoFilter {
     ALL,
     ACTIVE,
@@ -60,8 +60,8 @@ public class TodosViewController {
   private final ReadOnlyBooleanWrapper todosAvailable = new ReadOnlyBooleanWrapper(false);
   private List<Todo> todos = List.of();
 
-  public static TodosViewController create(Stage stage) {
-    var factory = new ViewControllerFactory(TodosViewController.class);
+  public static MainViewController create(Stage stage) {
+    var factory = new ViewControllerFactory(MainViewController.class);
 
     var scene = new Scene(factory.getView());
     stage.setScene(scene);

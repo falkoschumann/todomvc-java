@@ -18,7 +18,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<VBox prefWidth="640.0" spacing="8.0" styleClass="small-window" stylesheets="@uwp.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.muspellheim.todomvc.frontend.TodosViewController">
+<VBox prefWidth="640.0" spacing="8.0" styleClass="small-window" stylesheets="@uwp.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.muspellheim.todomvc.frontend.MainViewController">
    <children>
       <Label styleClass="header" text="todos" />
       <HBox fx:id="commandBar" styleClass="command-bar">

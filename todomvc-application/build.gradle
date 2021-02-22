@@ -75,7 +75,7 @@ gluonClient {
   resourcesList = ['app.properties']
   reflectionList = [
     'de.muspellheim.todomvc.contract.data.Todo',
-    'de.muspellheim.todomvc.frontend.TodosViewController',
+    'de.muspellheim.todomvc.frontend.MainViewController',
     'de.muspellheim.todomvc.frontend.InfoViewController',
     'javafx.geometry.Insets',
     'javafx.scene.control.Button',
