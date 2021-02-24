@@ -14,18 +14,16 @@ task npmBuild(type: NpmTask, dependsOn: npmInstall) {
   inputs.dir('public')
   inputs.dir('node_modules')
   inputs.file('tsconfig.json')
-  outputs.dir('build')
+  outputs.dir('build/www')
 }
 assemble.dependsOn(npmBuild)
 
 task npmStart(type: NpmTask, dependsOn: npmInstall) {
   npmCommand = ['start']
-  outputs.upToDateWhen { true }
 }
 
 task npmStorybook(type: NpmTask, dependsOn: npmInstall) {
   npmCommand = ['run', 'storybook']
-  outputs.upToDateWhen { true }
 }
 
 task npmTest(type: NpmTask, dependsOn: npmInstall) {
@@ -34,7 +32,6 @@ task npmTest(type: NpmTask, dependsOn: npmInstall) {
   inputs.dir('src')
   inputs.dir('node_modules')
   inputs.file('tsconfig.json')
-  outputs.upToDateWhen { true }
 }
 check.dependsOn(npmTest)
 
@@ -42,7 +39,6 @@ task npmPrettierCheck(type: NpmTask, dependsOn: npmInstall) {
   npmCommand = ['run', 'prettier:check']
   inputs.dir('src')
   inputs.file('.prettierrc.json')
-  outputs.upToDateWhen { true }
 }
 check.dependsOn(npmPrettierCheck)
 
@@ -50,5 +46,4 @@ task npmPrettierWrite(type: NpmTask, dependsOn: npmInstall) {
   npmCommand = ['run', 'prettier:write']
   inputs.dir('src')
   inputs.file('.prettierrc.json')
-  outputs.upToDateWhen { true }
 }
