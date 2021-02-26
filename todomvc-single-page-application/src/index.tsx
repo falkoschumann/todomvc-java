@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 
 import { BackendProxy } from './backend/BackendProxy';
 import App from './frontend/App';
+import './frontend/style.css';
 import reportWebVitals from './reportWebVitals';
-import './index.css';
 
 const backend = new BackendProxy();
 const frontend = <App messageHandling={backend} />;
