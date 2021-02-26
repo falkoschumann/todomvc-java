@@ -26,14 +26,14 @@ task npmStorybook(type: NpmTask, dependsOn: npmInstall) {
   npmCommand = ['run', 'storybook']
 }
 
-task npmTest(type: NpmTask, dependsOn: npmInstall) {
+task test(type: NpmTask, dependsOn: npmInstall) {
   npmCommand = ['run', 'test']
   args = ['--', '--watchAll=false']
   inputs.dir('src')
   inputs.dir('node_modules')
   inputs.file('tsconfig.json')
 }
-check.dependsOn(npmTest)
+check.dependsOn(test)
 
 task npmPrettierCheck(type: NpmTask, dependsOn: npmInstall) {
   npmCommand = ['run', 'prettier:check']
