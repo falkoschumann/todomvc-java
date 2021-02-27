@@ -29,17 +29,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
-import javafx.util.StringConverter;
 import lombok.Getter;
 import lombok.Setter;
 
 public class MainViewController {
-  private enum TodoFilter {
-    ALL,
-    ACTIVE,
-    COMPLETED
-  }
-
   @Getter @Setter private Runnable onOpenInfo;
   @Getter @Setter private Consumer<NewTodoCommand> onNewTodoCommand;
   @Getter @Setter private Consumer<ToggleAllCommand> onToggleAllCommand;
@@ -170,26 +163,5 @@ public class MainViewController {
                         || filter.getValue() == TodoFilter.ALL)
             .collect(Collectors.toList());
     todoList.getItems().setAll(filteredTodos);
-  }
-
-  private static class TodoFilterStringConverter extends StringConverter<TodoFilter> {
-    @Override
-    public String toString(TodoFilter object) {
-      switch (object) {
-        case ALL:
-          return "All";
-        case ACTIVE:
-          return "Active";
-        case COMPLETED:
-          return "Completed";
-        default:
-          throw new IllegalArgumentException("Unreachable code");
-      }
-    }
-
-    @Override
-    public TodoFilter fromString(String string) {
-      return TodoFilter.valueOf(string);
-    }
   }
 }
