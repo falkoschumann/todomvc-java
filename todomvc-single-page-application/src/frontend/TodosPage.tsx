@@ -26,54 +26,51 @@ function TodosPage({ messageHandling }: TodosPageProps) {
   }
 
   const [todosQueryResult, setTodosQueryResult] = useState<TodosQueryResult>();
-  const handleToggleAllCommand = useCallback(
-    async (command) => {
-      await messageHandling.handleToggleAllCommand(command);
+  const handleToggleAll = useCallback(
+    async (completed) => {
+      await messageHandling.handleToggleAllCommand({ completed });
       const result = await messageHandling.handleTodosQuery({});
       setTodosQueryResult(result);
     },
     [messageHandling]
   );
-  const handleNewTodoCommand = useCallback(
-    async (command) => {
-      await messageHandling.handleNewTodoCommand(command);
+  const handleNewTodo = useCallback(
+    async (title) => {
+      await messageHandling.handleNewTodoCommand({ title });
       const result = await messageHandling.handleTodosQuery({});
       setTodosQueryResult(result);
     },
     [messageHandling]
   );
-  const handleToggleCommand = useCallback(
-    async (command) => {
-      await messageHandling.handleToggleCommand(command);
+  const handleToggle = useCallback(
+    async (id) => {
+      await messageHandling.handleToggleCommand({ id });
       const result = await messageHandling.handleTodosQuery({});
       setTodosQueryResult(result);
     },
     [messageHandling]
   );
-  const handleEditCommand = useCallback(
-    async (command) => {
-      await messageHandling.handleEditCommand(command);
+  const handleEdit = useCallback(
+    async (id, title) => {
+      await messageHandling.handleEditCommand({ id, title });
       const result = await messageHandling.handleTodosQuery({});
       setTodosQueryResult(result);
     },
     [messageHandling]
   );
-  const handleDestroyCommand = useCallback(
-    async (command) => {
-      await messageHandling.handleDestroyCommand(command);
+  const handleDestroy = useCallback(
+    async (id) => {
+      await messageHandling.handleDestroyCommand({ id });
       const result = await messageHandling.handleTodosQuery({});
       setTodosQueryResult(result);
     },
     [messageHandling]
   );
-  const handleClearCompletedCommand = useCallback(
-    async (command) => {
-      await messageHandling.handleClearCompletedCommand(command);
-      const result = await messageHandling.handleTodosQuery({});
-      setTodosQueryResult(result);
-    },
-    [messageHandling]
-  );
+  const handleClearCompleted = useCallback(async () => {
+    await messageHandling.handleClearCompletedCommand({});
+    const result = await messageHandling.handleTodosQuery({});
+    setTodosQueryResult(result);
+  }, [messageHandling]);
 
   useEffect(() => {
     (async () => {
@@ -85,13 +82,13 @@ function TodosPage({ messageHandling }: TodosPageProps) {
   return (
     <TodosController
       filter={filter}
-      todosQueryResult={todosQueryResult}
-      onToggleAllCommand={handleToggleAllCommand}
-      onNewTodoCommand={handleNewTodoCommand}
-      onToggleCommand={handleToggleCommand}
-      onEditCommand={handleEditCommand}
-      onDestroyCommand={handleDestroyCommand}
-      onClearCompletedCommand={handleClearCompletedCommand}
+      {...todosQueryResult}
+      onToggleAll={handleToggleAll}
+      onNewTodo={handleNewTodo}
+      onToggle={handleToggle}
+      onEdit={handleEdit}
+      onDestroy={handleDestroy}
+      onClearCompleted={handleClearCompleted}
     />
   );
 }

@@ -25,12 +25,10 @@ const Template: Story<TodosControllerProps> = (args) => <TodosController {...arg
 export const Default = Template.bind({});
 Default.args = {
   filter: TodoFilter.All,
-  todosQueryResult: {
-    todos: [
-      { id: '1', title: 'Taste JavaScript', completed: true },
-      { id: '2', title: 'Buy a unicorn', completed: false },
-    ],
-  },
+  todos: [
+    { id: '1', title: 'Taste JavaScript', completed: true },
+    { id: '2', title: 'Buy a unicorn', completed: false },
+  ],
 };
 
 export const ActiveFilter = Template.bind({});
@@ -42,9 +40,7 @@ ActiveFilter.args = {
 export const ActiveFilterWithoutActiveTodos = Template.bind({});
 ActiveFilterWithoutActiveTodos.args = {
   filter: TodoFilter.Active,
-  todosQueryResult: {
-    todos: [{ id: '1', title: 'Taste JavaScript', completed: true }],
-  },
+  todos: [{ id: '1', title: 'Taste JavaScript', completed: true }],
 };
 
 export const CompletedFilter = Template.bind({});
@@ -56,7 +52,5 @@ CompletedFilter.args = {
 export const CompletedFilterWithoutCompletedTodos = Template.bind({});
 CompletedFilterWithoutCompletedTodos.args = {
   filter: TodoFilter.Completed,
-  todosQueryResult: {
-    todos: [{ id: '2', title: 'Buy a unicorn', completed: false }],
-  },
+  todos: [{ id: '2', title: 'Buy a unicorn', completed: false }],
 };

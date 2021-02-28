@@ -775,7 +775,6 @@ exports[`Storyshots Todos Controller Active Filter 1`] = `
     </ul>
     <button
       className="clear-completed"
-      onClick={[Function]}
     >
       Clear completed
     </button>
@@ -844,7 +843,6 @@ exports[`Storyshots Todos Controller Active Filter Without Active Todos 1`] = `
     </ul>
     <button
       className="clear-completed"
-      onClick={[Function]}
     >
       Clear completed
     </button>
@@ -965,7 +963,6 @@ exports[`Storyshots Todos Controller Completed Filter 1`] = `
     </ul>
     <button
       className="clear-completed"
-      onClick={[Function]}
     >
       Clear completed
     </button>
@@ -1180,7 +1177,6 @@ exports[`Storyshots Todos Controller Default 1`] = `
     </ul>
     <button
       className="clear-completed"
-      onClick={[Function]}
     >
       Clear completed
     </button>
