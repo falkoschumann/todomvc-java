@@ -15,8 +15,11 @@ import de.muspellheim.todomvc.contract.messages.commands.ToggleAllCommand;
 import de.muspellheim.todomvc.contract.messages.commands.ToggleCommand;
 import de.muspellheim.todomvc.contract.messages.queries.TodosQuery;
 import java.util.List;
+import java.util.stream.Collectors;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.ReadOnlyBooleanWrapper;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -25,6 +28,7 @@ import javafx.collections.ObservableList;
 public class MainViewModel {
   private final ReadOnlyBooleanWrapper todosAvailable = new ReadOnlyBooleanWrapper(false);
   private final ReadOnlyBooleanWrapper allCompleted = new ReadOnlyBooleanWrapper(false);
+  private final ObjectProperty<TodoFilter> filter = new SimpleObjectProperty<>(TodoFilter.ALL);
   private final StringProperty newTodo = new SimpleStringProperty("");
   private final ObservableList<Todo> filteredTodos = FXCollections.observableArrayList();
 
@@ -39,6 +43,10 @@ public class MainViewModel {
     return allCompleted.getReadOnlyProperty();
   }
 
+  public ObjectProperty<TodoFilter> filterProperty() {
+    return filter;
+  }
+
   public StringProperty newTodoProperty() {
     return newTodo;
   }
@@ -51,13 +59,21 @@ public class MainViewModel {
     var result = messageHandling.handle(new TodosQuery());
     todos = result.getTodos();
 
-    // TODO Übernimm von MainViewController::display(TodosQueryResult)
-
     updateFilteredTodos();
+
+    // TODO Übernimm von MainViewController::display(TodosQueryResult)
   }
 
-  public void updateFilteredTodos() {
-    // TODO Übernimm von MainViewController::updateTodoList()
+  private void updateFilteredTodos() {
+    var filtered =
+        todos.stream()
+            .filter(
+                it ->
+                    filter.get() == TodoFilter.ACTIVE && it.isActive()
+                        || filter.get() == TodoFilter.COMPLETED && it.isCompleted()
+                        || filter.get() == TodoFilter.ALL)
+            .collect(Collectors.toList());
+    filteredTodos.setAll(filtered);
   }
 
   public void newTodo() {

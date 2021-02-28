@@ -14,9 +14,10 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.TextFlow;
 
-public class MainView {
+public class MainView extends VBox {
   private final MainViewModel viewModel = new MainViewModel();
 
   @FXML private HBox commandBar;
@@ -34,8 +35,7 @@ public class MainView {
 
     filter.setConverter(new TodoFilterStringConverter());
     filter.getItems().setAll(TodoFilter.values());
-    filter.setValue(TodoFilter.ALL);
-    filter.valueProperty().addListener(o -> viewModel.updateFilteredTodos());
+    filter.valueProperty().bindBidirectional(viewModel.filterProperty());
 
     newTodo.textProperty().bindBidirectional(viewModel.newTodoProperty());
 
