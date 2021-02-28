@@ -7,6 +7,8 @@ package de.muspellheim.todomvc.frontend;
 
 import de.muspellheim.todomvc.contract.MessageHandling;
 import de.muspellheim.todomvc.contract.data.Todo;
+import java.net.URL;
+import java.util.Properties;
 import javafx.beans.Observable;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -22,7 +24,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
-public class MainView2 extends VBox {
+public class MainView extends VBox {
   @FXML private HBox commandBar;
   @FXML private TextFlow todoCount;
   @FXML private ChoiceBox<TodoFilter> filter;
@@ -32,9 +34,12 @@ public class MainView2 extends VBox {
   @FXML private ListView<Todo> todoList;
 
   private final MainViewModel viewModel = new MainViewModel();
+  private URL appIconUrl;
+  private Properties appProperties;
 
-  public static MainView2 create(Stage stage, MessageHandling messageHandling) {
-    var factory = new ViewControllerFactory(MainView2.class);
+  public static MainView create(
+      Stage stage, MessageHandling messageHandling, URL appIconUrl, Properties appProperties) {
+    var factory = new ViewControllerFactory(MainView.class);
 
     var scene = new Scene(factory.getView());
     stage.setScene(scene);
@@ -42,8 +47,10 @@ public class MainView2 extends VBox {
     stage.setMinWidth(320);
     stage.setMinHeight(569);
 
-    MainView2 controller = factory.getController();
+    MainView controller = factory.getController();
     controller.viewModel.initMessageHandling(messageHandling);
+    controller.appIconUrl = appIconUrl;
+    controller.appProperties = appProperties;
     return controller;
   }
 
@@ -79,7 +86,7 @@ public class MainView2 extends VBox {
   }
 
   private ListCell<Todo> createTodoListCell(ListView<Todo> view) {
-    var cell = new TodoListCell2();
+    var cell = new TodoListCell();
     cell.setOnToggle(viewModel::toggle);
     cell.setOnEdit(viewModel::edit);
     cell.setOnDestroy(viewModel::destroy);
@@ -97,7 +104,10 @@ public class MainView2 extends VBox {
 
   @FXML
   private void handleOpenInfo() {
-    throw new UnsupportedOperationException("Not implemented yet");
+    var stage = new Stage();
+    stage.initOwner(getWindow());
+    var infoView = InfoView.create(stage, appIconUrl, appProperties);
+    infoView.run();
   }
 
   @FXML
