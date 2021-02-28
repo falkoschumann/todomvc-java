@@ -10,7 +10,7 @@ import de.muspellheim.todomvc.backend.TodoRepository;
 import de.muspellheim.todomvc.backend.adapters.JsonTodoRepository;
 import de.muspellheim.todomvc.backend.adapters.MemoryTodoRepository;
 import de.muspellheim.todomvc.contract.data.Todo;
-import de.muspellheim.todomvc.frontend.UserInterface;
+import de.muspellheim.todomvc.frontend.MainView2;
 import java.io.InputStream;
 import java.nio.file.Paths;
 import java.util.List;
@@ -49,7 +49,8 @@ public class App extends Application {
     try (InputStream in = getClass().getResourceAsStream("/app.properties")) {
       appProperties.load(in);
     }
-    var frontend = new UserInterface(backend, primaryStage, appIcon, appProperties);
+    // var frontend = new UserInterface(backend, primaryStage, appIcon, appProperties);
+    var frontend = MainView2.create(primaryStage, backend);
     frontend.run();
   }
 }

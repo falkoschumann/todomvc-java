@@ -5,8 +5,11 @@
 
 package de.muspellheim.todomvc.frontend;
 
+import de.muspellheim.todomvc.contract.MessageHandling;
 import de.muspellheim.todomvc.contract.data.Todo;
+import javafx.beans.Observable;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListCell;
@@ -15,11 +18,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.stage.Stage;
 
-public class MainView extends VBox {
-  private final MainViewModel viewModel = new MainViewModel();
-
+public class MainView2 extends VBox {
   @FXML private HBox commandBar;
   @FXML private TextFlow todoCount;
   @FXML private ChoiceBox<TodoFilter> filter;
@@ -28,20 +31,51 @@ public class MainView extends VBox {
   @FXML private TextField newTodo;
   @FXML private ListView<Todo> todoList;
 
+  private final MainViewModel viewModel = new MainViewModel();
+
+  public static MainView2 create(Stage stage, MessageHandling messageHandling) {
+    var factory = new ViewControllerFactory(MainView2.class);
+
+    var scene = new Scene(factory.getView());
+    stage.setScene(scene);
+    stage.setTitle("Todos");
+    stage.setMinWidth(320);
+    stage.setMinHeight(569);
+
+    MainView2 controller = factory.getController();
+    controller.viewModel.initMessageHandling(messageHandling);
+    return controller;
+  }
+
   @FXML
   private void initialize() {
     commandBar.visibleProperty().bind(viewModel.todosAvailableProperty());
     commandBar.managedProperty().bind(viewModel.todosAvailableProperty());
 
+    viewModel.activeTodoCountProperty().addListener(this::updateTodoCount);
+
     filter.setConverter(new TodoFilterStringConverter());
     filter.getItems().setAll(TodoFilter.values());
     filter.valueProperty().bindBidirectional(viewModel.filterProperty());
 
+    toggleAll.selectedProperty().bindBidirectional(viewModel.allCompletedProperty());
+    clearCompleted.disableProperty().bind(viewModel.allActiveProperty());
+
     newTodo.textProperty().bindBidirectional(viewModel.newTodoProperty());
 
+    todoList.setItems(viewModel.getFilteredTodos());
     todoList.setCellFactory(this::createTodoListCell);
     todoList.visibleProperty().bind(viewModel.todosAvailableProperty());
     todoList.managedProperty().bind(todoList.visibleProperty());
+  }
+
+  private void updateTodoCount(Observable observable) {
+    var activeTodoCount = viewModel.activeTodoCountProperty().get();
+    var text = new Text(String.valueOf(activeTodoCount));
+    text.setStyle("-fx-font-weight: bold");
+    todoCount
+        .getChildren()
+        .setAll(text, new Text(" item" + (activeTodoCount == 1 ? "" : "s") + " left"));
   }
 
   private ListCell<Todo> createTodoListCell(ListView<Todo> view) {
@@ -53,7 +87,12 @@ public class MainView extends VBox {
   }
 
   public void run() {
+    getWindow().show();
     viewModel.updateTodos();
+  }
+
+  private Stage getWindow() {
+    return (Stage) commandBar.getScene().getWindow();
   }
 
   @FXML

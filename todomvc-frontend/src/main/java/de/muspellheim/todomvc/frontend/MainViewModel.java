@@ -16,9 +16,12 @@ import de.muspellheim.todomvc.contract.messages.commands.ToggleCommand;
 import de.muspellheim.todomvc.contract.messages.queries.TodosQuery;
 import java.util.List;
 import java.util.stream.Collectors;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.ReadOnlyBooleanWrapper;
+import javafx.beans.property.ReadOnlyLongProperty;
+import javafx.beans.property.ReadOnlyLongWrapper;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -27,20 +30,40 @@ import javafx.collections.ObservableList;
 
 public class MainViewModel {
   private final ReadOnlyBooleanWrapper todosAvailable = new ReadOnlyBooleanWrapper(false);
-  private final ReadOnlyBooleanWrapper allCompleted = new ReadOnlyBooleanWrapper(false);
-  private final ObjectProperty<TodoFilter> filter = new SimpleObjectProperty<>(TodoFilter.ALL);
+  private final ReadOnlyLongWrapper activeTodoCount = new ReadOnlyLongWrapper(0);
+  private final BooleanProperty allCompleted = new ReadOnlyBooleanWrapper(false);
+  private final ReadOnlyBooleanWrapper allActive = new ReadOnlyBooleanWrapper(false);
+  private final ObjectProperty<TodoFilter> filter =
+      new SimpleObjectProperty<>(TodoFilter.ALL) {
+        @Override
+        protected void invalidated() {
+          updateFilteredTodos();
+        }
+      };
   private final StringProperty newTodo = new SimpleStringProperty("");
   private final ObservableList<Todo> filteredTodos = FXCollections.observableArrayList();
 
   private MessageHandling messageHandling;
   private List<Todo> todos = List.of();
 
+  void initMessageHandling(MessageHandling messageHandling) {
+    this.messageHandling = messageHandling;
+  }
+
   public ReadOnlyBooleanProperty todosAvailableProperty() {
     return todosAvailable.getReadOnlyProperty();
   }
 
-  public ReadOnlyBooleanProperty allCompletedProperty() {
-    return allCompleted.getReadOnlyProperty();
+  public ReadOnlyLongProperty activeTodoCountProperty() {
+    return activeTodoCount.getReadOnlyProperty();
+  }
+
+  public BooleanProperty allCompletedProperty() {
+    return allCompleted;
+  }
+
+  public ReadOnlyBooleanProperty allActiveProperty() {
+    return allActive.getReadOnlyProperty();
   }
 
   public ObjectProperty<TodoFilter> filterProperty() {
@@ -58,10 +81,12 @@ public class MainViewModel {
   public void updateTodos() {
     var result = messageHandling.handle(new TodosQuery());
     todos = result.getTodos();
-
+    todosAvailable.set(!result.getTodos().isEmpty());
+    activeTodoCount.set(result.getTodos().stream().filter(Todo::isActive).count());
+    var completedCount = result.getTodos().stream().filter(Todo::isCompleted).count();
+    allCompleted.set(todosAvailable.get() && completedCount == todos.size());
+    allActive.set(todosAvailable.get() && completedCount == 0);
     updateFilteredTodos();
-
-    // TODO Übernimm von MainViewController::display(TodosQueryResult)
   }
 
   private void updateFilteredTodos() {
@@ -108,7 +133,7 @@ public class MainViewModel {
   }
 
   public void toggleAll() {
-    messageHandling.handle(new ToggleAllCommand(!allCompleted.get()));
+    messageHandling.handle(new ToggleAllCommand(allCompleted.get()));
     updateTodos();
   }
 }
