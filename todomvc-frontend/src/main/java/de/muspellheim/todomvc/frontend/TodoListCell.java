@@ -6,9 +6,6 @@
 package de.muspellheim.todomvc.frontend;
 
 import de.muspellheim.todomvc.contract.data.Todo;
-import de.muspellheim.todomvc.contract.messages.commands.DestroyCommand;
-import de.muspellheim.todomvc.contract.messages.commands.EditCommand;
-import de.muspellheim.todomvc.contract.messages.commands.ToggleCommand;
 import java.util.function.Consumer;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -24,9 +21,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 public class TodoListCell extends ListCell<Todo> {
-  @Getter @Setter Consumer<ToggleCommand> onToggleCommand;
-  @Getter @Setter Consumer<EditCommand> onEditCommand;
-  @Getter @Setter Consumer<DestroyCommand> onDestroyCommand;
+  @Getter @Setter Consumer<Todo> onToggle;
+  @Getter @Setter Consumer<Todo> onEdit;
+  @Getter @Setter Consumer<Todo> onDestroy;
 
   private final HBox container;
   private final CheckBox completed;
@@ -71,23 +68,23 @@ public class TodoListCell extends ListCell<Todo> {
       setGraphic(container);
 
       completed.setSelected(item.isCompleted());
-      completed.setOnAction(it -> onToggleCommand.accept((new ToggleCommand(item.getId()))));
+      completed.setOnAction(it -> onToggle.accept(item));
 
       titleLabel.setText(item.getTitle());
-      titleLabel.setOnMouseClicked(it -> startEdit(it));
+      titleLabel.setOnMouseClicked(this::startEdit);
 
       titleTextField.setText(item.getTitle());
-      titleTextField.setOnAction(it -> endEdit());
+      titleTextField.setOnAction(it -> endEdit(item));
       titleTextField
           .focusedProperty()
           .addListener(
               (observableValue, oldValue, newValue) -> {
                 if (oldValue && !newValue) {
-                  endEdit();
+                  endEdit(item);
                 }
               });
 
-      destroy.setOnAction(it -> onDestroyCommand.accept((new DestroyCommand(item.getId()))));
+      destroy.setOnAction(it -> onDestroy.accept(item));
     }
   }
 
@@ -100,8 +97,9 @@ public class TodoListCell extends ListCell<Todo> {
     }
   }
 
-  private void endEdit() {
-    onEditCommand.accept(new EditCommand(getItem().getId(), titleTextField.getText().trim()));
+  private void endEdit(Todo item) {
+    var newTitle = titleTextField.getText().trim();
+    onEdit.accept(new Todo(item.getId(), newTitle, item.isCompleted()));
     completed.setVisible(true);
     container.getChildren().set(1, titleLabel);
     destroy.setVisible(container.isHover());

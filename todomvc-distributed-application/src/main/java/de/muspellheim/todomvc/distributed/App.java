@@ -5,7 +5,7 @@
 
 package de.muspellheim.todomvc.distributed;
 
-import de.muspellheim.todomvc.frontend.UserInterface;
+import de.muspellheim.todomvc.frontend.MainView;
 import java.io.InputStream;
 import java.util.Properties;
 import javafx.application.Application;
@@ -20,12 +20,13 @@ public class App extends Application {
   public void start(Stage primaryStage) throws Exception {
     // TODO Backend Host starten
     var backendProxy = new BackendProxy();
-    var appIcon = getClass().getResource("/app.png");
-    var appProperties = new Properties();
+
+    var url = getClass().getResource("/app.png");
+    var properties = new Properties();
     try (InputStream in = getClass().getResourceAsStream("/app.properties")) {
-      appProperties.load(in);
+      properties.load(in);
     }
-    var frontend = new UserInterface(backendProxy, primaryStage, appIcon, appProperties);
+    var frontend = MainView.create(primaryStage, backendProxy, url, properties);
     frontend.run();
   }
 }
