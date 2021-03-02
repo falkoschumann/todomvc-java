@@ -64,7 +64,7 @@ function TodoItem({ todo, editing = false, onToggle, onEdit, onSave, onCancel, o
       <div className="view">
         <input title="Toggle" className="toggle" type="checkbox" checked={todo.completed} onChange={onToggle} />
         <label onDoubleClick={handleEdit}>{todo.title}</label>
-        <button title="Destroy" className="destroy" onClick={onDestroy}></button>
+        <button title="Destroy" className="destroy" onClick={onDestroy} />
       </div>
       <input
         ref={inputRef}
