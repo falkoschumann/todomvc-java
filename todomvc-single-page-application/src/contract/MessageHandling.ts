@@ -11,7 +11,7 @@ import { TodosQuery, TodosQueryResult } from './messages/queries';
 
 export interface MessageHandling {
   handleClearCompletedCommand(command: ClearCompletedCommand): Promise<CommandStatus>;
-  handleDestroyCommand(command: DestroyCommand): Promise<CommandStatus>;
+    handleDestroyCommand(command: DestroyCommand): Promise<CommandStatus>;
   handleEditCommand(command: EditCommand): Promise<CommandStatus>;
   handleNewTodoCommand(command: NewTodoCommand): Promise<CommandStatus>;
   handleToggleAllCommand(command: ToggleAllCommand): Promise<CommandStatus>;
