@@ -40,6 +40,5 @@ spotless {
   format 'javascript', {
     target 'src/**/*.js', 'src/**/*.jsx', 'src/**/*.ts', 'src/**/*.tsx', 'src/**/*.json', 'src/**/*.css', 'src/**/*.scss', 'src/**/*.md'
     prettier().configFile("${projectDir}/.prettierrc.json")
-    //.npmExecutable(nodeSetup.nodeDir.get() + '/bin/npm')
   }
 }
