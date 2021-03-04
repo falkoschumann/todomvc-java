@@ -23,12 +23,13 @@ public class InfoView {
   @FXML private Label version;
   @FXML private Label copyright;
 
-  private InfoViewModel viewModel = new InfoViewModel();
+  private final InfoViewModel viewModel = new InfoViewModel();
 
-  public static InfoView create(Stage stage, URL appIconUrl, Properties appProperties) {
+  public static InfoView create(Stage owner, URL appIconUrl, Properties appProperties) {
     var factory = new ViewControllerFactory(InfoView.class);
 
-    stage.initModality(Modality.APPLICATION_MODAL);
+    var stage = new Stage();
+    stage.initOwner(owner);
     stage.initStyle(StageStyle.UTILITY);
     stage.setTitle("Info");
     stage.setScene(new Scene(factory.getView()));

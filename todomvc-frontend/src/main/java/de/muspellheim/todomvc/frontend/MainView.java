@@ -104,9 +104,7 @@ public class MainView extends VBox {
 
   @FXML
   private void handleOpenInfo() {
-    var stage = new Stage();
-    stage.initOwner(getWindow());
-    var infoView = InfoView.create(stage, appIconUrl, appProperties);
+    var infoView = InfoView.create(getWindow(), appIconUrl, appProperties);
     infoView.run();
   }
 
