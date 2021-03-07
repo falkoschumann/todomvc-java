@@ -11,6 +11,7 @@ import de.muspellheim.todomvc.backend.adapters.JsonTodoRepository;
 import de.muspellheim.todomvc.backend.adapters.MemoryTodoRepository;
 import de.muspellheim.todomvc.contract.data.Todo;
 import de.muspellheim.todomvc.frontend.MainView;
+import de.muspellheim.todomvc.frontend.ViewModelFactory;
 import java.io.InputStream;
 import java.nio.file.Paths;
 import java.util.List;
@@ -44,13 +45,18 @@ public class App extends Application {
   @Override
   public void start(Stage primaryStage) throws Exception {
     var backend = new MessageHandler(repository);
+    ViewModelFactory.initMessageHandling(backend);
 
     var url = getClass().getResource("/app.png");
+    ViewModelFactory.initIconUrl(url);
+
     var properties = new Properties();
     try (InputStream in = getClass().getResourceAsStream("/app.properties")) {
       properties.load(in);
     }
-    var frontend = MainView.create(primaryStage, backend, url, properties);
+    ViewModelFactory.initAppProperties(properties);
+
+    var frontend = MainView.create(primaryStage);
     frontend.run();
   }
 }

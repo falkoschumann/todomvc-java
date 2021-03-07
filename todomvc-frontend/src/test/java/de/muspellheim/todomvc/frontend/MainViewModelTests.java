@@ -29,10 +29,10 @@ import org.junit.jupiter.api.Test;
 class MainViewModelTests {
   @Test
   void allActive() {
-    var viewModel = new MainViewModel();
-    viewModel.initMessageHandling(
-        new TestingMessageHandling(
-            new Todo("1", "Taste JavaScript", false), new Todo("2", "Buy a unicorn", false)));
+    var viewModel =
+        new MainViewModel(
+            new TestingMessageHandling(
+                new Todo("1", "Taste JavaScript", false), new Todo("2", "Buy a unicorn", false)));
 
     viewModel.updateTodos();
 
@@ -54,10 +54,10 @@ class MainViewModelTests {
 
   @Test
   void allCompleted() {
-    var viewModel = new MainViewModel();
-    viewModel.initMessageHandling(
-        new TestingMessageHandling(
-            new Todo("1", "Taste JavaScript", true), new Todo("2", "Buy a unicorn", true)));
+    var viewModel =
+        new MainViewModel(
+            new TestingMessageHandling(
+                new Todo("1", "Taste JavaScript", true), new Todo("2", "Buy a unicorn", true)));
 
     viewModel.updateTodos();
 
@@ -78,8 +78,7 @@ class MainViewModelTests {
 
   @Test
   void noTodos() {
-    var viewModel = new MainViewModel();
-    viewModel.initMessageHandling(new TestingMessageHandling());
+    var viewModel = new MainViewModel(new TestingMessageHandling());
 
     viewModel.updateTodos();
 
@@ -95,10 +94,10 @@ class MainViewModelTests {
 
   @Test
   void filterAll() {
-    var viewModel = new MainViewModel();
-    viewModel.initMessageHandling(
-        new TestingMessageHandling(
-            new Todo("1", "Taste JavaScript", true), new Todo("2", "Buy a unicorn", false)));
+    var viewModel =
+        new MainViewModel(
+            new TestingMessageHandling(
+                new Todo("1", "Taste JavaScript", true), new Todo("2", "Buy a unicorn", false)));
 
     viewModel.updateTodos();
 
@@ -119,10 +118,10 @@ class MainViewModelTests {
 
   @Test
   void filterActive() {
-    var viewModel = new MainViewModel();
-    viewModel.initMessageHandling(
-        new TestingMessageHandling(
-            new Todo("1", "Taste JavaScript", true), new Todo("2", "Buy a unicorn", false)));
+    var viewModel =
+        new MainViewModel(
+            new TestingMessageHandling(
+                new Todo("1", "Taste JavaScript", true), new Todo("2", "Buy a unicorn", false)));
     viewModel.updateTodos();
 
     viewModel.filterProperty().set(TodoFilter.ACTIVE);
@@ -143,10 +142,10 @@ class MainViewModelTests {
 
   @Test
   void filterCompleted() {
-    var viewModel = new MainViewModel();
-    viewModel.initMessageHandling(
-        new TestingMessageHandling(
-            new Todo("1", "Taste JavaScript", true), new Todo("2", "Buy a unicorn", false)));
+    var viewModel =
+        new MainViewModel(
+            new TestingMessageHandling(
+                new Todo("1", "Taste JavaScript", true), new Todo("2", "Buy a unicorn", false)));
     viewModel.updateTodos();
 
     viewModel.filterProperty().set(TodoFilter.COMPLETED);
@@ -167,10 +166,10 @@ class MainViewModelTests {
 
   @Test
   void newTodo() {
-    var viewModel = new MainViewModel();
-    viewModel.initMessageHandling(
-        new TestingMessageHandling(
-            new Todo("1", "Taste JavaScript", true), new Todo("2", "Buy a unicorn", false)));
+    var viewModel =
+        new MainViewModel(
+            new TestingMessageHandling(
+                new Todo("1", "Taste JavaScript", true), new Todo("2", "Buy a unicorn", false)));
     viewModel.updateTodos();
 
     viewModel.newTodoProperty().set("Lorem ipsum");
@@ -195,10 +194,10 @@ class MainViewModelTests {
 
   @Test
   void newTodoWithBlankTitle() {
-    var viewModel = new MainViewModel();
-    viewModel.initMessageHandling(
-        new TestingMessageHandling(
-            new Todo("1", "Taste JavaScript", true), new Todo("2", "Buy a unicorn", false)));
+    var viewModel =
+        new MainViewModel(
+            new TestingMessageHandling(
+                new Todo("1", "Taste JavaScript", true), new Todo("2", "Buy a unicorn", false)));
     viewModel.updateTodos();
 
     viewModel.newTodoProperty().set("");
