@@ -5,10 +5,7 @@
 
 package de.muspellheim.todomvc.frontend;
 
-import de.muspellheim.todomvc.contract.MessageHandling;
 import de.muspellheim.todomvc.contract.data.Todo;
-import java.net.URL;
-import java.util.Properties;
 import javafx.beans.Observable;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -33,12 +30,9 @@ public class MainView extends VBox {
   @FXML private TextField newTodo;
   @FXML private ListView<Todo> todoList;
 
-  private final MainViewModel viewModel = new MainViewModel();
-  private URL appIconUrl;
-  private Properties appProperties;
+  private final MainViewModel viewModel = ViewModelFactory.getMainViewModel();
 
-  public static MainView create(
-      Stage stage, MessageHandling messageHandling, URL appIconUrl, Properties appProperties) {
+  public static MainView create(Stage stage) {
     var factory = new ViewControllerFactory(MainView.class);
 
     var scene = new Scene(factory.getView());
@@ -47,11 +41,7 @@ public class MainView extends VBox {
     stage.setMinWidth(320);
     stage.setMinHeight(569);
 
-    MainView controller = factory.getController();
-    controller.viewModel.initMessageHandling(messageHandling);
-    controller.appIconUrl = appIconUrl;
-    controller.appProperties = appProperties;
-    return controller;
+    return factory.getController();
   }
 
   @FXML
@@ -104,7 +94,7 @@ public class MainView extends VBox {
 
   @FXML
   private void handleOpenInfo() {
-    var infoView = InfoView.create(getWindow(), appIconUrl, appProperties);
+    var infoView = InfoView.create(getWindow());
     infoView.run();
   }
 

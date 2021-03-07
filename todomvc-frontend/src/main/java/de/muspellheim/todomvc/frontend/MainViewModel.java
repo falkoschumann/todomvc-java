@@ -46,7 +46,7 @@ public class MainViewModel {
   private MessageHandling messageHandling;
   private List<Todo> todos = List.of();
 
-  void initMessageHandling(MessageHandling messageHandling) {
+  public MainViewModel(MessageHandling messageHandling) {
     this.messageHandling = messageHandling;
   }
 
