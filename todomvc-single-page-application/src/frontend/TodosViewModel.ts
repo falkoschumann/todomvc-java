@@ -15,8 +15,6 @@ export type TodosViewModel = Readonly<{
   onClearCompleted: () => void;
 }>;
 
-// TODO Todos ViewModel testen
-
 export function useTodosViewModel(messageHandling: MessageHandling): TodosViewModel {
   const location = useLocation();
   let filter: TodoFilter;
