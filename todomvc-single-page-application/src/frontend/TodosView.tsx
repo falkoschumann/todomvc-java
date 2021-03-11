@@ -7,7 +7,7 @@ import TodoList from './TodoList';
 import TodoItem from './TodoItem';
 import TodoListFooter from './TodoListFooter';
 
-export type TodosControllerProps = Readonly<{
+export type TodosViewProps = Readonly<{
   filter?: TodoFilter;
   todos?: readonly Todo[];
   onToggleAll?: (completed: boolean) => void;
@@ -18,7 +18,7 @@ export type TodosControllerProps = Readonly<{
   onClearCompleted?: () => void;
 }>;
 
-function TodosController({
+function TodosView({
   filter = TodoFilter.All,
   todos = [],
   onToggleAll,
@@ -27,7 +27,7 @@ function TodosController({
   onEdit,
   onDestroy,
   onClearCompleted,
-}: TodosControllerProps) {
+}: TodosViewProps) {
   const [editing, setEditing] = useState<TodoId>();
 
   const activeCount = todos.filter((it) => !it.completed).length;
@@ -86,4 +86,4 @@ function TodosController({
   );
 }
 
-export default TodosController;
+export default TodosView;

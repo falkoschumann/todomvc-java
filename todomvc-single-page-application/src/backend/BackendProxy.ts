@@ -16,31 +16,63 @@ const BACKEND_URL = 'http://localhost:8080/api/';
 export class BackendProxy implements MessageHandling {
   private client = new HttpJsonClient(BACKEND_URL);
 
-  handleClearCompletedCommand(command: ClearCompletedCommand): Promise<CommandStatus> {
-    return this.client.execute('clear-completed-command', command);
+  async handleClearCompletedCommand(command: ClearCompletedCommand): Promise<CommandStatus> {
+    try {
+      return await this.client.execute('clear-completed-command', command);
+    } catch (error) {
+      return { success: false, errorMessage: error };
+    }
   }
 
-  handleDestroyCommand(command: DestroyCommand): Promise<CommandStatus> {
-    return this.client.execute('destroy-command', command);
+  async handleDestroyCommand(command: DestroyCommand): Promise<CommandStatus> {
+    try {
+      return await this.client.execute('destroy-command', command);
+    } catch (error) {
+      return { success: false, errorMessage: error };
+    }
   }
 
-  handleEditCommand(command: EditCommand): Promise<CommandStatus> {
-    return this.client.execute('edit-command', command);
+  async handleEditCommand(command: EditCommand): Promise<CommandStatus> {
+    try {
+      return await this.client.execute('edit-command', command);
+    } catch (error) {
+      return { success: false, errorMessage: error };
+    }
   }
 
-  handleNewTodoCommand(command: NewTodoCommand): Promise<CommandStatus> {
-    return this.client.execute('new-todo-command', command);
+  async handleNewTodoCommand(command: NewTodoCommand): Promise<CommandStatus> {
+    try {
+      return await this.client.execute('new-todo-command', command);
+    } catch (error) {
+      return { success: false, errorMessage: error };
+    }
   }
 
-  handleToggleAllCommand(command: ToggleAllCommand): Promise<CommandStatus> {
-    return this.client.execute('toggle-all-command', command);
+  async handleToggleAllCommand(command: ToggleAllCommand): Promise<CommandStatus> {
+    try {
+      return this.client.execute('toggle-all-command', command);
+    } catch (error) {
+      return { success: false, errorMessage: error };
+    }
   }
 
-  handleToggleCommand(command: ToggleCommand): Promise<CommandStatus> {
-    return this.client.execute('toggle-command', command);
+  async handleToggleCommand(command: ToggleCommand): Promise<CommandStatus> {
+    try {
+      return await this.client.execute('toggle-command', command);
+    } catch (error) {
+      return { success: false, errorMessage: error };
+    }
   }
 
-  handleTodosQuery(query: TodosQuery): Promise<TodosQueryResult> {
-    return this.client.execute('todos-query', query);
+  async handleTodosQuery(query: TodosQuery): Promise<TodosQueryResult> {
+    try {
+      console.log('handleTodosQuery - try');
+      let result: TodosQueryResult = await this.client.execute('todos-query', query);
+      console.log('handleTodosQuery - success', result);
+      return result;
+    } catch (error) {
+      console.log('handleTodosQuery - error', error);
+      return { todos: [] };
+    }
   }
 }

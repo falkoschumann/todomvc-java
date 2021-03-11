@@ -662,7 +662,7 @@ exports[`Storyshots Todo List Header Default 1`] = `
 </section>
 `;
 
-exports[`Storyshots Todos Controller Active Filter 1`] = `
+exports[`Storyshots Todos View Active Filter 1`] = `
 <section
   className="todoapp"
 >
@@ -782,7 +782,7 @@ exports[`Storyshots Todos Controller Active Filter 1`] = `
 </section>
 `;
 
-exports[`Storyshots Todos Controller Active Filter Without Active Todos 1`] = `
+exports[`Storyshots Todos View Active Filter Without Active Todos 1`] = `
 <section
   className="todoapp"
 >
@@ -850,7 +850,7 @@ exports[`Storyshots Todos Controller Active Filter Without Active Todos 1`] = `
 </section>
 `;
 
-exports[`Storyshots Todos Controller Completed Filter 1`] = `
+exports[`Storyshots Todos View Completed Filter 1`] = `
 <section
   className="todoapp"
 >
@@ -970,7 +970,7 @@ exports[`Storyshots Todos Controller Completed Filter 1`] = `
 </section>
 `;
 
-exports[`Storyshots Todos Controller Completed Filter Without Completed Todos 1`] = `
+exports[`Storyshots Todos View Completed Filter Without Completed Todos 1`] = `
 <section
   className="todoapp"
 >
@@ -1032,7 +1032,7 @@ exports[`Storyshots Todos Controller Completed Filter Without Completed Todos 1`
 </section>
 `;
 
-exports[`Storyshots Todos Controller Default 1`] = `
+exports[`Storyshots Todos View Default 1`] = `
 <section
   className="todoapp"
 >

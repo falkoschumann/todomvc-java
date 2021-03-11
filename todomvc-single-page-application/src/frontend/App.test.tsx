@@ -13,7 +13,7 @@ test('renders todos title', async () => {
     handleNewTodoCommand: jest.fn(),
     handleToggleAllCommand: jest.fn(),
     handleToggleCommand: jest.fn(),
-    handleTodosQuery: jest.fn(),
+    handleTodosQuery: jest.fn(() => Promise.resolve({ todos: [] })),
   };
   render(
     <Router>
