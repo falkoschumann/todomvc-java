@@ -66,12 +66,8 @@ export class BackendProxy implements MessageHandling {
 
   async handleTodosQuery(query: TodosQuery): Promise<TodosQueryResult> {
     try {
-      console.log('handleTodosQuery - try');
-      let result: TodosQueryResult = await this.client.execute('todos-query', query);
-      console.log('handleTodosQuery - success', result);
-      return result;
+      return await this.client.execute('todos-query', query);
     } catch (error) {
-      console.log('handleTodosQuery - error', error);
       return { todos: [] };
     }
   }
