@@ -5,6 +5,7 @@ import { act, renderHook, WrapperComponent } from '@testing-library/react-hooks'
 import { MessageHandling } from '../contract/MessageHandling';
 import { useTodosViewModel } from './TodosViewModel';
 import { TodoFilter } from './types';
+import MessageHandlingProvider from './MessageHandlingProvider';
 
 const todo1 = { id: '1', title: 'Taste JavaScript', completed: true };
 const todo2 = { id: '2', title: 'Buy a unicorn', completed: false };
@@ -25,10 +26,18 @@ function mockMessageHandling(): MessageHandling {
   };
 }
 
+function createWrapper(messageHandling: MessageHandling): WrapperComponent<ReactNode> {
+  return ({ children }) => (
+    <MessageHandlingProvider messageHandling={messageHandling}>
+      <MemoryRouter>{children}</MemoryRouter>
+    </MessageHandlingProvider>
+  );
+}
+
 test('Initial State', async () => {
   const messageHandling = mockMessageHandling();
-  const wrapper: WrapperComponent<ReactNode> = ({ children }) => <MemoryRouter>{children}</MemoryRouter>;
-  const { result, waitForNextUpdate } = renderHook(() => useTodosViewModel(messageHandling), { wrapper });
+  const wrapper = createWrapper(messageHandling);
+  const { result, waitForNextUpdate } = renderHook(() => useTodosViewModel(), { wrapper });
 
   await waitForNextUpdate();
 
@@ -38,8 +47,8 @@ test('Initial State', async () => {
 
 test('Toggle all', async () => {
   const messageHandling = mockMessageHandling();
-  const wrapper: WrapperComponent<ReactNode> = ({ children }) => <MemoryRouter>{children}</MemoryRouter>;
-  const { result, waitForNextUpdate } = renderHook(() => useTodosViewModel(messageHandling), { wrapper });
+  const wrapper = createWrapper(messageHandling);
+  const { result, waitForNextUpdate } = renderHook(() => useTodosViewModel(), { wrapper });
   await waitForNextUpdate();
 
   act(() => {
@@ -54,8 +63,8 @@ test('Toggle all', async () => {
 
 test('New todo', async () => {
   const messageHandling = mockMessageHandling();
-  const wrapper: WrapperComponent<ReactNode> = ({ children }) => <MemoryRouter>{children}</MemoryRouter>;
-  const { result, waitForNextUpdate } = renderHook(() => useTodosViewModel(messageHandling), { wrapper });
+  const wrapper = createWrapper(messageHandling);
+  const { result, waitForNextUpdate } = renderHook(() => useTodosViewModel(), { wrapper });
   await waitForNextUpdate();
 
   act(() => {
@@ -70,8 +79,8 @@ test('New todo', async () => {
 
 test('Toggle', async () => {
   const messageHandling = mockMessageHandling();
-  const wrapper: WrapperComponent<ReactNode> = ({ children }) => <MemoryRouter>{children}</MemoryRouter>;
-  const { result, waitForNextUpdate } = renderHook(() => useTodosViewModel(messageHandling), { wrapper });
+  const wrapper = createWrapper(messageHandling);
+  const { result, waitForNextUpdate } = renderHook(() => useTodosViewModel(), { wrapper });
   await waitForNextUpdate();
 
   act(() => {
@@ -86,8 +95,8 @@ test('Toggle', async () => {
 
 test('Edit', async () => {
   const messageHandling = mockMessageHandling();
-  const wrapper: WrapperComponent<ReactNode> = ({ children }) => <MemoryRouter>{children}</MemoryRouter>;
-  const { result, waitForNextUpdate } = renderHook(() => useTodosViewModel(messageHandling), { wrapper });
+  const wrapper = createWrapper(messageHandling);
+  const { result, waitForNextUpdate } = renderHook(() => useTodosViewModel(), { wrapper });
   await waitForNextUpdate();
 
   act(() => {
@@ -102,8 +111,8 @@ test('Edit', async () => {
 
 test('Destroy', async () => {
   const messageHandling = mockMessageHandling();
-  const wrapper: WrapperComponent<ReactNode> = ({ children }) => <MemoryRouter>{children}</MemoryRouter>;
-  const { result, waitForNextUpdate } = renderHook(() => useTodosViewModel(messageHandling), { wrapper });
+  const wrapper = createWrapper(messageHandling);
+  const { result, waitForNextUpdate } = renderHook(() => useTodosViewModel(), { wrapper });
   await waitForNextUpdate();
 
   act(() => {
@@ -118,8 +127,8 @@ test('Destroy', async () => {
 
 test('Clear completed', async () => {
   const messageHandling = mockMessageHandling();
-  const wrapper: WrapperComponent<ReactNode> = ({ children }) => <MemoryRouter>{children}</MemoryRouter>;
-  const { result, waitForNextUpdate } = renderHook(() => useTodosViewModel(messageHandling), { wrapper });
+  const wrapper = createWrapper(messageHandling);
+  const { result, waitForNextUpdate } = renderHook(() => useTodosViewModel(), { wrapper });
   await waitForNextUpdate();
 
   act(() => {

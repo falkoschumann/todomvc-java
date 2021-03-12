@@ -1,8 +1,9 @@
-import { MessageHandling } from '../contract/MessageHandling';
-import { TodoFilter } from './types';
-import { Todo, TodoId } from '../contract/data';
-import { useLocation } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+
+import { Todo, TodoId } from '../contract/data';
+import { TodoFilter } from './types';
+import { useMessageHandling } from './MessageHandlingProvider';
 
 export type TodosViewModel = Readonly<{
   filter: TodoFilter;
@@ -15,7 +16,8 @@ export type TodosViewModel = Readonly<{
   onClearCompleted: () => void;
 }>;
 
-export function useTodosViewModel(messageHandling: MessageHandling): TodosViewModel {
+export function useTodosViewModel(): TodosViewModel {
+  const messageHandling = useMessageHandling();
   const location = useLocation();
   let filter: TodoFilter;
   switch (location.pathname) {

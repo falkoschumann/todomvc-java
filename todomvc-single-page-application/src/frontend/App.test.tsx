@@ -2,8 +2,9 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { render, screen, waitFor } from '@testing-library/react';
 
-import App from './App';
 import { MessageHandling } from '../contract/MessageHandling';
+import App from './App';
+import MessageHandlingProvider from './MessageHandlingProvider';
 
 test('renders todos title', async () => {
   const messageHandlerMock: MessageHandling = {
@@ -16,9 +17,11 @@ test('renders todos title', async () => {
     handleTodosQuery: jest.fn(() => Promise.resolve({ todos: [] })),
   };
   render(
-    <Router>
-      <App messageHandling={messageHandlerMock} />
-    </Router>
+    <MessageHandlingProvider messageHandling={messageHandlerMock}>
+      <Router>
+        <App />
+      </Router>
+    </MessageHandlingProvider>
   );
 
   await waitFor(() => {
