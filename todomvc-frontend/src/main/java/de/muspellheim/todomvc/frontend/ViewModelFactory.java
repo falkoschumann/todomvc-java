@@ -14,8 +14,6 @@ public class ViewModelFactory {
   private static URL iconUrl;
   private static Properties appProperties;
 
-  private static InfoViewModel infoViewModel;
-
   public static void initMessageHandling(MessageHandling messageHandling) {
     ViewModelFactory.messageHandling = messageHandling;
   }
@@ -33,9 +31,6 @@ public class ViewModelFactory {
   }
 
   public static InfoViewModel getInfoViewModel() {
-    if (infoViewModel == null) {
-      infoViewModel = new InfoViewModel(iconUrl, appProperties);
-    }
-    return infoViewModel;
+    return new InfoViewModel(iconUrl, appProperties);
   }
 }
