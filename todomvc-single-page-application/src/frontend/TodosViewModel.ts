@@ -8,12 +8,12 @@ import { useMessageHandling } from './MessageHandlingProvider';
 export type TodosViewModel = Readonly<{
   filter: TodoFilter;
   todos: readonly Todo[];
-  onToggleAll: (completed: boolean) => void;
-  onNewTodo: (title: string) => void;
-  onToggle: (id: TodoId) => void;
-  onEdit: (id: TodoId, title: string) => void;
-  onDestroy: (id: TodoId) => void;
-  onClearCompleted: () => void;
+  toggleAll: (completed: boolean) => void;
+  newTodo: (title: string) => void;
+  toggle: (id: TodoId) => void;
+  edit: (id: TodoId, title: string) => void;
+  destroy: (id: TodoId) => void;
+  clearCompleted: () => void;
 }>;
 
 export function useTodosViewModel(): TodosViewModel {
@@ -34,7 +34,7 @@ export function useTodosViewModel(): TodosViewModel {
 
   const [todos, setTodos] = useState<readonly Todo[]>([]);
 
-  const onToggleAll = useCallback(
+  const toggleAll = useCallback(
     async (completed) => {
       await messageHandling.handleToggleAllCommand({ completed });
       const result = await messageHandling.handleTodosQuery({});
@@ -43,7 +43,7 @@ export function useTodosViewModel(): TodosViewModel {
     [messageHandling]
   );
 
-  const onNewTodo = useCallback(
+  const newTodo = useCallback(
     async (title) => {
       await messageHandling.handleNewTodoCommand({ title });
       const result = await messageHandling.handleTodosQuery({});
@@ -52,7 +52,7 @@ export function useTodosViewModel(): TodosViewModel {
     [messageHandling]
   );
 
-  const onToggle = useCallback(
+  const toggle = useCallback(
     async (id) => {
       await messageHandling.handleToggleCommand({ id });
       const result = await messageHandling.handleTodosQuery({});
@@ -61,7 +61,7 @@ export function useTodosViewModel(): TodosViewModel {
     [messageHandling]
   );
 
-  const onEdit = useCallback(
+  const edit = useCallback(
     async (id, title) => {
       await messageHandling.handleEditCommand({ id, title });
       const result = await messageHandling.handleTodosQuery({});
@@ -70,7 +70,7 @@ export function useTodosViewModel(): TodosViewModel {
     [messageHandling]
   );
 
-  const onDestroy = useCallback(
+  const destroy = useCallback(
     async (id) => {
       await messageHandling.handleDestroyCommand({ id });
       const result = await messageHandling.handleTodosQuery({});
@@ -79,7 +79,7 @@ export function useTodosViewModel(): TodosViewModel {
     [messageHandling]
   );
 
-  const onClearCompleted = useCallback(async () => {
+  const clearCompleted = useCallback(async () => {
     await messageHandling.handleClearCompletedCommand({});
     const result = await messageHandling.handleTodosQuery({});
     setTodos(result.todos);
@@ -95,11 +95,11 @@ export function useTodosViewModel(): TodosViewModel {
   return {
     filter,
     todos,
-    onToggleAll,
-    onNewTodo,
-    onToggle,
-    onEdit,
-    onDestroy,
-    onClearCompleted,
+    toggleAll,
+    newTodo,
+    toggle,
+    edit,
+    destroy,
+    clearCompleted,
   };
 }

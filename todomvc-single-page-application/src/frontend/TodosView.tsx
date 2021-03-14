@@ -6,7 +6,17 @@ import TodoListHeader from './TodoListHeader';
 import TodoList from './TodoList';
 import TodoItem from './TodoItem';
 import TodoListFooter from './TodoListFooter';
-import { TodosViewModel } from './TodosViewModel';
+
+export type TodosViewProps = Readonly<{
+  filter?: TodoFilter;
+  todos?: readonly Todo[];
+  onToggleAll?: (completed: boolean) => void;
+  onNewTodo?: (title: string) => void;
+  onToggle?: (id: TodoId) => void;
+  onEdit?: (id: TodoId, title: string) => void;
+  onDestroy?: (id: TodoId) => void;
+  onClearCompleted?: () => void;
+}>;
 
 function TodosView({
   filter = TodoFilter.All,
@@ -17,7 +27,7 @@ function TodosView({
   onEdit,
   onDestroy,
   onClearCompleted,
-}: TodosViewModel) {
+}: TodosViewProps) {
   const [editing, setEditing] = useState<TodoId>();
 
   const activeCount = todos.filter((it) => !it.completed).length;
