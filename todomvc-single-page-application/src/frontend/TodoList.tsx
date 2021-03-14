@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 export type TodoListProps = Readonly<{
   allCompleted?: boolean;
-  children?: React.ReactElement[] | React.ReactElement | null;
+  children: ReactNode;
   onToggleAll?: (completed: boolean) => void;
 }>;
 

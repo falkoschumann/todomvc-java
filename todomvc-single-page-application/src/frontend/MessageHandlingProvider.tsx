@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 import { MessageHandling } from '../contract/MessageHandling';
 
@@ -10,7 +10,7 @@ const MessageHandlingContext = React.createContext<MessageHandlingContextType>(u
 
 type MessageHandlingProviderProps = Readonly<{
   messageHandling: MessageHandling;
-  children?: JSX.Element | JSX.Element[];
+  children: ReactNode;
 }>;
 
 export default function MessageHandlingProvider({ messageHandling, children }: MessageHandlingProviderProps) {
