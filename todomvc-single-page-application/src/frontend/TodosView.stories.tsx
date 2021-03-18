@@ -3,8 +3,7 @@ import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { Meta, Story } from '@storybook/react';
 
-import TodosView from './TodosView';
-import { TodosViewModel } from './TodosViewModel';
+import TodosView, { TodosViewProps } from './TodosView';
 import { TodoFilter } from './types';
 
 const history = createMemoryHistory();
@@ -21,7 +20,7 @@ export default {
   ],
 } as Meta;
 
-const Template: Story<TodosViewModel> = (args) => <TodosView {...args} />;
+const Template: Story<TodosViewProps> = (args) => <TodosView {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {

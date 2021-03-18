@@ -52,7 +52,7 @@ test('Toggle all', async () => {
   await waitForNextUpdate();
 
   act(() => {
-    result.current.onToggleAll(true);
+    result.current.toggleAll(true);
   });
   await waitForNextUpdate();
 
@@ -68,7 +68,7 @@ test('New todo', async () => {
   await waitForNextUpdate();
 
   act(() => {
-    result.current.onNewTodo('Lorem ipsum');
+    result.current.newTodo('Lorem ipsum');
   });
   await waitForNextUpdate();
 
@@ -84,7 +84,7 @@ test('Toggle', async () => {
   await waitForNextUpdate();
 
   act(() => {
-    result.current.onToggle('1');
+    result.current.toggle('1');
   });
   await waitForNextUpdate();
 
@@ -100,7 +100,7 @@ test('Edit', async () => {
   await waitForNextUpdate();
 
   act(() => {
-    result.current.onEdit('2', 'Buy a horse');
+    result.current.edit('2', 'Buy a horse');
   });
   await waitForNextUpdate();
 
@@ -116,7 +116,7 @@ test('Destroy', async () => {
   await waitForNextUpdate();
 
   act(() => {
-    result.current.onDestroy('2');
+    result.current.destroy('2');
   });
   await waitForNextUpdate();
 
@@ -132,7 +132,7 @@ test('Clear completed', async () => {
   await waitForNextUpdate();
 
   act(() => {
-    result.current.onClearCompleted();
+    result.current.clearCompleted();
   });
   await waitForNextUpdate();
 
