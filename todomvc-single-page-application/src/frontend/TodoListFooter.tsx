@@ -23,7 +23,7 @@ function TodoListFooter({
   return (
     <footer className="footer">
       <span className="todo-count">
-        <strong>{activeCount}</strong> item{activeCount !== 1 ? 's' : null} left
+        <strong>{activeCount}</strong> item{activeCount !== 1 && 's'} left
       </span>
       <ul className="filters">
         <li>

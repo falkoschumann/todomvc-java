@@ -40,7 +40,7 @@ describe('Editing', () => {
     render(
       <TodoItem
         todo={todo}
-        editing={true}
+        editing
         onToggle={handleToggle}
         onSave={handleSave}
         onCancel={handleCancel}
@@ -68,7 +68,7 @@ describe('Editing', () => {
     render(
       <TodoItem
         todo={todo}
-        editing={true}
+        editing
         onToggle={handleToggle}
         onSave={handleSave}
         onCancel={handleCancel}
@@ -95,7 +95,7 @@ describe('Editing', () => {
     render(
       <TodoItem
         todo={todo}
-        editing={true}
+        editing
         onToggle={handleToggle}
         onSave={handleSave}
         onCancel={handleCancel}

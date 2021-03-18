@@ -25,7 +25,7 @@ function TodoListHeader({ onNewTodo }: TodoListHeaderProps) {
         ref={newTodoRef}
         className="new-todo"
         placeholder="What needs to be done?"
-        autoFocus={true}
+        autoFocus
         onKeyDown={handleNewTodo}
       />
     </header>
