@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
+import './App.css';
 import TodosPage from './TodosPage';
 import InfoFooter from './InfoFooter';
-import './App.css';
 
 function App() {
   return (

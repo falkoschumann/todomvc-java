@@ -3,7 +3,7 @@ import React, { ReactNode } from 'react';
 export type TodoListProps = Readonly<{
   allCompleted?: boolean;
   children: ReactNode;
-  onToggleAll?: (completed: boolean) => void;
+  onToggleAll?(completed: boolean): void;
 }>;
 
 function TodoList({ allCompleted = false, children, onToggleAll }: TodoListProps) {

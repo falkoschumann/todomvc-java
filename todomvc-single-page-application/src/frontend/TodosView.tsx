@@ -10,12 +10,12 @@ import TodoListFooter from './TodoListFooter';
 export type TodosViewProps = Readonly<{
   filter?: TodoFilter;
   todos?: readonly Todo[];
-  onToggleAll?: (completed: boolean) => void;
-  onNewTodo?: (title: string) => void;
-  onToggle?: (id: TodoId) => void;
-  onEdit?: (id: TodoId, title: string) => void;
-  onDestroy?: (id: TodoId) => void;
-  onClearCompleted?: () => void;
+  onToggleAll?(completed: boolean): void;
+  onNewTodo?(title: string): void;
+  onToggle?(id: TodoId): void;
+  onEdit?(id: TodoId, title: string): void;
+  onDestroy?(id: TodoId): void;
+  onClearCompleted?(): void;
 }>;
 
 function TodosView({

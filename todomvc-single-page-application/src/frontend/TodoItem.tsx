@@ -7,11 +7,11 @@ import { usePrevious } from './hooks';
 export type TodoItemProps = Readonly<{
   todo: Todo;
   editing?: boolean;
-  onToggle?: () => void;
-  onEdit?: () => void;
-  onSave?: (title: string) => void;
-  onCancel?: () => void;
-  onDestroy?: () => void;
+  onToggle?(): void;
+  onEdit?(): void;
+  onSave?(title: string): void;
+  onCancel?(): void;
+  onDestroy?(): void;
 }>;
 
 function TodoItem({ todo, editing = false, onToggle, onEdit, onSave, onCancel, onDestroy }: TodoItemProps) {
