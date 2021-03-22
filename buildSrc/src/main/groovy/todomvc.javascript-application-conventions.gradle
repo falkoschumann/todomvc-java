@@ -27,18 +27,30 @@ task npmStorybook(type: NpmTask, dependsOn: npmInstall) {
   npmCommand = ['run', 'storybook']
 }
 
-task test(type: NpmTask, dependsOn: npmInstall) {
+task npmTest(type: NpmTask, dependsOn: npmInstall) {
   npmCommand = ['run', 'test']
   args = ['--', '--watchAll=false']
   inputs.dir('src')
   inputs.dir('node_modules')
   inputs.file('tsconfig.json')
 }
-check.dependsOn(test)
+check.dependsOn(npmTest)
 
-spotless {
-  format 'javascript', {
-    target 'src/**/*.js', 'src/**/*.jsx', 'src/**/*.ts', 'src/**/*.tsx', 'src/**/*.json', 'src/**/*.css', 'src/**/*.scss', 'src/**/*.md'
-    prettier().configFile("${projectDir}/.prettierrc.json")
-  }
+task npmPrettierCheck(type: NpmTask, dependsOn: npmInstall) {
+  npmCommand = ['run', 'prettier:check']
 }
+check.dependsOn(npmPrettierCheck)
+
+task npmPrettierWrite(type: NpmTask, dependsOn: npmInstall) {
+  npmCommand = ['run', 'prettier:write']
+}
+
+// TODO Spotless will Prettier mit `npm install` installieren, bevor NodeJS/NPM installiert wurden
+//   Siehe https://github.com/diffplug/spotless/issues/728
+//spotless {
+//  format 'javascript', {
+//    target 'src/**/*.js', 'src/**/*.jsx', 'src/**/*.ts', 'src/**/*.tsx', 'src/**/*.json', 'src/**/*.css', 'src/**/*.scss', 'src/**/*.md'
+//    //prettier().npmExecutable(nodeSetup.nodeDir.get().dir('./bin/npm')).configFile("${projectDir}/.prettierrc.json")
+//    prettier().configFile("${projectDir}/.prettierrc.json")
+//  }
+//}
