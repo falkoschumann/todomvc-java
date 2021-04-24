@@ -43,7 +43,7 @@ if (Os.isFamily(Os.FAMILY_MAC)) {
       imageOptions = [
         '--copyright', copyright,
         '--mac-sign',
-        '--mac-signing-key-user-name', project.findProperty('macSigning.keyUserName')
+        '--mac-signing-key-user-name', project.findProperty('mac.signingKeyUserName')
       ]
     }
   }
@@ -65,7 +65,7 @@ if (Os.isFamily(Os.FAMILY_WINDOWS)) {
         '--win-dir-chooser',
         '--win-menu',
         '--win-menu-group', 'Muspellheim',
-        '--win-upgrade-uuid', '1f42ed58-4e2b-49e8-bc39-f333396ff8b6'
+        '--win-upgrade-uuid', project.findProperty('win.upgradeUuid')
       ]
     }
   }
