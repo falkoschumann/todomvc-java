@@ -19,8 +19,9 @@ TODO: Usage
     - Für signierten Build unter macOS muss in der `gradle.properties` die
       Property `mac.signingKeyUserName` auf den Namen des Schlüssels gesetzten
       werden z.B. `Max Mustermann (AB1234567890)`.
-    - Für einen produktiven Installer für Windows sollte die Property
-      `win.upgradeUuid` in der `gradle.properties` geändert werden.
+    - Für produktive Installer für Windows müssen die Properties
+      `win.upgradeUuid` und `win.distributed.upgradeUuid` in der
+      `gradle.properties` geändert werden.
 - Der Code Style [Google Java Style Guide][1] wird beim Build geprüft.
 - Code formatieren: `./gradlew spotlessApply`
 - [Project Lombok][2] wird verwendet, um Boilerplate Code zu reduzieren, es

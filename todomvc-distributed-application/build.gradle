@@ -65,7 +65,7 @@ if (Os.isFamily(Os.FAMILY_WINDOWS)) {
         '--win-dir-chooser',
         '--win-menu',
         '--win-menu-group', 'Muspellheim',
-        '--win-upgrade-uuid', project.findProperty('win.upgradeUuid')
+        '--win-upgrade-uuid', project.findProperty('win.distributed.upgradeUuid')
       ]
     }
   }
